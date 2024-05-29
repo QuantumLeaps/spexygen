@@ -40,7 +40,7 @@ in all changes and derivate works.
 
 
 # How to Help this Project?
-Please feel free to clone, fork, and make pull requests to improve ET.
+Please feel free to clone, fork, and make pull requests to improve **spexygen**.
 If you like this project, please give it a star (in the upper-right corner of your browser window):
 
 <p align="center"><img src="github-star.jpg"/></p>
