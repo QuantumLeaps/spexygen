@@ -27,20 +27,20 @@ ALIASES = \
 #---------------------------------------------------------------------------
 # Configuration options related to the HTML output
 #---------------------------------------------------------------------------
-HTML_HEADER            = ../../spexygen/spexy-header.html
-HTML_FOOTER            = ../../spexygen/spexy-footer.html
-HTML_EXTRA_STYLESHEET  = ../../spexygen/doxygen-awesome.css \
-                         ../../spexygen/doxygen-awesome-sidebar-only.css \
-                         ../../spexygen/doxygen-awesome-sidebar-only-darkmode-toggle.css \
-                         ../../spexygen/spexy-awesome.css
-HTML_EXTRA_FILES       = ../../spexygen/doxygen-awesome-darkmode-toggle.js \
-                         ../../spexygen/doxygen-awesome-fragment-copy-button.js \
-                         ../../spexygen/doxygen-awesome-paragraph-link.js \
-                         ../../spexygen/image-preview.js
+HTML_HEADER            = $(SPEXYGEN)/spexy-header.html
+HTML_FOOTER            = $(SPEXYGEN)/spexy-footer.html
+HTML_EXTRA_STYLESHEET  = $(SPEXYGEN)/doxygen-awesome.css \
+                         $(SPEXYGEN)/doxygen-awesome-sidebar-only.css \
+                         $(SPEXYGEN)/doxygen-awesome-sidebar-only-darkmode-toggle.css \
+                         $(SPEXYGEN)/spexy-awesome.css
+HTML_EXTRA_FILES       = $(SPEXYGEN)/doxygen-awesome-darkmode-toggle.js \
+                         $(SPEXYGEN)/doxygen-awesome-fragment-copy-button.js \
+                         $(SPEXYGEN)/doxygen-awesome-paragraph-link.js \
+                         $(SPEXYGEN)/image-preview.js
 DOCSET_FEEDNAME        = "spexygen generated docs"
 
 #---------------------------------------------------------------------------
 # Configuration options related to the LaTeX output
 #---------------------------------------------------------------------------
-LATEX_HEADER           = ../../spexygen/spexy-header.tex
-LATEX_FOOTER           = ../../spexygen/spexy-footer.tex
+LATEX_HEADER           = $(SPEXYGEN)/spexy-header.tex
+LATEX_FOOTER           = $(SPEXYGEN)/spexy-footer.tex

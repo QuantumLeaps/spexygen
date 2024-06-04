@@ -2,22 +2,65 @@
 [![Quantum Leaps](https://www.state-machine.com/attachments/logo_ql_400.png)](https://www.state-machine.com)
 <hr>
 
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/QuantumLeaps/Embedded-Test)](https://github.com/QuantumLeaps/Embedded-Test/releases/latest)
-[![GitHub](https://img.shields.io/github/license/QuantumLeaps/Embedded-Test)](https://github.com/QuantumLeaps/Embedded-Test/blob/master/LICENSE)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/QuantumLeaps/spexygen)](https://github.com/QuantumLeaps/spexygen/releases/latest)
+[![GitHub](https://img.shields.io/github/license/QuantumLeaps/spexygen)](https://github.com/QuantumLeaps/spexygen/blob/main/LICENSE)
 
 
-# Spexygen - Specifications Based on Doxygen
-**Spexygen** is a system for creating formal specifications based on Doxygen, such as:
+# Spexygen - Traceable Specifications Based on Doxygen
+**Spexygen** is a system for creating formal, [traceable](https://www.state-machine.com/qpc/fsm-qp_tr.html) specifications based on Doxygen, such as:
 
-- functional safety specification ([example](https://www.state-machine.com/qpc/cert-qp.html))
+- functional safety specification ([example](https://www.state-machine.com/qpc/fsm-qp.html))
 - requirements specification ([example](https://www.state-machine.com/qpc/srs-qp.html))
 - architecture specification ([example](https://www.state-machine.com/qpc/sas-qp.html))
 - design specification ([example](https://www.state-machine.com/qpc/sds-qp.html))
 - source code ([example](https://www.state-machine.com/qpc/annotated.html))
 
-# Traceability
-Spexygen supports bidirectional [traceability](https://www.state-machine.com/qpc/cert-qp.html#cert-qp_tr)
-among specifications and the __source code__.
+# Use
+Suppose that you have the following directory structure:
+
+
+```
++---spexygen/          // Spexygen (copy of this repo)
+|       . . .
+|       Spexyfile      // <== to be included in Doxyfiles
+|
++---my_docs/           // example documentation project
+|   +---DOC-MAN-QM/    // example document
+|   |   +---images/
+|   |   +---examples/
+|   |       Doxyfile   // @INCLUDE $(SPEXYGEN)/Spexyfile
+|   |       qm.dox
+|   |       qm_gui.dox
+|   |       . . .
+|
++---DOC-SRS-QP         // example document
+|   |   +---images/
+|   |       Doxyfile   // @INCLUDE $(SPEXYGEN)/Spexyfile
+|   |       srs.dox
+|   |       srs_sect1.dox
+|   |       . . .
+```
+
+1. Define the `SPEXYGEN` environment variable pointing to the Spexygen installation directory. This could be a relative path with respect to your `Doxyfile`. For example, if you intend to invoke doxygen from the `my_docs/DOC-MAN-QM/` directory, you can define (on Windows):
+
+```
+set SPEXYGEN=../../spexygen
+```
+
+2. Include the `Spexyfile` at the top of your `Doxyfile`
+
+```
+# Doxyfile
+
+@INCLUDE = $(SPEXYGEN)/Spexyfile
+. . .
+```
+
+3. Run doxygen in this directory:
+
+```
+doxygen
+```
 
 # Output
 
