@@ -5,6 +5,7 @@
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/QuantumLeaps/spexygen)](https://github.com/QuantumLeaps/spexygen/releases/latest)
 [![GitHub](https://img.shields.io/github/license/QuantumLeaps/spexygen)](https://github.com/QuantumLeaps/spexygen/blob/main/LICENSE)
 
+<p align="center"><img src="img/spexygen.webp"/></p>
 
 # Spexygen - Traceable Specifications Based on Doxygen
 **Spexygen** is a system for creating formal, [traceable](https://www.state-machine.com/qpc/fsm-qp_tr.html) specifications based on Doxygen, such as:
@@ -86,4 +87,4 @@ in all changes and derivate works.
 Please feel free to clone, fork, and make pull requests to improve **spexygen**.
 If you like this project, please give it a star (in the upper-right corner of your browser window):
 
-<p align="center"><img src="github-star.jpg"/></p>
+<p align="center"><img src="img/github-star.jpg"/></p>
