@@ -1,11 +1,43 @@
 /******** Overrides from doxygen-awesome *****/
 html {
-  --side-nav-fixed-width: 320px;
-  --side-top-background: #ecf0f5;
-  --side-nav-arrow-opacity: 1;
-  --side-nav-background-hover: #E0E0E0;
-  --top-height: 210px;
+    --side-nav-fixed-width: 320px;
+    --side-top-background: #ecf0f5;
+    --side-nav-arrow-opacity: 1;
+    --side-nav-background-hover: #E0E0E0;
+    --top-height: 210px;
+    --remark-color: #eeeeee;
+    --remark-color-dark: #777777;
+    --remark-color-darker: #333333;
 }
+
+@media (prefers-color-scheme: dark) {
+    html:not(.light-mode) {
+        --remark-color: #555555;
+        --remark-color-dark: #aaaaaa;
+        --remark-color-darker: #eeeeee;
+    }
+}
+
+html.dark-mode {
+    --remark-color: #555555;
+    --remark-color-dark: #aaaaaa;
+    --remark-color-darker: #eeeeee;
+}
+
+ul {
+    margin-block-start: 0.25em;
+}
+
+dl.remark {
+    background: var(--remark-color);
+    border-left: 8px solid var(--remark-color-dark);
+    color: var(--remark-color-darker);
+}
+
+dl.remark dt {
+    color: var(--remark-color-dark);
+}
+
 
 #top {
   background: var(--side-top-background);
