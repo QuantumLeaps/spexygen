@@ -1,0 +1,32 @@
+/*! @page dev Deviations (Coding Standard)
+@ifnot LATEX
+@nav{srs,header.h}
+<div style="clear:both;"></div>
+@endif
+
+@section dev-def Concepts &amp; Definitions
+Description of concepts and definitions...
+
+@section dev_rec Deviation Records
+Traceable, formal deviation records...
+
+@uid{DVR_PRJ_MC4_R11_03, Deviation record for MISRA-C:2023 Rule 11.3.}
+@uid_litem{Description}
+MISRA-C:2023 Rule 11.3(Required): A cast shall not be performed between a pointer to object type and a pointer to a different object type (object-oriented upcast)
+@uid_fw_trace
+@enduid
+
+@section dev_per Deviation Permits
+Traceable, formal deviation permits...
+
+@uid{DVP_PRJ_MC4_R11_03, Deviation permit for MISRA-C:2023 Rule 11.3.}
+@uid_litem{Description}
+MISRA-C:2023 Rule 11.3(Required): A cast shall not be performed between a pointer to object type and a pointer to a different object type (object-oriented upcast)
+@uid_fw_trace
+@enduid
+
+@ifnot LATEX
+<div style="clear:both;"></div>
+@nav{srs,header.h}
+@endif
+*/

@@ -1,0 +1,64 @@
+/*! @page srs Software Requirements Specification
+@ifnot LATEX
+@nav{exa,dev}
+<div style="clear:both;"></div>
+@endif
+
+@remark
+This is an example Software Requirements Specification (SRS), illustrating the typical structure and the use of _spexygen_ commands to define the @ref tr "traceable" requirement work artifacts.
+
+@section srs-def Concepts &amp; Definitions
+Description of concepts and definitions...
+
+@section srs_req Requirements
+Definitions of formal requirements specifications with _spexygen_ commands...
+
+@uid{SRS_PRJ_FF_00,My project shall provide a free function foo().}
+@uid_litem{Description}
+Longer description of the requirement
+@uid_fw_trace
+@enduid
+
+@uid{SRS_PRJ_Foo_00,My project shall provide a class Foo.}
+@uid_litem{Description}
+Longer description of the requirement
+@uid_fw_trace
+@enduid
+
+@uid{SRS_PRJ_Foo_01,My project class Foo shall provide a public attribute x.}
+@uid_litem{Description}
+Longer description of the requirement
+@uid_bw_trace{brief}
+- @tr{SRS_PRJ_Foo_00}
+@uid_fw_trace
+@enduid
+
+@uid{SRS_PRJ_Foo_02,My project class Foo shall provide a constructor.}
+@uid_litem{Description}
+Longer description of the requirement
+@uid_bw_trace{brief}
+- @tr{SRS_PRJ_Foo_00}
+@uid_fw_trace
+@enduid
+
+@uid{SRS_PRJ_Foo_03,My project class Foo shall provide a verify operation.}
+@uid_litem{Description}
+Longer description of the requirement
+@uid_bw_trace{brief}
+- @tr{SRS_PRJ_Foo_00}
+@uid_fw_trace
+@enduid
+
+@uid{SRS_PRJ_Foo_04,My project class Foo shall be a singleton.}
+@uid_litem{Description}
+Longer description of the requirement
+@uid_bw_trace{brief}
+- @tr{SRS_PRJ_Foo_00}
+@uid_fw_trace
+@enduid
+
+@ifnot LATEX
+<div style="clear:both;"></div>
+@nav{exa,dev}
+@endif
+*/
