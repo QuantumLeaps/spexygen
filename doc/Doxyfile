@@ -6,7 +6,7 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 PROJECT_NAME           = Spexygen
-PROJECT_NUMBER         = 2.0.0
+PROJECT_NUMBER         = 2.0.1
 PROJECT_BRIEF          = "Reference Manual"
 PROJECT_LOGO           = ./img/logo_spexygen.webp
 PROJECT_ICON           =
@@ -39,7 +39,8 @@ SORT_MEMBER_DOCS       = NO
 # listed *after* the referenced code (e.g., header.h).
 #---------------------------------------------------------------------------
 INPUT = \
-    main.dox
+    main.dox \
+    ../spexygen-awesome/help.dox
 
 @INCLUDE = spex/Spexyinc
 

@@ -79,7 +79,7 @@ rmdir /S /Q  %LATEX_OUT%
 @echo generating PDF...
 @cd %LATEX_OUT%
 @call make.bat
-@copy refman.pdf ..\DOC-MAN-SPX.pdf
+@copy refman.pdf ..\DOC_MAN_SPX.pdf
 @cd ..
 rmdir /S /Q  %LATEX_OUT%
 

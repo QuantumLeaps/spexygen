@@ -38,6 +38,7 @@
    <glyph unicode="N" horiz-adv-x="1165" d="M 156,0 L 156,1466 355,1466 1125,315 1125,1466 1311,1466 1311,0 1112,0 342,1152 342,0 156,0 Z"/>
    <glyph unicode="I" horiz-adv-x="213" d="M 191,0 L 191,1466 385,1466 385,0 191,0 Z"/>
    <glyph unicode="D" horiz-adv-x="1218" d="M 158,0 L 158,1466 663,1466 C 777,1466 864,1459 924,1445 1008,1426 1080,1391 1139,1340 1216,1275 1274,1191 1313,1090 1351,988 1370,872 1370,741 1370,630 1357,531 1331,445 1305,359 1272,288 1231,232 1190,175 1146,131 1098,99 1049,66 991,42 923,25 854,8 776,0 687,0 L 158,0 Z M 352,173 L 665,173 C 762,173 838,182 893,200 948,218 991,243 1024,276 1070,322 1106,384 1132,462 1157,539 1170,633 1170,744 1170,897 1145,1015 1095,1098 1044,1180 983,1235 911,1263 859,1283 775,1293 660,1293 L 352,1293 352,173 Z"/>
+   <glyph unicode="C" horiz-adv-x="1324" d="M 1204,514 L 1398,465 C 1357,306 1284,184 1179,101 1073,17 944,-25 791,-25 633,-25 505,7 406,72 307,136 231,229 180,351 128,473 102,604 102,744 102,897 131,1030 190,1144 248,1257 331,1344 439,1403 546,1462 665,1491 794,1491 941,1491 1064,1454 1164,1379 1264,1304 1334,1199 1373,1064 L 1182,1019 C 1148,1126 1099,1203 1034,1252 969,1301 888,1325 790,1325 677,1325 583,1298 508,1244 432,1190 379,1118 348,1027 317,936 302,842 302,745 302,620 320,512 357,419 393,326 449,256 526,210 603,164 686,141 775,141 884,141 976,172 1051,235 1126,298 1177,391 1204,514 Z"/>
    <glyph unicode="B" horiz-adv-x="1113" d="M 150,0 L 150,1466 700,1466 C 812,1466 902,1451 970,1422 1037,1392 1090,1346 1129,1285 1167,1223 1186,1158 1186,1091 1186,1028 1169,969 1135,914 1101,859 1050,814 981,780 1070,754 1138,710 1186,647 1233,584 1257,510 1257,425 1257,356 1243,293 1214,234 1185,175 1149,129 1106,97 1063,65 1010,41 946,25 881,8 802,0 709,0 L 150,0 Z M 344,850 L 661,850 C 747,850 809,856 846,867 895,882 933,906 958,940 983,974 995,1017 995,1068 995,1117 983,1160 960,1197 937,1234 903,1259 860,1273 817,1286 742,1293 637,1293 L 344,1293 344,850 Z M 344,173 L 709,173 C 772,173 816,175 841,180 886,188 923,201 953,220 983,239 1008,266 1027,302 1046,337 1056,378 1056,425 1056,480 1042,527 1014,568 986,608 947,636 898,653 848,669 776,677 683,677 L 344,677 344,173 Z"/>
    <glyph unicode="A" horiz-adv-x="1403" d="M -3,0 L 560,1466 769,1466 1369,0 1148,0 977,444 364,444 203,0 -3,0 Z M 420,602 L 917,602 764,1008 C 717,1131 683,1233 660,1312 641,1218 615,1125 581,1032 L 420,602 Z"/>
    <glyph unicode="9" horiz-adv-x="980" d="M 112,339 L 285,355 C 300,274 328,215 369,178 410,141 463,123 528,123 583,123 632,136 674,161 715,186 749,220 776,263 803,305 825,362 843,434 861,506 870,579 870,654 870,662 870,674 869,690 833,633 784,586 722,551 659,515 592,497 519,497 398,497 295,541 211,629 127,717 85,833 85,977 85,1126 129,1245 217,1336 304,1427 414,1472 546,1472 641,1472 729,1446 808,1395 887,1344 947,1271 988,1176 1029,1081 1049,943 1049,763 1049,576 1029,427 988,316 947,205 887,120 807,62 726,4 632,-25 524,-25 409,-25 316,7 243,71 170,134 127,224 112,339 Z M 849,986 C 849,1089 822,1171 767,1232 712,1293 645,1323 568,1323 488,1323 418,1290 359,1225 300,1160 270,1075 270,971 270,878 298,802 355,744 411,685 480,656 563,656 646,656 715,685 769,744 822,802 849,883 849,986 Z"/>
@@ -249,7 +250,7 @@
       <g class="TextShape">
        <g id="id13">
         <rect class="BoundingBox" stroke="none" fill="none" x="5406" y="522" width="2743" height="898"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="5547" y="1180"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SRS-QP-01_22</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="5547" y="1180"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SRS_QP_01_22</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
@@ -265,7 +266,7 @@
       <g class="TextShape">
        <g id="id16">
         <rect class="BoundingBox" stroke="none" fill="none" x="8108" y="582" width="2779" height="898"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="8249" y="1240"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SRS-QP-02_25</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="8249" y="1240"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SRS_QP_02_25</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
@@ -281,7 +282,7 @@
       <g class="TextShape">
        <g id="id19">
         <rect class="BoundingBox" stroke="none" fill="none" x="6759" y="1534" width="3417" height="898"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="6900" y="2192"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SRS-QP-02_34</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="6900" y="2192"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SRS_QP_02_34</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="Group">
@@ -327,7 +328,7 @@
       <g class="TextShape">
        <g id="id27">
         <rect class="BoundingBox" stroke="none" fill="none" x="8383" y="3220" width="3457" height="898"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="8524" y="3878"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SAS-QP-10_12</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="8524" y="3878"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SAS_QP_10_12</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
@@ -343,7 +344,7 @@
       <g class="TextShape">
        <g id="id30">
         <rect class="BoundingBox" stroke="none" fill="none" x="10304" y="2884" width="3230" height="898"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="10445" y="3542"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SAS-QP-05_23</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="10445" y="3542"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SAS_QP_05_23</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
@@ -359,7 +360,7 @@
       <g class="TextShape">
        <g id="id33">
         <rect class="BoundingBox" stroke="none" fill="none" x="9761" y="3672" width="3389" height="898"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="9902" y="4330"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SAS-QP-10_23A1</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="9902" y="4330"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SAS_QP_10_23A1</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.LineShape">
@@ -419,7 +420,7 @@
       <g class="TextShape">
        <g id="id43">
         <rect class="BoundingBox" stroke="none" fill="none" x="3025" y="4678" width="3616" height="898"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="3166" y="5336"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SDS-QA-01_23A1</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="3166" y="5336"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SDS_QA_01_23A1</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
@@ -435,7 +436,7 @@
       <g class="TextShape">
        <g id="id46">
         <rect class="BoundingBox" stroke="none" fill="none" x="4576" y="4193" width="3100" height="898"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="4717" y="4851"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SDS-QP_12_50</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="4717" y="4851"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SDS_QP_12_50</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
@@ -451,7 +452,7 @@
       <g class="TextShape">
        <g id="id49">
         <rect class="BoundingBox" stroke="none" fill="none" x="5197" y="5081" width="3270" height="898"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="5338" y="5739"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SDS-QP-15_30</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="5338" y="5739"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SDS_QP_15_30</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="Group">
@@ -561,7 +562,7 @@
       <g class="TextShape">
        <g id="id69">
         <rect class="BoundingBox" stroke="none" fill="none" x="2008" y="7940" width="3457" height="898"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="2149" y="8598"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">TUN-QP-23_12</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="2149" y="8598"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">TUN_QP-23_12</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
@@ -577,7 +578,7 @@
       <g class="TextShape">
        <g id="id72">
         <rect class="BoundingBox" stroke="none" fill="none" x="4157" y="8300" width="3249" height="898"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="4298" y="8958"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">TUN-QP-82_31A1</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="4298" y="8958"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">TAC_QP_82_31A1</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
@@ -593,7 +594,7 @@
       <g class="TextShape">
        <g id="id75">
         <rect class="BoundingBox" stroke="none" fill="none" x="3479" y="8881" width="3732" height="898"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="3620" y="9539"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">TIN_QA-33-62B1</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="3620" y="9539"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">TIN_QA_33_62B1</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.LineShape">
@@ -644,7 +645,7 @@
       <g class="TextShape">
        <g id="id83">
         <rect class="BoundingBox" stroke="none" fill="none" x="9339" y="1018" width="3230" height="898"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="9480" y="1676"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SRS-QP-06_50</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="9480" y="1676"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">SRS_QP_06_50</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.LineShape">
@@ -657,7 +658,7 @@
       <g class="Group">
        <g class="com.sun.star.drawing.ClosedBezierShape">
         <g id="id85">
-         <rect class="BoundingBox" stroke="none" fill="none" x="9471" y="4610" width="5280" height="1748"/>
+         <rect class="BoundingBox" stroke="none" fill="none" x="9470" y="4610" width="5281" height="1748"/>
          <path fill="rgb(192,192,192)" stroke="none" d="M 14750,5484 L 14750,5483 C 14750,5637 14628,5787 14396,5920 14165,6053 13832,6163 13430,6240 13029,6317 12574,6357 12111,6357 11647,6357 11192,6317 10791,6240 10389,6163 10056,6053 9825,5920 9593,5787 9471,5637 9471,5484 9471,5330 9593,5180 9825,5047 10056,4914 10389,4804 10791,4727 11192,4650 11647,4610 12111,4610 12574,4610 13029,4650 13430,4727 13832,4804 14165,4914 14396,5047 14628,5180 14750,5330 14750,5483 L 14750,5484 Z"/>
         </g>
        </g>
@@ -692,7 +693,7 @@
       <g class="TextShape">
        <g id="id91">
         <rect class="BoundingBox" stroke="none" fill="none" x="10682" y="5477" width="3851" height="898"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="10823" y="6135"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">DVR-QP-R11_3</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="10823" y="6135"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">DVR_QP_R11_3</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
@@ -708,7 +709,7 @@
       <g class="TextShape">
        <g id="id94">
         <rect class="BoundingBox" stroke="none" fill="none" x="11733" y="5061" width="2859" height="898"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="11874" y="5719"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">DVP-QA-04_9</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="282px" font-weight="400"><tspan class="TextPosition" x="11874" y="5719"><tspan font-size="459px" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">●</tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">DVP_QA_04_9</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.LineShape">
@@ -749,9 +750,9 @@
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id100">
-        <rect class="BoundingBox" stroke="none" fill="none" x="424" y="5677" width="1029" height="1860"/>
-        <path fill="rgb(255,255,255)" stroke="none" d="M 688,5691 L 688,7064 438,7064 938,7521 1438,7064 1188,7064 1188,5691 688,5691 Z"/>
-        <path fill="none" stroke="rgb(0,0,0)" stroke-width="28" stroke-linejoin="round" d="M 688,5691 L 688,7064 438,7064 938,7521 1438,7064 1188,7064 1188,5691 688,5691 Z"/>
+        <rect class="BoundingBox" stroke="none" fill="none" x="424" y="5671" width="1029" height="1859"/>
+        <path fill="rgb(255,255,255)" stroke="none" d="M 688,5685 L 688,7058 438,7058 938,7515 1438,7058 1188,7058 1188,5685 688,5685 Z"/>
+        <path fill="none" stroke="rgb(0,0,0)" stroke-width="28" stroke-linejoin="round" d="M 688,5685 L 688,7058 438,7058 938,7515 1438,7058 1188,7058 1188,5685 688,5685 Z"/>
        </g>
       </g>
       <g class="Group">

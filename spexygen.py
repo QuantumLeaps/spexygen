@@ -44,13 +44,14 @@ def debug(*args, **kwargs):
 class spexygen:
 
     # public class constants
-    VERSION = 200
+    VERSION = 201
 
     LEVELS = ('', '  ', '    ', '      ')
 
     def __init__(self):
         # private members
         self._item = None          # current Item
+        self._fname = ''           # current file name (for generating output)
         self._file = None          # current file (for generating output)
         self._prefix = ''          # prefix for each generated line
         self._bw_trace = ''        # bw-trace for current item requested
@@ -62,7 +63,7 @@ class spexygen:
         return fname.endswith('.dox') or \
                fname.endswith('.h') or fname.endswith('.c') or \
                fname.endswith('.hpp') or fname.endswith('.cpp') or \
-               fname.endswith('.py')
+               fname.endswith('.py') or fname.endswith('.lnt')
 
     # recursively generate the forward trace for a given 'uid'
     def on_gen_trace(self, uid, level):
@@ -224,7 +225,7 @@ class spexygen:
         if self._item.uid in self._item_trace_dict:
             self.on_gen_trace(self._item.uid, 0)
         else:
-            print(f'  No forward trace for UID: "{self._item.uid}"')
+            print(f'  {self._fname}:{lnum} no forward trace for UID: "{self._item.uid}"')
 
         return True
 
@@ -270,7 +271,8 @@ class spexygen:
         with f:
             lines = f.readlines()
 
-        fname = gendir + '/' + os.path.basename(fname)
+        self._fname = os.path.basename(fname)
+        fname = gendir + '/' + self._fname
         try:
             self._file = open(fname, 'w', encoding="utf-8")
         except OSError:

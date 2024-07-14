@@ -7,13 +7,13 @@
 
 <p align="center">
 <a href="https://www.state-machine.com/spexygen">
-<img src="img/banner_spexygen.webp"/></a>
+<img src="https://www.state-machine.com/spexygen/banner_spexygen.webp"/></a>
 </p>
 
 # Spexygen - Traceable Specifications Based on Doxygen
-_Spexygen_ documentation (generated with _spexygen_!) is available at:
+_Spexygen_ documentation (generated with _Spexygen_) is available at:
 - [Spexygen Reference Manual in HTML](https://www.state-machine.com/spexygen)
-- [Spexygen Reference Manual in PDF](https://www.state-machine.com/spexygen/DOC-MAN-SPX.pdf)
+- [Spexygen Reference Manual in PDF](https://www.state-machine.com/spexygen/DOC_MAN_SPX.pdf)
 
 # Licensing
 Spexygen is released under the terms of the permissive [MIT open source license](LICENSE).

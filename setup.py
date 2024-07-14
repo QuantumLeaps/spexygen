@@ -9,7 +9,7 @@ from setuptools import setup
 
 setup(
     name="spexygen",
-    version="2.0.0",
+    version="2.0.1",
     author="Quantum Leaps",
     author_email="info@state-machine.com",
     description="Traceable specifications based on doxygen",
@@ -20,7 +20,7 @@ setup(
     platforms="any",
     py_modules=["spexygen"],
     entry_points={"console_scripts": ["spexygen = spexygen:main"]},
-    classifiers=["Development Status :: 4 - Beta",
+    classifiers=["Development Status :: 5 - Production/Stable",
                  "Intended Audience :: Developers",
                  "Topic :: Software Development :: Documentation",
                  "License :: OSI Approved :: MIT License",
