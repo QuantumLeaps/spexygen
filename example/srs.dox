@@ -5,13 +5,13 @@
 @endif
 
 @remark
-This is an example Software Requirements Specification (SRS), illustrating the typical structure and the use of _spexygen_ commands to define the @ref tr "traceable" requirement work artifacts.
+This is an example Software Requirements Specification (SRS), illustrating the typical structure and the use of _Spexygen_ commands to define the @ref tr "traceable" requirement work artifacts.
 
 @section srs-def Concepts &amp; Definitions
 Description of concepts and definitions...
 
 @section srs_req Requirements
-Definitions of formal requirements specifications with _spexygen_ commands...
+Definitions of formal requirements specifications with _Spexygen_ commands...
 
 @uid{SRS_PRJ_FF_00,My project shall provide a free function foo().}
 @uid_litem{Description}

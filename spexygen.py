@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #=============================================================================
-# _spexygen_ - Traceable Specifications Based on doxygen
+# _Spexygen_ - Traceable Specifications Based on doxygen
 # Copyright (C) 2023 Quantum Leaps, LLC. All rights reserved.
 #
 # SPDX-License-Identifier: MIT
@@ -28,86 +28,107 @@
 # <info@state-machine.com>
 #=============================================================================
 
-# pylint: disable=missing-module-docstring,
-# pylint: disable=missing-class-docstring
-# pylint: disable=missing-function-docstring
+'''
+Spexygen is a Doxygen extension for creating traceable technical
+specifications, such as:
+- traceable requirement specifications
+- traceable source code
+- traceable tests
+- traceable specifications of other kind
+'''
 
 import sys
 import os
 import json
 
-# debug output (uncomment the print() inside for debugging)
 def debug(*args, **kwargs):
+    '''debug output (uncomment the print() inside for debugging)
+    '''
     #print(*args, **kwargs)
     pass
 
-class spexygen:
+class Spexygen:
+    '''
+    Spexygen class that encapsulates tracing and code generation
+    '''
 
     # public class constants
-    VERSION = 201
+    VERSION = 210
 
-    LEVELS = ('', '  ', '    ', '      ')
+    LEVELS = ('', '  ', '    ', '      ', '        ')
 
     def __init__(self):
         # private members
         self._item = None          # current Item
         self._fname = ''           # current file name (for generating output)
+        self._lnum = 0             # current linie number (for generating output)
         self._file = None          # current file (for generating output)
         self._prefix = ''          # prefix for each generated line
         self._bw_trace = ''        # bw-trace for current item requested
-        self._item_trace_dict = {} # Item dictionary harvested during tracing
-        self._uid_brief_dict = {}  # UID dictionary harvested during tracing
+        self._item_trace_dict = {} # Item dictionary collected during tracing
+        self._uid_brief_dict = {}  # UID-brief dictionary collected during tracing
+        self._uid_traced_list = [] # UID list built during generation
 
-    # return True if file-name is acceptable for spexygen
     def on_file_pattern(self, fname):
+        '''return True if file-name is acceptable for Spexygen
+        '''
         return fname.endswith('.dox') or \
                fname.endswith('.h') or fname.endswith('.c') or \
                fname.endswith('.hpp') or fname.endswith('.cpp') or \
                fname.endswith('.py') or fname.endswith('.lnt')
 
-    # recursively generate the forward trace for a given 'uid'
-    def on_gen_trace(self, uid, level):
+    def on_gen_trace(self, level):
+        '''recursively generate the forward trace for a "uid"
+        from self._uid_traced_list[level]
+        '''
+        uid = self._uid_traced_list[level]
+        debug("  self._uid_traced_list:", self._uid_traced_list)
         item_list = self._item_trace_dict.get(uid)
         for item in item_list:
-            self._file.write("%s%s- @tr{%s}: %s\n"
-                %(self._prefix, spexygen.LEVELS[level], item.uid, item.brief))
-            if level < len(spexygen.LEVELS) - 1:
-                if item.uid in self._item_trace_dict:
-                    self.on_gen_trace(item.uid, level+1) # recursive!
-            else:
-                self._file.write(f"{self._prefix}{spexygen.LEVELS[level+1]}"\
-                                 "- ...\n")
+            if item.uid not in self._uid_traced_list:
+                self._file.write("%s%s- @tr{%s}: %s\n"
+                    %(self._prefix, Spexygen.LEVELS[level], item.uid, item.brief))
+                if level < len(Spexygen.LEVELS) - 2:
+                    if item.uid in self._item_trace_dict:
+                        self._uid_traced_list.append(item.uid)
+                        self.on_gen_trace(level+1) # recursive!
+                else:
+                    self._file.write(f"{self._prefix}{Spexygen.LEVELS[level+1]}"\
+                                     "- ...\n")
+                    print(f"  {self._fname}:{self._lnum} too many"\
+                          f' forward trace levels for "{item.uid}"')
 
-    # inner class for traceable items (a.k.a. "work artifacts")
     class Item:
+        '''inner class for traceable items (a.k.a. "work artifacts")
+        '''
         ITEM_DOC  = 0
         ITEM_CODE = 1
-        def __init__(self, type = ITEM_DOC, uid = None, brief = None):
-            self.type  = type # type of item (0 -> doc-item, 1 -> code-item)
+        def __init__(self, kind = ITEM_DOC, uid = None, brief = None):
+            self.kind  = kind # kind of item (0 -> doc-item, 1 -> code-item)
             self.uid   = uid
             self.brief = brief
         def __repr__(self):
             if not self:
                 return 'None'
-            if self.type == spexygen.Item.ITEM_DOC:
+            if self.kind == Spexygen.Item.ITEM_DOC:
                 return f"ITEM_DOC {self.uid}: {self.brief}"
-            if self.type == spexygen.Item.ITEM_CODE:
+            if self.kind == Spexygen.Item.ITEM_CODE:
                 return f"ITEM_CODE {self.uid}: {self.brief}"
             return f"ITEM_??? {self.uid}: {self.brief}"
 
-    # set the current item 'self._item' if found in the given 'line'
-    def uid_begin(self, line, lnum):
+    def uid_begin(self, line):
+        '''set the current item 'self._item' if found in the given "line"'''
         if self._item:
             print("Looking for new UID while previous is still active",
                   f"{self._item.uid}")
-        type = spexygen.Item.ITEM_DOC
+        kind = Spexygen.Item.ITEM_DOC
         if (i := line.find('@uid{')) >= 0:
             l = 5
         elif (i := line.find('@code_uid{')) >= 0:
-            type = spexygen.Item.ITEM_CODE
+            kind = Spexygen.Item.ITEM_CODE
             l = 10
         elif (i := line.find('@code_alias{')) >= 0:
-            type = spexygen.Item.ITEM_CODE
+            kind = Spexygen.Item.ITEM_CODE
             l = 12
         else:
             return
@@ -115,46 +136,48 @@ class spexygen:
         j = line.find(',', i + l)
         if j < 0:
             print("Error: missing ',' in UID definition",
-                    "line", lnum, ":", i)
+                    "line", self._lnum, ":", i)
             return
 
         k = line.find('}', j + 1)
         if k < 0:
             print("Error: missing '}' in UID definition",
-                    "line", lnum, ":", i)
+                    "line", self._lnum, ":", i)
             return
 
-        self._item = self.Item(type,
+        self._item = self.Item(kind,
                                line[i + l:j].strip(), line[j + 1:k].strip())
         debug("  uid:", self._item)
         if self._item.uid not in self._uid_brief_dict:
             self._uid_brief_dict[self._item.uid] = self._item.brief
 
-    # return True if UID-end was found in the line
     def uid_end(self, line):
+        '''return True if UID-end was found in the "line"
+        '''
         if not self._item:
             print("Looking for UID-end while no UID active")
             return False
 
-        if self._item.type == spexygen.Item.ITEM_DOC:
+        if self._item.kind == Spexygen.Item.ITEM_DOC:
             if line.find('@enduid') >= 0:
                 debug("  end:", self._item.uid)
                 self._item = None
                 self._bw_trace = ''
                 return True
-        elif self._item.type == spexygen.Item.ITEM_CODE:
+        elif self._item.kind == Spexygen.Item.ITEM_CODE:
             if line.find('@endcode_uid') >= 0:
                 debug("  end:", self._item.uid)
                 self._item = None
                 self._bw_trace = ''
                 return True
         else:
-            print(f"Unknown current item type={self._item.type}")
+            print(f"Unknown current item kind={self._item.kind}")
 
         return False
 
-    # return list of backward traces found in a given line
-    def uid_tr(self, line, lnum):
+    def uid_tr(self, line):
+        '''return list of backward traces found in a given "line"
+        '''
         tr_list = []
         i = 0
         while (i := line.find('@tr{', i)) >= 0:
@@ -165,14 +188,15 @@ class spexygen:
                 i = j
             else:
                 print("Error: missing '}' for '@tr{' in line",
-                      lnum, ":", i)
+                      self._lnum, ":", i)
                 break
         return tr_list
 
-    # find a bw-trace placeholder
-    # as long as bw-trace found
-    # return True if bw-trace placeholder or @tr{} found
-    def gen_bw_trace(self, line, lnum):
+    def gen_bw_trace(self, line):
+        '''find a bw-trace placeholder
+        as long as bw-trace found
+        return True if bw-trace placeholder or "@tr{}" found
+        '''
         l = 0
         if (i := line.find('@uid_bw_trace')) >= 0:
             l = 13
@@ -185,7 +209,7 @@ class spexygen:
                     self._bw_trace = line[i+l+1:j]
                 else:
                     print("Error: missing '}' for '@uid_bw_trace{' in line",
-                          lnum, ":", i+l+1)
+                          self._lnum, ":", i+l+1)
             else:
                 self._bw_trace = 'empty'
             self._file.write(line)
@@ -199,7 +223,7 @@ class spexygen:
                     tr = line[i + 4:j]
                 else:
                     print("Error: missing '}' for '@tr{' in line",
-                          lnum, ":", i)
+                          self._lnum, ":", i)
                     self._file.write(line)
                     return True
                 if self._bw_trace == 'brief' and tr in self._uid_brief_dict:
@@ -212,9 +236,10 @@ class spexygen:
         return False
 
 
-    # find a fw-trace placeholder and generate fw-trace
-    # return True if the placeholder found
-    def gen_fw_trace(self, line, lnum):
+    def gen_fw_trace(self, line):
+        '''find a fw-trace placeholder and generate fw-trace
+        return True if the placeholder found
+        '''
         if (i := line.find('@uid_fw_trace')) < 0:
             i = line.find('@code_fw_trace')
         if i < 0:
@@ -223,15 +248,18 @@ class spexygen:
         self._prefix = line[:i]
         self._file.write(line)
         if self._item.uid in self._item_trace_dict:
-            self.on_gen_trace(self._item.uid, 0)
+            self._uid_traced_list = [self._item.uid]
+            self.on_gen_trace(0)
         else:
-            print(f'  {self._fname}:{lnum} no forward trace for UID: "{self._item.uid}"')
+            print(f'  {self._fname}:{self._lnum} no forward trace'\
+                  f' for UID: "{self._item.uid}"')
 
         return True
 
-    # trace a given file and harvest the traces
-    # into the dictionaries: self._uid_brief_dict and self._item_trace_dict
     def trace(self, fname):
+        '''trace a given file and harvest the traces
+        into the dictionaries: self._uid_brief_dict and self._item_trace_dict
+        '''
         try:
             f = open(fname, encoding="utf-8")
         except OSError:
@@ -242,16 +270,16 @@ class spexygen:
 
         print("Tracing:", fname)
         self._item = None
-        lnum = 0
+        self._lnum = 0
         for line in lines:
-            lnum += 1
+            self._lnum += 1
             if not self._item:
-                self.uid_begin(line, lnum)
+                self.uid_begin(line)
             else:
                 if self.uid_end(line):
                     pass
                 else:
-                    tr_list = self.uid_tr(line, lnum)
+                    tr_list = self.uid_tr(line)
                     for tr in tr_list:
                         if not self._item_trace_dict.get(tr):
                             self._item_trace_dict[tr] = []
@@ -259,10 +287,11 @@ class spexygen:
                             self._item_trace_dict[tr].append(self._item)
                             debug(tr, '<-', self._item)
 
-    # generate a given file, replacing the detected placeholdrs
-    # with information from the dictionaries:
-    # self._uid_brief_dict and self._item_trace_dict
     def gen(self, gendir, fname):
+        '''generate a given file, replacing the detected placeholdrs
+        with information from the dictionaries:
+        self._uid_brief_dict and self._item_trace_dict
+        '''
         try:
             f = open(fname, encoding="utf-8")
         except OSError:
@@ -280,27 +309,28 @@ class spexygen:
             return
         with self._file:
             print("Generating:", fname)
-            lnum = 0
+            self._lnum = 0
             self._item = None
             self._bw_trace = ''
             for line in lines:
-                lnum += 1
+                self._lnum += 1
                 if not self._item: # no current item
                     self._file.write(line)
-                    self.uid_begin(line, lnum)
+                    self.uid_begin(line)
                 else:              # have current item
                     if self.uid_end(line):
                         self._file.write(line)
-                    elif self.gen_fw_trace(line, lnum):
+                    elif self.gen_fw_trace(line):
                         pass
-                    elif self.gen_bw_trace(line, lnum):
+                    elif self.gen_bw_trace(line):
                         pass
                     else:
                         self._file.write(line)
 
-    # main entry point to spexygen
-    # process command-line arguments and run spexygen
     def main(self):
+        '''main entry point to Spexygen
+        process command-line arguments and run Spexygen
+        '''
         print(f"Spexygen: traceable technical documentation system "\
             f"{self.VERSION//100}.{(self.VERSION//10) % 10}."\
             f"{self.VERSION % 10}")
@@ -314,11 +344,11 @@ class spexygen:
         # process command-line arguments...
         argv = sys.argv
         argc = len(argv)
-        arg  = 1 # skip the 'spexygen' argument
+        arg  = 1 # skip the 'Spexygen' argument
 
         if '-h' in argv or '--help' in argv or '?' in argv \
             or '--version' in argv:
-            print("Usage: python spexygen.py [spexyfile]",
+            print("Usage: python Spexygen.py [spexyfile]",
                   "\n(deafult spexyfile: 'spexy.json')")
             sys.exit(0)
 
@@ -345,7 +375,7 @@ class spexygen:
         if key not in spex:
             key = 'gen' # no 'trace' section means use 'gen' section
         if key not in spex:
-            print("spexygen: nothing to do")
+            print("Spexygen: nothing to do")
             return
         for path in spex[key]:
             if os.path.isfile(path):
@@ -374,7 +404,7 @@ class spexygen:
         key = 'gen'
         geninc = None
         if key not in spex:
-            print("spexygen: nothing to generate")
+            print("Spexygen: nothing to generate")
             return
 
         if not os.path.exists(gendir):
@@ -412,5 +442,5 @@ class spexygen:
 
 #=============================================================================
 if __name__ == "__main__":
-    spx = spexygen()
+    spx = Spexygen()
     spx.main()

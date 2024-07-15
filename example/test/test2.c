@@ -9,10 +9,8 @@ void tearDown(void) {
 
 /*!
 @code_uid{TUN_PRJ_Foo_ctor_01, constructor test}
-
 @code_litem{Details}
 This test checks that Foo_ctor() produces valid instance.
-
 @code_bw_trace{brief}
 - @tr{Foo_ctor()}
 @endcode_uid
@@ -26,10 +24,8 @@ void TUN_PRJ_Foo_ctor_01(void) {
 
 /*!
 @code_uid{TUN_PRJ_Foo_verify_00, verify positive test}
-
 @code_litem{Details}
 This test checks that Foo_verify_() distinguishes valid instance.
-
 @code_bw_trace{brief}
 - @tr{Foo_verify_()}
 @endcode_uid
@@ -41,10 +37,8 @@ void TUN_PRJ_Foo_verify_00(void) {
 
 /*!
 @code_uid{TUN_PRJ_Foo_verify_01, verify negative test}
-
 @code_litem{Details}
 This test checks that Foo_verify_() distinguishes invalid instance.
-
 @code_bw_trace{brief}
 - @tr{Foo_verify_()}
 @endcode_uid

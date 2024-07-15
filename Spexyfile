@@ -37,8 +37,6 @@ ALIASES += \
 #---------------------------------------------------------------------------
 # Spexygen: spexygen-awesome style
 #---------------------------------------------------------------------------
-HTML_HEADER            = $(SPEXYGEN)/spexygen-awesome/spexy-header.html
-HTML_FOOTER            = $(SPEXYGEN)/spexygen-awesome/spexy-footer.html
 HTML_EXTRA_STYLESHEET  = $(SPEXYGEN)/spexygen-awesome/doxygen-awesome.css \
                          $(SPEXYGEN)/spexygen-awesome/doxygen-awesome-sidebar-only.css \
                          $(SPEXYGEN)/spexygen-awesome/doxygen-awesome-sidebar-only-darkmode-toggle.css \
@@ -49,9 +47,17 @@ HTML_EXTRA_FILES       = $(SPEXYGEN)/spexygen-awesome/doxygen-awesome-darkmode-t
                          $(SPEXYGEN)/spexygen-awesome/image-preview.js
 
 #---------------------------------------------------------------------------
+# Spexygen: customized HTML header/footer
+# (can be overridden by the including Doxyfile)
+#---------------------------------------------------------------------------
+HTML_HEADER            = $(SPEXYGEN)/spexygen-awesome/spexy-header.html
+HTML_FOOTER            = $(SPEXYGEN)/spexygen-awesome/spexy-footer.html
+
+#---------------------------------------------------------------------------
 # Configuration options related to the LaTeX output
 #---------------------------------------------------------------------------
-# Spexygen: customized LaTeX formatting
+# Spexygen: customized LaTeX header/footer
+# (can be overridden by the including Doxyfile)
 #---------------------------------------------------------------------------
 LATEX_HEADER           = $(SPEXYGEN)/spexygen-awesome/spexy-header.tex
 LATEX_FOOTER           = $(SPEXYGEN)/spexygen-awesome/spexy-footer.tex

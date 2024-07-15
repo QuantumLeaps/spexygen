@@ -4,18 +4,12 @@
 <div style="clear:both"></div>
 @endif
 
-The _spexygen_ distribution contains an example for generating traceable documentation with _spexygen_. The example is located in the @webref{https://github.com/QuantumLeaps/spexygen/tree/main/example,spexygen/example} folder, with the following content:
+The _Spexygen_ distribution contains an example for generating traceable documentation with _Spexygen_. The example is located in the @webref{https://github.com/QuantumLeaps/Spexygen/tree/main/example,spexygen/example} folder, with the following content:
 
 @code{c}
 spexygen/
-|   LICENSE
-|   README.md
-|   Spexyfile
-|   spexygen.py
 |
-+---doc/
-|
-+---example/     <-- spexygen example
++---example/     <-- Spexygen example
 |   |   exa.dox  <-- example description
 |   |   dev.dox  <-- example traceable deviations from coding standards
 |   |   srs.dox  <-- example traceable Software Requirements Specification
@@ -29,12 +23,10 @@ spexygen/
 |   \---test
 |           test1.c  <-- example test file
 |           test2.c  <-- example test file
-|
-\---spexygen-awesome/
  @endcode
 
 @section exa_gen Spexygen-Generated Documentation
-The following sections contain the _spexygen_-generated documentation of this example:
+The following sections contain the _Spexygen_-generated documentation of this example:
 - @subpage srs
 - @subpage dev
 - @ref header.h
@@ -43,7 +35,7 @@ The following sections contain the _spexygen_-generated documentation of this ex
 - @ref test2.c
 
 @note
-Please note the generated @ref tr-fw "forward-traceability" and the @ref tr-bw "backward-traceability" links (augmented with the brief descriptions) in the @ref spx_use-doc-uid "work artifacts" and @ref spx_use-doc-code "code artifacts". Also, try clicking on the provided traceability links as well as __searching__ the @ref tr-uid "UIDs" in the doxygen "search" box.
+Please note the generated @ref tr-fw "forward-traceability" and the @ref tr-bw "backward-traceability" links (augmented with the brief descriptions) in the @ref spx_use-doc-uid "work artifacts" and @ref spx_use-doc-code "code artifacts". Also, try clicking on the provided traceability links as well as __searching__ the @ref tr-uid "UIDs" in the Doxygen "search" box.
 
 <p></p>
 @ifnot LATEX
