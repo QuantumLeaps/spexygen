@@ -33,6 +33,5 @@ twine upload dist/* --verbose
 @rm -rf build
 @rm -rf dist
 @rm -rf %PROJ%.egg-info
-@rm -rf %PROJ%-*
 
 @endlocal

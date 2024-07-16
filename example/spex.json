@@ -2,10 +2,10 @@
     "gen-dir": "spex",
     "gen-inc": "Spexyinc",
     "gen": [
-        "../example/srs.dox",
-        "../example/inc",
-        "../example/src",
-        "../example/test"
+        "./srs.dox",
+        "./inc",
+        "./src",
+        "./test"
     ],
     "note1":  "no separate 'trace' section, meaning that 'gen' section will be used for tracing"
 }

@@ -2,7 +2,7 @@
 
 #=============================================================================
 # _Spexygen_ - Traceable Specifications Based on doxygen
-# Copyright (C) 2023 Quantum Leaps, LLC. All rights reserved.
+# Copyright (C) 2023 Quantum Leaps, LLC <www.state-machine.com>
 #
 # SPDX-License-Identifier: MIT
 #
@@ -47,7 +47,7 @@ class Spexygen:
     '''
 
     # public class constants
-    VERSION = 220
+    VERSION = 221
 
     UID_DOC  = 1
     UID_CODE = 2
@@ -88,9 +88,9 @@ class Spexygen:
         from self._uid_traced_list[level]
         '''
         uid = self._uid_traced_list[level]
-        Spexygen.debug("  self._uid_traced_list:", self._uid_traced_list)
-        uid_list = self._uid_trace_dict.get(uid)
-        for uid in uid_list:
+        Spexygen.debug("  level", level,
+                       "self._uid_traced_list:", self._uid_traced_list)
+        for uid in self._uid_trace_dict.get(uid):
             if uid not in self._uid_traced_list:
                 self._file.write("%s%s- @tr{%s}: %s\n"
                     %(self._prefix, Spexygen.LEVELS[level],
@@ -100,8 +100,8 @@ class Spexygen:
                         self._uid_traced_list.append(uid)
                         self.on_gen_fw_trace(level+1) # recursive!
                 else:
-                    self._file.write(f"{self._prefix}{Spexygen.LEVELS[level+1]}"\
-                                     "- ...\n")
+                    self._file.write("%s%s- ...\n"
+                        %(self._prefix, Spexygen.LEVELS[level+1]))
                     print(f"  {self._fname}:{self._lnum} too many"\
                           f' forward trace levels for "{uid}"')
 
@@ -270,11 +270,17 @@ class Spexygen:
                           self._lnum, ":", i)
                     self._file.write(line)
                     return True
-                if self._bw_trace == 'brief' and tr in self._uid_brief_dict:
-                    self._file.write(line[:j+1])
-                    self._file.write(f": {self._uid_brief_dict[tr]}")
-                    self._file.write(line[j+1:])
+                if tr in self._uid_brief_dict:
+                    if self._bw_trace == 'brief':
+                        self._file.write(line[:j+1])
+                        self._file.write(f": {self._uid_brief_dict[tr]}")
+                        self._file.write(line[j+1:])
+                    else:
+                        self._file.write(line)
                 else:
+                    print(f'  {self._fname}:{self._lnum} '\
+                          f'"{tr}" undefined in backward trace'\
+                          f' for UID: "{self._uid}"')
                     self._file.write(line)
                 return True
         return False
@@ -295,7 +301,7 @@ class Spexygen:
             self._uid_traced_list = [self._uid]
             self.on_gen_fw_trace(0)
         else:
-            print(f'  {self._fname}:{self._lnum} no forward trace'\
+            print(f'  {self._fname}:{self._lnum} empty forward trace'\
                   f' for UID: "{self._uid}"')
 
         return True
@@ -361,7 +367,7 @@ class Spexygen:
 
         if '-h' in argv or '--help' in argv or '?' in argv \
             or '--version' in argv:
-            print("Usage: python Spexygen.py [spexyfile]",
+            print("Usage: python [-d] spexygen.py [spexyfile]",
                   "\n(deafult spexyfile: 'spexy.json')")
             sys.exit(0)
 
