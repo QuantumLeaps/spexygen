@@ -5,9 +5,9 @@
 #---------------------------------------------------------------------------
 # Project related configuration options
 #---------------------------------------------------------------------------
-PROJECT_NAME           = Spexygen
-PROJECT_NUMBER         = 2.2.1
-PROJECT_BRIEF          = "Reference Manual"
+PROJECT_NAME           = Example
+PROJECT_NUMBER         = 0.0.1
+PROJECT_BRIEF          = For Spexygen 2.2.1
 PROJECT_LOGO           = $(SPEXYGEN)/spexygen-awesome/img/logo_spexygen.webp
 PROJECT_ICON           =
 
@@ -40,12 +40,11 @@ SORT_MEMBER_DOCS       = NO
 #---------------------------------------------------------------------------
 INPUT = \
     main.dox \
-    ../example/main.dox \
     $(SPEXYGEN)/spexygen-awesome/help.dox
 
 @INCLUDE = spex/Spexyinc
 
-ENABLED_SECTIONS       = IN_SPEXYGEN
+ENABLED_SECTIONS       =
 OPTIMIZE_OUTPUT_FOR_C  = YES
 
 RECURSIVE              = NO
@@ -56,8 +55,7 @@ EXCLUDE_SYMBOLS        =
 EXAMPLE_PATH           =
 EXAMPLE_PATTERNS       = *
 EXAMPLE_RECURSIVE      = NO
-IMAGE_PATH             = ./img \
-                         $(SPEXYGEN)/spexygen-awesome/img
+IMAGE_PATH             = $(SPEXYGEN)/spexygen-awesome/img
 #---------------------------------------------------------------------------
 # Configuration options related to source browsing
 #---------------------------------------------------------------------------

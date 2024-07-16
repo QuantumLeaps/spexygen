@@ -9,6 +9,15 @@ uint8_t const * free_fun(uint32_t x) {
     return arr;
 }
 
+void Foo_ctor(Foo * const me, uint32_t const x) {
+    me->x = x;
+    Foo_update_(me);
+}
+
+void Foo_update_(Foo* const me) {
+    me->x_dis = ~me->x;
+}
+
 bool Foo_verify_(Foo const* const me) {
-    return (uintptr_t)me->p == ~me->p_dis;
+    return me->x_dis == ~me->x;
 }

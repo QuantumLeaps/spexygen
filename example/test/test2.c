@@ -17,7 +17,6 @@ This test checks that Foo_ctor() produces valid instance.
 */
 void TUN_PRJ_Foo_ctor_01(void) {
     Foo_ctor(&Foo_inst, 0x12345678);
-    // All of these should pass
     TEST_ASSERT_EQUAL_INT32(0x12345678, Foo_inst.x);
     TEST_ASSERT_EQUAL_INT32(~0x12345678, Foo_inst.x_dis);
 }
