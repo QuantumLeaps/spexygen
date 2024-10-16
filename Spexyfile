@@ -22,8 +22,8 @@ ALIASES += \
 "code_fw_trace{1}=^^@par Forward Traceability^^" \
 "endcode_uid=" \
 "tr{1}=@ref \1 \"\1\"" \
-"precondition{2}=@par Precondition `\1:\2`^^" \
-"postcondition{2}=@par Postcondition `\1:\2`^^" \
+"precondition{2}=^^@par Precondition `\1:\2`^^" \
+"postcondition{2}=^^@par Postcondition `\1:\2`^^" \
 "invariant{2}=@par Invariant `\1:\2`^^" \
 "nav{2}=<span class=\"prev_button\">@ref \1</span><span class=\"next_button\">@ref \2</span>" \
 "nav_prev{1}=<span class=\"prev_button\">@ref \1</span>" \

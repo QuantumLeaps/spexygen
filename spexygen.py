@@ -2,7 +2,7 @@
 
 #=============================================================================
 # _Spexygen_ - Traceable Specifications Based on doxygen
-# Copyright (C) 2023 Quantum Leaps, LLC <www.state-machine.com>
+# Copyright (C) 2024 Quantum Leaps, LLC <www.state-machine.com>
 #
 # SPDX-License-Identifier: MIT
 #
@@ -47,7 +47,7 @@ class Spexygen:
     '''
 
     # public class constants
-    VERSION = 221
+    VERSION = 222
 
     UID_DOC  = 1
     UID_CODE = 2
@@ -83,12 +83,12 @@ class Spexygen:
                fname.endswith('.hpp') or fname.endswith('.cpp') or \
                fname.endswith('.py') or fname.endswith('.lnt')
 
-    def on_gen_fw_trace(self, level):
+    def on_gen_fw_trace(self, uid, level):
         '''recursively generate the forward trace for a "uid"
         from self._uid_traced_list[level]
         '''
-        uid = self._uid_traced_list[level]
-        Spexygen.debug("  level", level,
+        self._uid_traced_list.append(uid)
+        Spexygen.debug("  level=", level, "uid=", uid,
                        "self._uid_traced_list:", self._uid_traced_list)
         for uid in self._uid_trace_dict.get(uid):
             if uid not in self._uid_traced_list:
@@ -97,8 +97,7 @@ class Spexygen:
                     uid, self._uid_brief_dict[uid]))
                 if level < len(Spexygen.LEVELS) - 2:
                     if uid in self._uid_trace_dict:
-                        self._uid_traced_list.append(uid)
-                        self.on_gen_fw_trace(level+1) # recursive!
+                        self.on_gen_fw_trace(uid, level+1) # recursive!
                 else:
                     self._file.write("%s%s- ...\n"
                         %(self._prefix, Spexygen.LEVELS[level+1]))
@@ -298,8 +297,8 @@ class Spexygen:
         self._prefix = line[:i]
         self._file.write(line)
         if self._uid in self._uid_trace_dict:
-            self._uid_traced_list = [self._uid]
-            self.on_gen_fw_trace(0)
+            self._uid_traced_list = []
+            self.on_gen_fw_trace(self._uid, 0)
         else:
             print(f'  {self._fname}:{self._lnum} empty forward trace'\
                   f' for UID: "{self._uid}"')
