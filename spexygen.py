@@ -85,7 +85,6 @@ class Spexygen:
 
     def on_gen_fw_trace(self, uid, level):
         '''recursively generate the forward trace for a "uid"
-        from self._uid_traced_list[level]
         '''
         self._uid_traced_list.append(uid)
         Spexygen.debug("  level=", level, "uid=", uid,
