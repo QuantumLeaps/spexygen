@@ -7,7 +7,7 @@
 @endif
 
 @ifnot LATEX
-@nav{gen,srs}
+@nav_next{srs}
 <div style="clear:both"></div>
 @endif
 
@@ -47,6 +47,6 @@ Please note the generated _forward-traceability_ and the _backward-traceability_
 
 @ifnot LATEX
 <p></p>
-@nav{gen,srs}
+@nav_next{srs}
 @endif
 */

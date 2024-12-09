@@ -222,7 +222,7 @@ __Work artifacts__ (e.g., requirements) are defined by means of the following _S
 <tr><td><b>\@uid_litem{item}</b> <td>adds new line - item in the "work artifact" definition<br>parameter: <b>title</b> -- Title of the line item(e.g., Details)
 <tr><td><b>\@uid_bw_trace{brief}</b> <td>adds the backward trace section in in the "work artifact" definition<br>parameter: <b>brief</b> -- request _Spexygen_ to add the brief item description
 <tr><td><b>\@uid_bw_trace</b> <td>adds the backward trace section in in the "work artifact" definition<br> overloaded version without requesting the brief description
-<tr><td><b>\@uid_fw_trace</b>  <td>adds the forward trace section in in the "work artifact" definition<br> this is a request to _Spexygen_ to __generate__ the recursive @ref tr-fw "forward traceability" for the "work artifact"
+<tr><td><b>\@uid_fw_trace{levels}</b> <td>adds the forward trace section in in the "work artifact" definition<br> this is a request to _Spexygen_ to __generate__ the recursive @ref tr-fw "forward traceability" for the "work artifact" <br>optional parameter: <b>levels</b> truncates the displayed recursion levels
 <tr><td><b>\@enduid</b> <td>ends the definition "work artifact" <br> must be placed at the end of "work artifact" definition
 <tr><td><b>\@tr{uid}</b> <td>references the given UID<br> parameter: <b>uid</b>  -- the @ref tr-uid "UID" of the "work artifact"
 </table>
@@ -238,7 +238,7 @@ The following snippet illustrates how a "work artifact" (a requirement) has been
     Longer description of the requirement
 [4] @uid_bw_trace{brief}
 [5] - @tr{SRS_PRJ_Foo_00}
-[6] @uid_fw_trace
+[6] @uid_fw_trace{2}
 [7] @enduid
 @endverbatim
 
@@ -259,7 +259,7 @@ The whole <b>\@uid{}</b> command must be defined in a single line of text and th
 
 `[6]` the "work artifact" can specify forward traceability by means of the <b>\@uid_fw_trace</b> _Spexygen_ command
 @note
-The <b>\@uid_fw_trace</b> _Spexygen_ command is just a __placeholder__ for _Spexygen_ to generate the forward traceability links at this place.
+The <b>\@uid_fw_trace</b> _Spexygen_ command is just a __placeholder__ for _Spexygen_ to generate the forward traceability links at this place. The optional parameter truncates the number of recursion levels to the specified value.
 
 `[7]` The artifact definition must end with the _Spexygen_ <b>\@enduid</b> command
 
@@ -277,7 +277,7 @@ __Code artifacts__ (e.g., functions, macros, classes) are naturally handled by D
 <tr><td><b>\@code_litem{item }</b> <td>adds new line-item in the "code artifact" definition<br>parameter: <b>title</b> --Title of the line item(e.g., Details)
 <tr><td><b>\@code_bw_trace{brief}</b> <td>adds the backward trace section in in the "code artifact" definition<br>parameter: <b>brief</b> -- request _Spexygen_ to add the brief item description
 <tr><td><b>\@code_bw_trace</b> <td>adds the backward trace section in in the "code artifact" definition<br> overloaded version without requesting the brief description
-<tr><td><b>\@code_fw_trace</b>  <td>adds the forward trace section in in the "code artifact" definition<br> this is a request to _Spexygen_ to __generate__ the recursive @ref tr-fw "forward traceability" for the "code artifact"
+<tr><td><b>\@code_fw_trace{levels}</b>  <td>adds the forward trace section in in the "code artifact" definition<br> this is a request to _Spexygen_ to __generate__ the recursive @ref tr-fw "forward traceability" for the "code artifact"<br>optional parameter: <b>levels</b> truncates the displayed recursion levels
 <tr><td><b>\@endcode_uid</b> <td>ends the definition "code artifact" <br> must be placed at the end of "code artifact" definition
 <tr><td><b>\@tr{uid}</b> <td>references the given UID<br> parameter: <b>uid</b> -- the @ref tr-uid "UID" of the "code artifact"
 </table>
@@ -295,7 +295,7 @@ The following snippet illustrates how a "code artifact" (function `free_fun()`) 
 
 [3] @code_bw_trace{brief}
 [4] - @tr{SRS_PRJ_Foo_03}
-[5] @code_fw_trace
+[5] @code_fw_trace{3}
 [6] @endcode_uid
     */
 [7] bool Foo_verify_(Foo const* const me);
@@ -316,7 +316,7 @@ The whole <b>\@code_uid{}</b> command must be defined in a single line of text a
 
 `[5]` the "code artifact" can specify forward traceability by means of the <b>\@code_fw_trace</b> _Spexygen_ command
 @note
-The <b>\@code_fw_trace</b> _Spexygen_ command is just a __placeholder__ for _Spexygen_ to generate the forward traceability links at this place.
+The <b>\@code_fw_trace</b> _Spexygen_ command is just a __placeholder__ for _Spexygen_ to generate the forward traceability links at this place. The optional parameter truncates the number of recursion levels to the specified value.
 
 `[6]` The "code artifact" definition must end with the _Spexygen_ <b>\@endcode_uid</b> command
 

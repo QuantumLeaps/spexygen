@@ -47,7 +47,7 @@ class Spexygen:
     '''
 
     # public class constants
-    VERSION = 222
+    VERSION = 223
 
     UID_DOC  = 1
     UID_CODE = 2
@@ -66,6 +66,7 @@ class Spexygen:
         self._uid_trace_dict = {}  # UID dictionary collected during tracing
         self._uid_brief_dict = {}  # UID-brief dictionary collected during tracing
         self._uid_traced_list = [] # UID list built during generation
+        self._fw_trace_levels = len(Spexygen.LEVELS) - 2 # number of fw-trace levels to generate
 
     @staticmethod
     def debug(*args, **kwargs):
@@ -76,30 +77,32 @@ class Spexygen:
 
 
     def on_file_pattern(self, fname):
-        '''return True if file-name is acceptable for Spexygen
+        '''return True if file-name is recognizable to Spexygen
         '''
         return fname.endswith('.dox') or \
                fname.endswith('.h') or fname.endswith('.c') or \
                fname.endswith('.hpp') or fname.endswith('.cpp') or \
                fname.endswith('.py') or fname.endswith('.lnt')
 
-    def on_gen_fw_trace(self, uid, level):
+    def on_gen_fw_trace(self, uid_in, level):
         '''recursively generate the forward trace for a "uid"
         '''
-        self._uid_traced_list.append(uid)
-        Spexygen.debug("  level=", level, "uid=", uid,
+        self._uid_traced_list.append(uid_in)
+        Spexygen.debug("  level=", level, "uid=", uid_in,
                        "self._uid_traced_list:", self._uid_traced_list)
-        for uid in self._uid_trace_dict.get(uid):
+        for uid in self._uid_trace_dict.get(uid_in):
             if uid not in self._uid_traced_list:
                 self._file.write("%s%s- @tr{%s}: %s\n"
                     %(self._prefix, Spexygen.LEVELS[level],
                     uid, self._uid_brief_dict[uid]))
-                if level < len(Spexygen.LEVELS) - 2:
+                if level < self._fw_trace_levels:
                     if uid in self._uid_trace_dict:
                         self.on_gen_fw_trace(uid, level+1) # recursive!
-                else:
-                    self._file.write("%s%s- ...\n"
-                        %(self._prefix, Spexygen.LEVELS[level+1]))
+                elif level >= len(Spexygen.LEVELS) - 2:
+                    #self._file.write("%s%s- ...\n"
+                    #    %(self._prefix, Spexygen.LEVELS[level+1]))
+                    self._file.write(
+                        f"{self._prefix}{Spexygen.LEVELS[level+1]}- ...\n")
                     print(f"  {self._fname}:{self._lnum} too many"\
                           f' forward trace levels for "{uid}"')
 
@@ -288,10 +291,33 @@ class Spexygen:
         '''find a fw-trace placeholder and generate fw-trace
         return True if the placeholder found
         '''
-        if (i := line.find('@uid_fw_trace')) < 0:
-            i = line.find('@code_fw_trace')
+        l = 0
+        if (i := line.find('@uid_fw_trace')) >= 0:
+            l = 13
+        elif (i := line.find('@code_fw_trace')) >= 0:
+            l = 14
         if i < 0:
             return False # placeholder not found
+
+        # parse the optional number of levels parameter
+        levels = len(Spexygen.LEVELS) - 2
+        if line.find('{', i+l) == i+l: # parameter present?
+            j = line.find('}', i+l+1)
+            if j >= 0:
+                try:
+                    levels = int(line[i+l+1:j])
+                    if levels >= 1:
+                        levels -= 1
+                    elif levels > len(Spexygen.LEVELS) - 2:
+                        levels = len(Spexygen.LEVELS) - 2
+                except ValueError:
+                    print("Error: non-numeric parameter in '@uid_fw_trace{}'")
+                    return False
+            else:
+                print("Error: missing '}' for '@uid_fw_trace{' in line",
+                        self._lnum, ":", i+l+1)
+                return False
+        self._fw_trace_levels = levels
 
         self._prefix = line[:i]
         self._file.write(line)

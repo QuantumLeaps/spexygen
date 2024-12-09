@@ -18,13 +18,13 @@ Definitions of formal requirements specifications with _Spexygen_ commands.
 @uid{SRS_EXA_FF_00,My project shall provide a free function foo().}
 @uid_litem{Description}
 Longer description of the requirement
-@uid_fw_trace
+@uid_fw_trace{1}
 @enduid
 
 @uid{SRS_EXA_Foo_00,My project shall provide a class Foo.}
 @uid_litem{Description}
 Longer description of the requirement
-@uid_fw_trace
+@uid_fw_trace{1}
 @enduid
 
 @uid{SRS_EXA_Foo_01,Class Foo shall provide a public attribute x.}
@@ -32,7 +32,7 @@ Longer description of the requirement
 Longer description of the requirement
 @uid_bw_trace{brief}
 - @tr{SRS_EXA_Foo_00}
-@uid_fw_trace
+@uid_fw_trace{2}
 @enduid
 
 @uid{SRS_EXA_Foo_02,Class Foo shall provide a constructor.}
@@ -40,7 +40,7 @@ Longer description of the requirement
 Longer description of the requirement
 @uid_bw_trace{brief}
 - @tr{SRS_EXA_Foo_00}
-@uid_fw_trace
+@uid_fw_trace{2}
 @enduid
 
 @uid{SRS_EXA_Foo_03,Class Foo shall provide a verify operation.}
