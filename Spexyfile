@@ -30,7 +30,8 @@ ALIASES += \
 "nav_next{1}=<span class=\"next_button\">@ref \1</span>" \
 "next{1}=<span class=\"next_button\">@ref \1</span>" \
 "caption{1}=<div class=\"caption\"><center><em>\1</em></center></div>" \
-"webref{2}=<a target=\"_blank\" rel=\"noopener\" href=\"\1\">\2&uarr;</a>"
+"webref{2}=<a target=\"_blank\" rel=\"noopener\" href=\"\1\">\2&uarr;</a>" \
+"clearpage=@latexonly \clearpage @endlatexonly"
 
 #---------------------------------------------------------------------------
 # Configuration options related to the HTML output
