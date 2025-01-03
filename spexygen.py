@@ -47,7 +47,7 @@ class Spexygen:
     '''
 
     # public class constants
-    VERSION = 223
+    VERSION = 224
 
     UID_DOC  = 1
     UID_CODE = 2
@@ -92,7 +92,7 @@ class Spexygen:
                        "self._uid_traced_list:", self._uid_traced_list)
         for uid in self._uid_trace_dict.get(uid_in):
             if uid not in self._uid_traced_list:
-                self._file.write("%s%s- @tr{%s}: %s\n"
+                self._file.write("%s%s- @tr{%s}: <i>%s</i>\n"
                     %(self._prefix, Spexygen.LEVELS[level],
                     uid, self._uid_brief_dict[uid]))
                 if level < self._fw_trace_levels:
@@ -274,7 +274,7 @@ class Spexygen:
                 if tr in self._uid_brief_dict:
                     if self._bw_trace == 'brief':
                         self._file.write(line[:j+1])
-                        self._file.write(f": {self._uid_brief_dict[tr]}")
+                        self._file.write(f": <i>{self._uid_brief_dict[tr]}</i>")
                         self._file.write(line[j+1:])
                     else:
                         self._file.write(line)

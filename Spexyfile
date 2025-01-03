@@ -6,7 +6,7 @@
 # Spexygen: Commands
 #---------------------------------------------------------------------------
 ALIASES += \
-"uid{2}=@addindex \1^^@subsection \1 \1^^<table><tr><th style=\"text-align:left; width:var(--content-maxwidth)\">\1 : \2^^" \
+"uid{2}=@addindex \1^^@subsection \1 \1^^<table><tr><td style=\"text-align:left; width:var(--content-maxwidth)\"><b>\1</b>: <i>\2</i>^^" \
 "uid_litem{1}=<tr><td><b>\1</b><br>^^" \
 "uid_bw_trace=<tr><td><b>Backward Traceability</b><br>^^" \
 "uid_bw_trace{1}=<tr><td><b>Backward Traceability</b><br>^^" \
