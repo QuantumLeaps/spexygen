@@ -219,7 +219,7 @@ __Work artifacts__ (e.g., requirements) are defined by means of the following _S
 <table>
 <tr><th class = "middle">Command <th>Purpose
 <tr><td><b>\@uid{uid,brief}</b> <td>starts the definition of a "work artifact"<br> parameter: <b>uid</b>  -- the @ref tr-uid "UID" of the "work artifact"<br> parameter: <b>brief</b> -- brief description of the "work artifact"
-<tr><td><b>\@uid_litem{item}</b> <td>adds new line - item in the "work artifact" definition<br>parameter: <b>title</b> -- Title of the line item(e.g., Details)
+<tr><td><b>\@uid_litem{title}</b> <td>adds new line - item in the "work artifact" definition<br>parameter: <b>title</b> -- Title of the line item(e.g., Details)
 <tr><td><b>\@uid_bw_trace{brief}</b> <td>adds the backward trace section in in the "work artifact" definition<br>parameter: <b>brief</b> -- request _Spexygen_ to add the brief item description
 <tr><td><b>\@uid_bw_trace</b> <td>adds the backward trace section in in the "work artifact" definition<br> overloaded version without requesting the brief description
 <tr><td><b>\@uid_fw_trace{levels}</b> <td>adds the forward trace section in in the "work artifact" definition<br> this is a request to _Spexygen_ to __generate__ the recursive @ref tr-fw "forward traceability" for the "work artifact" <br>optional parameter: <b>levels</b> truncates the displayed recursion levels
