@@ -1,12 +1,10 @@
-# Doxyfile 1.11.0
-
 @INCLUDE = $(SPEXYGEN)/Spexyfile
 
 #---------------------------------------------------------------------------
 # Project related configuration options
 #---------------------------------------------------------------------------
 PROJECT_NAME           = Spexygen
-PROJECT_NUMBER         = 2.2.4
+PROJECT_NUMBER         = 2.2.5
 PROJECT_BRIEF          = "Reference Manual"
 PROJECT_LOGO           = $(SPEXYGEN)/spexygen-awesome/img/logo_spexygen.webp
 PROJECT_ICON           =
