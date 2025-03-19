@@ -1,12 +1,10 @@
-# Doxyfile 1.11.0
-
 @INCLUDE = Doxyfile
 
 #---------------------------------------------------------------------------
 # Configuration options related to the LateX output
 #---------------------------------------------------------------------------
 PROJECT_NAME           = Reference Manual
-PROJECT_BRIEF          = For Spexygen 2.2.4
+PROJECT_BRIEF          = For Spexygen 2.2.5
 PROJECT_NUMBER         = Document: DOC_MAN_SPX
 
 #---------------------------------------------------------------------------

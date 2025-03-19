@@ -1,4 +1,30 @@
-# Doxyfile 1.11.0
+#=============================================================================
+# _Spexygen_ - Traceable Specifications Based on doxygen
+# Copyright (C) 2024 Quantum Leaps, LLC <www.state-machine.com>
+#
+# SPDX-License-Identifier: MIT
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of
+# this software and associated documentation files (the "Software"), to deal in
+# the Software without restriction, including without limitation the rights to
+# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+# the Software, and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+# FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+# IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+# Contact information:
+# <www.state-machine.com>
+# <info@state-machine.com>
+#=============================================================================
 
 #---------------------------------------------------------------------------
 # Project related configuration options
@@ -6,25 +32,25 @@
 # Spexygen: Commands
 #---------------------------------------------------------------------------
 ALIASES += \
-"uid{2}=@addindex \1^^@subsection \1 \1^^<table><tr><td style=\"text-align:left; width:var(--content-maxwidth)\"><b>\1</b>: <i>\2</i>^^" \
-"uid_litem{1}=<tr><td><b>\1</b><br>^^" \
-"uid_bw_trace=<tr><td><b>Backward Traceability</b><br>^^" \
-"uid_bw_trace{1}=<tr><td><b>Backward Traceability</b><br>^^" \
-"uid_fw_trace=<tr><td><b>Forward Traceability</b><br>^^" \
-"uid_fw_trace{1}=<tr><td><b>Forward Traceability (truncated to \1 level(s))</b><br>^^" \
-"enduid=</table>" \
-"code_uid{2}=@brief \2^^" \
-"code_alias{2}=@brief <b>\1</b> : \2^^@anchor \1" \
-"code_litem{1}=^^@par \1^^" \
-"code_bw_trace=^^@par Backward Traceability^^" \
-"code_bw_trace{1}=^^@par Backward Traceability^^" \
-"code_fw_trace=^^@par Forward Traceability^^" \
-"code_fw_trace{1}=^^@par Forward Traceability (truncated to \1 level(s))^^" \
+"uid{2}=@addindex \1^^@subsection \1 \1^^<i>\2</i>^^" \
+"uid_litem{1}=@par \1" \
+"uid_bw_trace=@par Backward Traceability" \
+"uid_bw_trace{1}=@par Backward Traceability" \
+"uid_fw_trace=@par Forward Traceability" \
+"uid_fw_trace{1}=@par Forward Traceability (truncated to \1 level(s))" \
+"enduid=<br><hr>" \
+"code_uid{2}=@brief \2" \
+"code_alias{2}=@anchor \1^^@brief <b>\1</b> : \2" \
+"code_litem{1}=@par \1" \
+"code_bw_trace=@par Backward Traceability" \
+"code_bw_trace{1}=@par Backward Traceability" \
+"code_fw_trace=@par Forward Traceability" \
+"code_fw_trace{1}=@par Forward Traceability (truncated to \1 level(s))" \
 "endcode_uid=" \
 "tr{1}=@ref \1 \"\1\"" \
-"precondition{2}=^^@par Precondition `\1:\2`^^" \
-"postcondition{2}=^^@par Postcondition `\1:\2`^^" \
-"invariant{2}=@par Invariant `\1:\2`^^" \
+"precondition{2}=@par Precondition `\1:\2`" \
+"postcondition{2}=@par Postcondition `\1:\2`" \
+"invariant{2}=@par Invariant `\1:\2`" \
 "nav{2}=<span class=\"prev_button\">@ref \1</span><span class=\"next_button\">@ref \2</span>" \
 "nav_prev{1}=<span class=\"prev_button\">@ref \1</span>" \
 "nav_next{1}=<span class=\"next_button\">@ref \1</span>" \
