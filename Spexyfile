@@ -1,6 +1,6 @@
 #=============================================================================
 # _Spexygen_ - Traceable Specifications Based on doxygen
-# Copyright (C) 2024 Quantum Leaps, LLC <www.state-machine.com>
+# Copyright (C) 2025 Quantum Leaps, LLC <www.state-machine.com>
 #
 # SPDX-License-Identifier: MIT
 #
@@ -25,6 +25,8 @@
 # <www.state-machine.com>
 # <info@state-machine.com>
 #=============================================================================
+
+# Doxyfile 1.14.0
 
 #---------------------------------------------------------------------------
 # Project related configuration options
@@ -68,9 +70,9 @@ HTML_EXTRA_STYLESHEET  = $(SPEXYGEN)/spexygen-awesome/doxygen-awesome.css \
                          $(SPEXYGEN)/spexygen-awesome/doxygen-awesome-sidebar-only.css \
                          $(SPEXYGEN)/spexygen-awesome/doxygen-awesome-sidebar-only-darkmode-toggle.css \
                          $(SPEXYGEN)/spexygen-awesome/spexy-awesome.css
+
 HTML_EXTRA_FILES       = $(SPEXYGEN)/spexygen-awesome/doxygen-awesome-darkmode-toggle.js \
-                         $(SPEXYGEN)/spexygen-awesome/doxygen-awesome-fragment-copy-button.js \
-                         $(SPEXYGEN)/spexygen-awesome/doxygen-awesome-paragraph-link.js \
+                         $(SPEXYGEN)/spexygen-awesome/spexy-awesome.js \
                          $(SPEXYGEN)/spexygen-awesome/image-preview.js
 
 #---------------------------------------------------------------------------

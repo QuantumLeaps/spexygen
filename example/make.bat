@@ -42,23 +42,23 @@
 @set SPEXYGEN=..
 
 @echo Generate Spexygen tracing ----------------------------------------------
+rmdir /S /Q  .\spex
 python %SPEXYGEN%/spexygen.py spex.json
 
 ::============================================================================
 @if "%1"=="-PDF" goto PDF
 
+@echo.
 @echo Generate HTML Documentation --------------------------------------------
 @set HTML_OUT=html
 
-@echo.
 @echo cleanup
 rmdir /S /Q %HTML_OUT%
 
 @echo generating HTML...
-%DOXYGEN% Doxyfile
+call %DOXYGEN% Doxyfile
 
 @echo Adding custom files...
-copy %SPEXYGEN%\spexygen-awesome\jquery.js %HTML_OUT%
 
 ::qclean %HTML_OUT%
 goto END
@@ -72,7 +72,7 @@ goto END
 rmdir /S /Q  %LATEX_OUT%
 
 @echo generating LATEX...
-%DOXYGEN% Doxyfile-PDF
+call %DOXYGEN% Doxyfile-PDF
 
 :: Generate LaTex/PDF Documentation...
 @echo generating PDF...
