@@ -724,6 +724,15 @@ html.dark-mode iframe#MSearchResults {
     color: var(--menu-focus-foreground) !important;
 }
 
+#MSearchCloseImg {
+    margin: 0;
+}
+
+.close-icon {
+    width: 22px;
+    height: 22px;
+}
+
 @media screen and (max-width: 767px) {
     #MSearchBox {
         margin-top: var(--spacing-medium);
@@ -783,7 +792,7 @@ html.dark-mode iframe#MSearchResults {
  */
 
 #side-nav, #page-nav {
-    /*padding: 0 !important;*/
+    padding: 0 !important;
     background: var(--side-nav-background);
     min-width: 8px;
     max-width: 50vw;
@@ -825,7 +834,9 @@ ul.page-outline li.vis {
 }
 
 #nav-sync {
-    top: 0 !important;
+    bottom: 12px;
+    right: 12px;
+    top: auto !important;
     user-select: none;
 }
 
