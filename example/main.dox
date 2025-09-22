@@ -32,8 +32,9 @@ Simple example for Doxygen.
 
 @section exa_gen Spexygen-Generated Documentation
 
-@image html  logo_spexygen.png "image caption"
-@image latex logo_spexygen.png "image caption"
+@image html  logo_spexygen.webp
+@image latex logo_spexygen.png width=2in
+@caption{image caption}
 
 The following sections contain the _Spexygen_-generated documentation of this example:
 - @subpage srs

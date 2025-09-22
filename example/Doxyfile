@@ -8,8 +8,8 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = Example
 PROJECT_NUMBER         = 0.0.1
-PROJECT_BRIEF          = For Spexygen 2.3.0
-PROJECT_LOGO           = $(SPEXYGEN)/spexygen-awesome/img/logo_spexygen.webp
+PROJECT_BRIEF          = For Spexygen 2.4.0
+PROJECT_LOGO           = $(SPEXYGEN)/doc/img/logo_spexygen.webp
 PROJECT_ICON           =
 
 FULL_PATH_NAMES        = NO
@@ -59,7 +59,6 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 INPUT = \
     main.dox \
-    $(SPEXYGEN)/spexygen-awesome/help.dox
 
 @INCLUDE = spex/Spexyinc
 
@@ -79,8 +78,7 @@ EXCLUDE_SYMBOLS        =
 EXAMPLE_PATH           =
 EXAMPLE_PATTERNS       = *
 EXAMPLE_RECURSIVE      = NO
-IMAGE_PATH             = $(SPEXYGEN)/spexygen-awesome/img \
-                         ./img
+IMAGE_PATH             = $(SPEXYGEN)/doc/img
 #---------------------------------------------------------------------------
 # Configuration options related to source browsing
 #---------------------------------------------------------------------------
@@ -108,15 +106,15 @@ IGNORE_PREFIX          =
 GENERATE_HTML          = YES
 HTML_OUTPUT            = html
 HTML_FILE_EXTENSION    = .html
-HTML_HEADER            = $(SPEXYGEN)/spexygen-awesome/spexy-header.html
-HTML_FOOTER            = $(SPEXYGEN)/spexygen-awesome/spexy-footer.html
+HTML_HEADER            = $(SPEXYGEN)/spexy-header.html
+HTML_FOOTER            = $(SPEXYGEN)/spexy-footer.html
 HTML_STYLESHEET        =
 #Spexygen HTML_EXTRA_STYLESHEET  =
 #Spexygen HTML_EXTRA_FILES       =
 HTML_COLORSTYLE        = AUTO_LIGHT
-HTML_COLORSTYLE_HUE    = 209
-HTML_COLORSTYLE_SAT    = 255
-HTML_COLORSTYLE_GAMMA  = 113
+HTML_COLORSTYLE_HUE    = 220
+HTML_COLORSTYLE_SAT    = 100
+HTML_COLORSTYLE_GAMMA  = 80
 HTML_DYNAMIC_MENUS     = YES
 HTML_DYNAMIC_SECTIONS  = NO
 HTML_CODE_FOLDING      = YES
@@ -147,10 +145,10 @@ QHP_SECT_FILTER_ATTRS  =
 QHG_LOCATION           =
 GENERATE_ECLIPSEHELP   = NO
 ECLIPSE_DOC_ID         = com.state-machine.qp
-DISABLE_INDEX          = NO
-GENERATE_TREEVIEW      = YES
-PAGE_OUTLINE_PANEL     = YES
-FULL_SIDEBAR           = NO
+#Spexyfile: DISABLE_INDEX          = NO
+#Spexyfile: GENERATE_TREEVIEW      = YES
+#Spexyfile: PAGE_OUTLINE_PANEL     = YES
+#Spexyfile: FULL_SIDEBAR           = NO
 ENUM_VALUES_PER_LINE   = 4
 SHOW_ENUM_VALUES       = NO
 TREEVIEW_WIDTH         = 335
@@ -183,8 +181,8 @@ LATEX_MAKEINDEX_CMD    = makeindex
 COMPACT_LATEX          = NO
 PAPER_TYPE             = letter
 EXTRA_PACKAGES         =
-LATEX_HEADER           = $(SPEXYGEN)/spexygen-awesome/spexy-header.tex
-LATEX_FOOTER           = $(SPEXYGEN)/spexygen-awesome/spexy-footer.tex
+LATEX_HEADER           = $(SPEXYGEN)/spexy-header.tex
+LATEX_FOOTER           = $(SPEXYGEN)/spexy-footer.tex
 LATEX_EXTRA_STYLESHEET =
 LATEX_EXTRA_FILES      =
 PDF_HYPERLINKS         = YES

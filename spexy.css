@@ -1,0 +1,269 @@
+html {
+    /* default spacings. Most components reference these values
+    * for spacing, to provide uniform spacing on the page.
+    */
+    --spacing-small: 5px;
+    --spacing-medium: 10px;
+    --spacing-large: 16px;
+
+    --border-radius-medium: 0.65em;
+    
+    /* font-families. will affect all text on the website
+     * font-family: the normal font for text, headlines, menus
+     * font-family-monospace: used for preformatted text in memtitle, code, fragments
+     */
+    --font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+    --font-family-normal: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+    --font-family-nav: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+    --font-family-monospace: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+
+    /* font sizes */
+    --page-font-size: 15px;
+    --nav-font-size: 14px;
+    --toc-font-size: 13.4px;
+    --code-font-size: 14px; /* affects code, fragment */
+    --title-font-size: 22px;
+
+    /* content text properties. These only affect the page content, not the navigation or any other ui elements */
+    --content-line-height: 27px;
+    /* The content is centered and constraint in it's width. To make the content fill the whole page, set the variable to auto.*/
+    --content-maxwidth: 1050px;
+}
+
+body, table, div, p, dl {
+    font-weight: 400;
+    font-size: var(--page-font-size);
+    font-family: var(--font-family-normal);
+    line-height: var(--content-line-height);
+}
+
+div.contents {
+    max-width: var(--content-maxwidth);
+    margin: 0 auto;
+    padding: var(--spacing-medium);
+}
+
+h1, h2, h3, h4, h5 {
+    margin-top: 1em;
+    font-weight: 600;
+    line-height: initial;
+}
+
+/* full side nav .........................................*/
+#side-nav {
+    min-width: 20em;
+}
+
+#MSearchField {
+    width: 18em;
+}
+
+#titlearea {
+    background-color: var(--nav-background-color);
+    padding-bottom: var(--spacing-medium);
+    border-bottom: 1px solid var(--nav-border-color);
+}
+
+#projectalign {
+    padding: var(--spacing-medium) 0 var(--spacing-medium) 0.15em;
+}
+
+#side-nav #projectname {
+    font-size: 200%;
+    font-weight: 600;
+}
+
+#projectlogo {
+    text-align: left;
+    vertical-align: middle;
+}
+
+#projectbrief {
+    font-size: 120%;
+}
+
+#projectnumber {
+    font-size: 90%;
+}
+
+#nav-sync {
+    bottom: 12px;
+    top: auto !important;
+}
+
+@media screen and (max-width: 767px) {
+    #side-nav {
+        display: none;
+    }
+
+    #doc-content {
+        margin-left: 0 !important;
+    }
+}
+
+/* navigation buttons .................................*/
+
+#nav-tree .label {
+    margin: 0px;
+    padding: 0px;
+    font: var(--nav-font-size) var(--font-family-nav);
+    line-height: 22px;
+}
+
+.next_button {
+    display: inline;
+    padding: var(--spacing-large) 0 var(--spacing-small) 0;
+    user-select: none;
+}
+
+.next_button::after {
+    /* clearfix */
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.next_button a {
+    overflow: hidden;
+    float: right;
+    border: 1px solid var(--nav-border-color);
+    padding: var(--spacing-medium) calc(var(--spacing-large) / 2) var(--spacing-medium) var(--spacing-large);
+    border-radius: var(--border-radius-medium);
+    color: var(--page-link-color) !important;
+    text-decoration: none;
+    background-color: var(--nav-background-color);
+    transition: color .08s ease-in-out, background-color .1s ease-in-out;
+}
+
+.next_button a:hover {
+    color: var(--page-foreground-color) !important;
+    background-color: var(--nav-menu-active-bg);
+}
+
+.next_button a::after {
+    content: '〉';
+    color: var(--page-link-color) !important;
+    padding-left: var(--spacing-large);
+    display: inline-block;
+    transition: color .08s ease-in-out, transform .09s ease-in-out;
+}
+
+.next_button a:hover::after {
+    color: var(--page-foreground-color) !important;
+    transform: translateX(3px);
+}
+
+.prev_button {
+    display: inline;
+    padding: var(--spacing-large) 0 var(--spacing-small) 0;
+    color: var(--page-background-color);
+    user-select: none;
+}
+
+.prev_button a {
+    overflow: hidden;
+    float: left;
+    border: 1px solid var(--nav-border-color);
+    padding: var(--spacing-medium) calc(var(--spacing-large) / 2) var(--spacing-medium) var(--spacing-large);
+    border-radius: var(--border-radius-medium);
+    color: var(--page-link-color) !important;
+    text-decoration: none;
+    background-color: var(--nav-background-color);
+    transition: color .08s ease-in-out, background-color .1s ease-in-out;
+}
+
+.prev_button a:hover {
+    color: var(--page-foreground-color) !important;
+    background-color: var(--nav-menu-active-bg);
+}
+
+.prev_button a::before {
+    content: '〈';
+    color: var(--page-link-color) !important;
+    padding-right: var(--spacing-large);
+    display: inline-block;
+    transition: color .08s ease-in-out, transform .09s ease-in-out;
+}
+
+.prev_button a:hover::before {
+    color: var(--page-foreground-color) !important;
+    transform: translateX(-3px);
+}
+
+html.dark-mode #variants_image img {
+    filter: brightness(87%) hue-rotate(180deg) invert();
+}
+
+/* Custom tags ..........................................*/
+dl.tag dt {
+  float: left;
+  background-color: black;
+  color: white;
+  line-height: 1.3em;
+  padding: 0 5px;
+}
+
+dl.tag blockquote {
+  border-left: 4px solid #9CAFD4;
+}
+
+dl.item dt {
+  font-size: 110%;
+  font-weight: normal;  padding: var(--spacing-medium);
+  background: var(--code-background);
+  border: 1px solid var(--nav-border-color);
+  border-radius: var(--border-radius-medium) var(--border-radius-medium) 0 0;
+  margin-bottom: -1px;
+  overflow: auto;
+}
+dl.item dd {
+  margin-inline-start: initial;
+  padding: var(--spacing-medium);
+  border: 1px solid var(--nav-border-color);
+  border-radius: 0 0 var(--border-radius-medium) var(--border-radius-medium);
+  overflow: auto;
+}
+
+div.label {
+  font-weight: bold;
+}
+
+div.memdoc p {
+  margin-top: 0;
+}
+
+dl.item p {
+  margin-top: 0;
+}
+
+/******** Custom images (center) *****/
+.contents img, .contents .center, .contents center, .contents div.image object {
+    max-width: 100%;
+    overflow: auto;
+}
+
+.img {
+    padding-left: 20px;
+    white-space: nowrap;
+    color: #00A;
+}
+
+img.inline {
+  display: block;
+  margin: auto;
+}
+
+img.right {
+  float:right;
+  clear:right;
+  margin:0 20px 0 20px;
+}
+
+#preview {
+  position:absolute;
+  border:1px solid #ccc;
+  background:#77f;
+  padding:2px;
+  display:none;
+  color:#fff;
+}
