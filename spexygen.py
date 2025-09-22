@@ -47,7 +47,7 @@ class Spexygen:
     '''
 
     # public class constants
-    VERSION = 230
+    VERSION = 240
 
     UID_DOC  = 1
     UID_CODE = 2

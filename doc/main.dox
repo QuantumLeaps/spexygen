@@ -23,16 +23,17 @@
 - traceable @ref srs "requirement specifications"
 - traceable @ref header.h "source code"
 - traceable @ref test1.c "tests"
-- traceable specifications of other kind
+- traceable specifications of other kind (e.g., @ref srs)
 
 @ifnot LATEX
-<a href="" target="_blank" title="Spexygen video">
+<a href="https://youtu.be/5naC_z-76Aw?si=IsXXh3Zs59CXAeNv" target="_blank" title="Spexygen video">
 <img src="spexygen-video.jpg">
 </a>
 @else
 @image latex spexygen-video.jpg width=5in
-@webref{https://youtu.be/5naC_z-76Aw?si=x4Svroqv9qDdkpsE,Spexygen video}
+@webref{https://youtu.be/5naC_z-76Aw?si=IsXXh3Zs59CXAeNv, Spexygen video}
 @endif
+@caption{watch @webref{https://youtu.be/5naC_z-76Aw?si=IsXXh3Zs59CXAeNv, Spexygen video on YouTube}}
 <br>
 
 @note
@@ -45,40 +46,57 @@ The main objectives and features of _Spexygen_ are:
 - automating the generation of @ref tr-fw "forward traceability" links in the documentation (_Spexygen_ generates @ref tr-fw-rec "recursive forward traceability" enabling impact analysis to identify the potential consequences of a change of a given artifact)
 - automating the generation of brief descriptions for the @ref tr-bw "backward traceability" links
 - enabling DRY documentation (designed according to the "Don't Repeat Yourself" principle) by eliminating repetitions in specifying dependencies among "work artifacts"
-- genearting cross-linked, __searchable__, nicely formatted documentation in HTML (modern @webref{https://github.com/jothepro/Doxygen-awesome-css, Doxygen-awesome HTML style})
+- genearting cross-linked, __searchable__, nicely formatted documentation in HTML (the new style introduced in Doxygen 1.14.0)
 - genearting cross-linked, nicely formatted documentation in PDF (modern LaTeX template)
 - representing documentation in human-readable text files, which can be stored in any version control system (VCS).
 
 
 @section tr Traceability
-__Traceability__ is the cornerstone of any formal documentation system, especially those intended for managing __functional safety__. It enables product teams to associate every work artifact (e.g., a specific requirement) with all the related project artifacts (e.g., design, code, or tests), both backward and forward. Traceability lets everyone to see how every work artifact relates to the requirement &mdash; and vice versa &mdash; at any point during development. This ability fosters team collaboration and enables early detection of possible production risks.
+__Traceability__ is the cornerstone of any formal documentation system, especially those intended for managing __functional safety__. It enables product teams to associate every work artifact (e.g., a specific requirement) with all the related project artifacts (e.g., design, code, or tests), both backward and forward. Traceability enables everyone to see how every work artifact relates to the requirement &mdash; and vice versa &mdash; at any point during development. This ability fosters team collaboration and enables early detection of possible production risks.
 
-@attention
-_Spexygen_ provides consistent and __automated__ management of traceability within the whole documentation set.
-
-@subsection tr-uid Unique Identifiers (UIDs)
-Traceability is enabled by the consistent use of __Unique Identifiers (UIDs)__, which are short text labels associated with _all_ work artifacts, such as requirements, architecture elements, design elements, coding standard deviations, tests, functional safety documents, etc.
+@section fsm-qp_tr-uid Unique Identifiers (UIDs)
+Traceability is enabled by the consistent use of __Unique Identifiers (UIDs)__, which are short text labels associated with _all_ work artifacts, such as requirements, architecture elements, design elements, source code elements, coding standard deviations, tests, functional safety documents, etc.
 
 @note
-The structure of UIDs is __flexible__ to accommodate various existing naming conventions. But for compatibility with the widest possible range of cross-referencing systems and tools, the UIDs are __restricted__ to generally follow the _rules for identifiers in programming languages_, such as identifiers in C, C++, or Python. Specifically, valid UIDs can contain only upper-case letters (A..Z), numbers (0..9), and underscores ('_'). Among others, UIDs cannot contain spaces, punctuation, parentheses, or any special characters like !, \@, #, \$, etc.
+The structure of UIDs is __flexible__ to accommodate various existing naming conventions. But for compatibility with the widest possible range of cross-referencing systems and tools, the UIDs are __restricted__ to generally follow the _rules for identifiers in programming languages_, such as identifiers in C, C++, or Python. Specifically, valid UIDs can contain only letters (A..Z, a..z), numbers (0..9), and underscores ('_'). Additionally, UIDs not associated with code can contain dashes ('-'). However, all UIDs should __not__ contain spaces (' '), punctuation ('.', ',', ';'), parentheses ('()', '[]', '{}'), or any special characters like !, ?, \@, #, \$, etc.
 
 @remark
-Restricting the UIDs to the programming language identifiers allows you to _use the UIDs as identifiers_. For example, you might name test functions as their UIDs. Additionally, such UIDs become __searchable__ with the Doxygen built-in search (the "Search Box").
+The UIDs for source code must follow the @webref{https://doxygen.nl, Doxygen} standard for referencing code elements, such as classes, functions, macros, namespaces, types, etc. This enables extending the bi-directional traceability to code. Additionally, such UIDs become __searchable__ with the Doxygen built-in search (the "Search Box").
 
 
-The most important feature of UIDs is their __uniqueness__ within the whole system under consideration. To avoid name conflicts, it is advantageous to establish general rules for constructing the UIDs. Throughout _Spexygen_ documentation, the UIDs have the general structure consisting of fields separated by underscores:
+The most important feature of UIDs is their __uniqueness__ within the whole system under consideration. To avoid name conflicts, it is advantageous to establish general rules for constructing the UIDs. Throughout _Spexygen_ documentation, the UIDs have the hierarchical structure consisting of fields separated by underscores and/or dashes:
 
 @verbatim
- +------------------ [1] Work artifact class (e.g., 'SRS' for Software Requirement Specification)
- |   +-------------- [2] Component unique identifier (e.g, 'PRJ' for my "Project")
+ +------------------ [1] Work artifact type (e.g., 'SRS' for Software Requirement Specification)
+ |   +-------------- [2] Component unique identifier (e.g, 'QP' for @QPX Framework)
  |   |   +---------- [3] Work artifact ID (abbreviation or number)
  |   |   |  +------- [4] Work artifact number
  |   |   |  |   +--- [5] Optional variant letter ('A', 'B', 'C'...)
  |   |   |  |   |+-- [6] Optional version number (1, 2, 3...)
  |   |   |  |   ||
-SRS_xxx_yyy_zz[_A2]
+SRS_xxx_yyy_zz[-A2]
 @endverbatim
-Examples: @tr{SRS_PRJ_Foo_01}, @tr{TUN_PRJ_free_fun_00}
+Examples: @tr{SRS_QP_AO_10}, @tr{SDS_QP_QHsm}
+
+The various fields in the UID are as follows:
+
+@subsection fsm-qp_tr-uid_type UID Type
+`[1]` the UID starts with a fields corresponding to the _type_ of the work artifact. Here are the suggested artifact type names:
+  + <b>DOC</b>  Document
+  + <b>SRS</b>  Software Requirement Specification
+  + <b>SSR</b>  Software Safety Requirement
+  + <b>SAS</b>  Software Architecture Specification
+  + <b>SDS</b>  Software Design Specification
+  + <b>FSM</b>  Functional Safety Management artifact
+  + <b>SHR</b>  Software Hazard and Risk artifact
+  + <b>DVR</b>  Deviation Record (e.g. coding standard violation)
+  + <b>DVP</b>  Deviation Permit (e.g. coding standard violation)
+  + <b>TUN</b>  Test (unit)
+  + <b>TIN</b>  Test (integration)
+  + <b>TAC</b>  Test (acceptance)
+
+@attention
+The __type__ filed of the UID should be carefully chosen to allow filtering and cross-referencing artifacts of various types. For example, __requirements traceability matrix__ (often needed for compliance with functional safety standards) is a relationship between the requirements (type `SRS`) and various other work items (e.g., tests, `TUN`, `TIN`, or `TAC`).
 
 The various fields in the UID are as follows:
 
@@ -187,7 +205,7 @@ relation between _Spexygen_ and Doxygen, and the flow of information between the
 
 `[11]` Doxygen processes the files generarted by _Spexygen_ (see `[6-7]`) and other files (see `[9]`) according to the `Doxyfile` (see `[10]`)
 
-`[12]` If Doxygen is configured to produce HTML output, it applies the modern @webref{https://jothepro.github.io/Doxygen-awesome-css/,Doxygen-awesome HTML styling} (included in _Spexygen_)
+`[12]` If Doxygen is configured to produce HTML output, it applies the modern style introduced in Doxygen 1.14.0 and adapted in Spexygen.
 
 `[13]` If Doxygen is configured to produce PDF output, it applies the modern LaTeX template provided by _Spexygen_
 
@@ -512,9 +530,6 @@ rmdir /S /Q %HTML_OUT%
 
 @echo generating HTML...
 %DOXYGEN% Doxyfile
-
-@echo Adding custom files...
-copy %SPEXYGEN%\spexygen-awesome\jquery.js %HTML_OUT%
 
 ::qclean %HTML_OUT%
 goto END

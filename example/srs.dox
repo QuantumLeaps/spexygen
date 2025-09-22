@@ -68,7 +68,8 @@ Longer description of the requirement
 @enduid
 
 @ifnot LATEX
-<div style="clear:both;"></div>
+<p></p>
+<hr>
 @nav_prev{exa}
 @endif
 */

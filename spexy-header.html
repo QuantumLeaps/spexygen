@@ -20,12 +20,7 @@
 <!--BEGIN COPY_CLIPBOARD-->
 <script type="text/javascript" src="$relpath^clipboard.js"></script>
 <!--END COPY_CLIPBOARD-->
-<script type="text/javascript" src="$relpath^doxygen-awesome-darkmode-toggle.js"></script>
-<script type="text/javascript" src="$relpath^doxygen-awesome-spexy.js"></script>
 <script type="text/javascript" src="$relpath^image-preview.js"></script>
-<script type="text/javascript">
-  DoxygenAwesomeDarkModeToggle.init()
-</script>
 $treeview
 $search
 $mathjax
@@ -42,22 +37,45 @@ $extrastylesheet
 
 <!--BEGIN TITLEAREA-->
 <div id="titlearea">
-  <div id="projectlogo">
-    <a href="https://www.state-machine.com" title="Quantum Leaps"><img alt="Logo" src="$relpath^$projectlogo"/></a>
-  </div>
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <!--BEGIN PROJECT_LOGO-->
+  <td id="projectlogo">
+    <a href="https://www.state-machine.com" title="Quantum Leaps"><img alt="Logo" src="$relpath^$projectlogo"$logosize/></a></td>
+  </tr>
   <!--END PROJECT_LOGO-->
   <!--BEGIN PROJECT_NAME-->
-   <div id="projectname">
-    $projectname
-    <!--BEGIN PROJECT_NUMBER-->&nbsp;<span id="projectnumber">$projectnumber</span><!--END PROJECT_NUMBER-->
+ <tr>
+  <td id="projectalign">
+   <div id="projectname">$projectname<!--BEGIN PROJECT_NUMBER--><span id="projectnumber">&#160;$projectnumber</span><!--END PROJECT_NUMBER-->
    </div>
    <!--BEGIN PROJECT_BRIEF--><div id="projectbrief">$projectbrief</div><!--END PROJECT_BRIEF-->
+  </td>
   <!--END PROJECT_NAME-->
+  <!--BEGIN !PROJECT_NAME-->
+   <!--BEGIN PROJECT_BRIEF-->
+    <td>
+    <div id="projectbrief">$projectbrief</div>
+    </td>
+ </tr>
+   <!--END PROJECT_BRIEF-->
+  <!--END !PROJECT_NAME-->
   <!--BEGIN DISABLE_INDEX-->
    <!--BEGIN SEARCHENGINE-->
-   $searchbox
+     <!--BEGIN !FULL_SIDEBAR-->
+    <td>$searchbox</td>
+     <!--END !FULL_SIDEBAR-->
    <!--END SEARCHENGINE-->
   <!--END DISABLE_INDEX-->
+ </tr>
+  <!--BEGIN SEARCHENGINE-->
+   <!--BEGIN FULL_SIDEBAR-->
+   <tr><td colspan="2">$searchbox</td></tr>
+   <!--END FULL_SIDEBAR-->
+  <!--END SEARCHENGINE-->
+ </tbody>
+</table>
 </div>
 <!--END TITLEAREA-->
 <!-- end header part -->
