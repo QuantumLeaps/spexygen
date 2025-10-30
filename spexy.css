@@ -24,9 +24,13 @@ html {
     --code-font-size: 14px; /* affects code, fragment */
     --title-font-size: 22px;
 
-    /* content text properties. These only affect the page content, not the navigation or any other ui elements */
+    /* content text properties. These only affect the page content,
+    * not the navigation or any other ui elements
+    */
     --content-line-height: 27px;
-    /* The content is centered and constraint in it's width. To make the content fill the whole page, set the variable to auto.*/
+    /* The content is centered and constraint in it's width. To make the content
+    * fill the whole page, set the variable to auto.
+    */
     --content-maxwidth: 1050px;
 }
 
@@ -47,6 +51,19 @@ h1, h2, h3, h4, h5 {
     margin-top: 1em;
     font-weight: 600;
     line-height: initial;
+}
+
+/* centered and bold page titles */
+.title {
+    font-size: 200%;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* centered doxygen tables */
+table.doxtable {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* remark styling ........................................*/
