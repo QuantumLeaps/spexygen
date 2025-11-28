@@ -8,7 +8,7 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = Example
 PROJECT_NUMBER         = 0.0.1
-PROJECT_BRIEF          = For Spexygen 2.4.0
+PROJECT_BRIEF          = For Spexygen 2.4.1
 PROJECT_LOGO           = $(SPEXYGEN)/doc/img/logo_spexygen.webp
 PROJECT_ICON           =
 
