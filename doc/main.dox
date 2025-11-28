@@ -98,22 +98,6 @@ The various fields in the UID are as follows:
 @attention
 The __type__ filed of the UID should be carefully chosen to allow filtering and cross-referencing artifacts of various types. For example, __requirements traceability matrix__ (often needed for compliance with functional safety standards) is a relationship between the requirements (type `SRS`) and various other work items (e.g., tests, `TUN`, `TIN`, or `TAC`).
 
-The various fields in the UID are as follows:
-
-`[1]` the UID starts with a fields corresponding to the _class_ of the work artifact. Here are the suggested artifact class names:
-  + <b>DOC</b>  Document
-  + <b>SRS</b>  Software Requirement Specification
-  + <b>SSR</b>  Software Safety Requirement
-  + <b>SAS</b>  Software Architecture Specification
-  + <b>SDS</b>  Software Design Specification
-  + <b>FSM</b>  Functional Safety Management artifact
-  + <b>SHR</b>  Software Hazard and Risk artifact
-  + <b>DVR</b>  Deviation Record (e.g. coding standard violation)
-  + <b>DVP</b>  Deviation Permit (e.g. coding standard violation)
-  + <b>TUN</b>  Test (unit)
-  + <b>TIN</b>  Test (integration)
-  + <b>TAC</b>  Test (acceptance)
-
 `[2]` the Component Unique Identifier (CUI), which should be unique enough to avoid name conflicts with other software components in a larger system.
 
 `[3]` "Work artifact ID" field identifies the artifact within the "work artifact class" `[1]`. This  is the most flexible part in the UID to accommodate other existing conventions, such as MISRA deviations, the `work artifact ID` field should be easily identifiable with the MISRA Rule/Directive ID, such as `D04_01` for "Directive 4.1", or `R10_04` for "Rule 10.4". Still, please note that the more structured UID convention of using two-digits for feature groups (e.g., `D04_10` instead of `D4_10`) provide additional benefits, such as correct order under a simple alphabetical sort. This property is missing in the original MISRA IDs (e.g., a simple alphabetical sort will place Rule 10.8 _before_ Rule 8.10).

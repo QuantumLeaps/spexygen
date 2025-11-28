@@ -66,20 +66,48 @@ table.doxtable {
     margin-right: auto;
 }
 
-/* remark styling ........................................*/
-dl.remark {
+/* custom paragraph styling (@par) ..........................*/
+dl.user {
     background: var(--deprecated-color-bg);
     border-left: 8px solid var(--deprecated-color-hl);
     color: var(--deprecated-color-text);
+    padding: 10px;
+    margin: 10px 0px;
+    overflow: hidden;
+    border-radius: 4px;
+}
+dl.section dd {
+    margin-left: 0;
 }
 
-/* full side nav .........................................*/
+/* remark styling (@remark) .................................*/
+dl.remark {
+    background: var(--todo-color-bg);
+    border-left: 8px solid var(--todo-color-hl);
+    color: var(--todo-color-text);
+}
+
+/* full side nav ............................................*/
 #side-nav {
-    min-width: 20em;
+    min-width: 280px;
 }
 
 #MSearchField {
-    width: 17em;
+    width: 210px;
+}
+
+@media screen and (max-width: 767px) {
+    #side-nav {
+        min-width: 120px;
+    }
+    #MSearchField {
+        width: 80px;
+    }
+/*
+    #doc-content {
+        margin-left: 0 !important;
+    }
+*/
 }
 
 #titlearea {
@@ -115,17 +143,8 @@ dl.remark {
     top: auto !important;
 }
 
-@media screen and (max-width: 767px) {
-    #side-nav {
-        display: none;
-    }
 
-    #doc-content {
-        margin-left: 0 !important;
-    }
-}
-
-/* navigation buttons .................................*/
+/* navigation buttons .......................................*/
 
 #nav-tree .label {
     margin: 0px;
@@ -218,7 +237,7 @@ html.dark-mode #variants_image img {
     filter: brightness(87%) hue-rotate(180deg) invert();
 }
 
-/* Custom tags ..........................................*/
+/* Custom tags ..............................................*/
 dl.tag dt {
   float: left;
   background-color: black;
@@ -281,6 +300,12 @@ img.right {
   float:right;
   clear:right;
   margin:0 20px 0 20px;
+}
+
+video {
+  display: block;
+  margin: 0 auto;
+  border: none;
 }
 
 #preview {
