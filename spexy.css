@@ -297,6 +297,12 @@ img.right {
   margin:0 20px 0 20px;
 }
 
+video {
+  display: block;
+  margin: 0 auto;
+  border: none;
+}
+
 #preview {
   position:absolute;
   border:1px solid #ccc;
