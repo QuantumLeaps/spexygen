@@ -47,7 +47,7 @@ class Spexygen:
     '''
 
     # public class constants
-    VERSION = 240
+    VERSION = 250
 
     UID_DOC  = 1
     UID_CODE = 2
@@ -63,10 +63,11 @@ class Spexygen:
         self._file = None          # current file (for generating output)
         self._prefix = ''          # prefix for each generated line
         self._bw_trace = ''        # bw-trace for current uid requested
+        self._ref = ''             # reference for current uid requested
         self._uid_trace_dict = {}  # UID dictionary collected during tracing
         self._uid_brief_dict = {}  # UID-brief dictionary collected during tracing
         self._uid_traced_list = [] # UID list built during generation
-        self._fw_trace_levels = len(Spexygen.LEVELS) - 2 # number of fw-trace levels to generate
+        self._fw_tr_levels = len(Spexygen.LEVELS) - 2 # no. of levels to generate
 
     @staticmethod
     def debug(*args, **kwargs):
@@ -95,7 +96,7 @@ class Spexygen:
                 self._file.write("%s%s- @tr{%s}: <i>%s</i>\n"
                     %(self._prefix, Spexygen.LEVELS[level],
                     uid, self._uid_brief_dict[uid]))
-                if level < self._fw_trace_levels:
+                if level < self._fw_tr_levels:
                     if uid in self._uid_trace_dict:
                         self.on_gen_fw_trace(uid, level+1) # recursive!
                 elif level >= len(Spexygen.LEVELS) - 2:
@@ -201,6 +202,39 @@ class Spexygen:
             self._bw_trace = 'empty'
         return True
 
+    def uid_ref(self, line):
+        '''return True if bw-ref placeholder found in "line"
+        '''
+        if self._uid == '':
+            return False
+        l = 0
+        i = -1
+        if self._kind == Spexygen.UID_DOC:
+            if (i := line.find('@uid_ref')) >= 0:
+                l = 8
+        elif self._kind == Spexygen.UID_CODE:
+            if (i := line.find('@code_ref')) >= 0:
+                l = 9
+        else:
+            print(f"Unknown current UID kind={self._kind}")
+            return False
+
+        if i < 0:
+            return False
+
+        if line.find('{', i+l) == i+l: # parameter present?
+            j = line.find('}', i+l+1)
+            if j >= 0:
+                self._ref = line[i+l+1:j]
+            else:
+                print("Error: missing '}' for '@uid_ref{' in line",
+                        self._lnum, ":", i+l+1)
+                return False
+        else:
+            self._ref = 'empty'
+        return True
+
+
     def uid_tr(self, line):
         '''return list of backward traces found in a given "line"
         '''
@@ -220,7 +254,7 @@ class Spexygen:
 
     def trace(self, fname):
         '''trace a given file and harvest the traces into the
-        dictionaries: self._uid_brief_dict and self._uid_trace_dict
+        dictionary: self._uid_trace_dict
         '''
         try:
             f = open(fname, encoding="utf-8")
@@ -242,6 +276,8 @@ class Spexygen:
                     pass
                 elif self.uid_bw_trace(line):
                     pass
+                elif self.uid_ref(line):
+                    pass
                 elif self._bw_trace != '':
                     tr_list = self.uid_tr(line)
                     for tr in tr_list:
@@ -259,8 +295,11 @@ class Spexygen:
         if self.uid_bw_trace(line):
             self._file.write(line)
             return True
+        elif self.uid_ref(line):
+            self._file.write(line)
+            return True
 
-        if self._bw_trace != '':
+        if self._bw_trace != '' or self._ref != '':
             if (i := line.find('@tr{')) >= 0:
                 j = line.find('}', i + 4)
                 tr = ''
@@ -272,7 +311,7 @@ class Spexygen:
                     self._file.write(line)
                     return True
                 if tr in self._uid_brief_dict:
-                    if self._bw_trace == 'brief':
+                    if self._bw_trace == 'brief' or self._ref == 'brief':
                         self._file.write(line[:j+1])
                         self._file.write(f": <i>{self._uid_brief_dict[tr]}</i>")
                         self._file.write(line[j+1:])
@@ -317,7 +356,7 @@ class Spexygen:
                 print("Error: missing '}' for '@uid_fw_trace{' in line",
                         self._lnum, ":", i+l+1)
                 return False
-        self._fw_trace_levels = levels
+        self._fw_tr_levels = levels
 
         self._prefix = line[:i]
         self._file.write(line)
@@ -363,9 +402,9 @@ class Spexygen:
                 else:              # have current item
                     if self.uid_end(line):
                         self._file.write(line)
-                    elif self.gen_fw_trace(line):
-                        pass
                     elif self.gen_bw_trace(line):
+                        pass
+                    elif self.gen_fw_trace(line):
                         pass
                     else:
                         self._file.write(line)

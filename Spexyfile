@@ -26,7 +26,7 @@
 # <info@state-machine.com>
 #=============================================================================
 
-# Doxyfile 1.14.0
+# Doxyfile 1.16.1
 
 #---------------------------------------------------------------------------
 # Project related configuration options
@@ -40,6 +40,8 @@ ALIASES += \
 "uid_bw_trace{1}=^^<b>Backward Traceability</b><br>" \
 "uid_fw_trace=^^<b>Forward Traceability</b><br>" \
 "uid_fw_trace{1}=^^<b>Forward Traceability (truncated to \1 level(s))</b><br>" \
+"uid_ref=^^<b>References</b><br>" \
+"uid_ref{1}=^^<b>References</b><br>" \
 "enduid=^^<br>" \
 "code_uid{2}=@brief \2" \
 "code_alias{2}=@anchor \1^^@brief <b>\1</b> : \2" \
@@ -48,6 +50,8 @@ ALIASES += \
 "code_bw_trace{1}=^^<b>Backward Traceability</b><br>" \
 "code_fw_trace=^^<b>Forward Traceability</b><br>" \
 "code_fw_trace{1}=^^<b>Forward Traceability (truncated to \1 level(s))</b><br>" \
+"code_ref=^^<b>References</b><br>" \
+"code_ref{1}=^^<b>References</b><br>" \
 "endcode_uid=" \
 "tr{1}=@ref \1 \"\1\"" \
 "precondition{2}=^^@par Precondition `\1:\2`^^" \
