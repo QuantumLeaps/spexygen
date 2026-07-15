@@ -49,14 +49,16 @@ div.contents {
 
 h1, h2, h3, h4, h5 {
     margin-top: 1em;
-    font-weight: 600;
+    font-weight: 400;
     line-height: initial;
+    color: var(--toc-header-color);
 }
 
 /* centered and bold page titles */
 .title {
-    font-size: 200%;
-    font-weight: 600;
+    font-size: 180%;
+    font-weight: 400;
+    color: var(--toc-header-color);
     text-align: center;
 }
 
@@ -64,6 +66,10 @@ h1, h2, h3, h4, h5 {
 table.doxtable {
     margin-left: auto;
     margin-right: auto;
+}
+
+#MSearchField {
+    width: 210px;
 }
 
 /* custom paragraph styling (@par) ..........................*/
@@ -89,45 +95,88 @@ dl.remark {
 
 /* full side nav ............................................*/
 #side-nav {
-    min-width: 280px;
+    width: 200px;
+    /*min-width: 200px;*/
 }
 
-#MSearchField {
-    width: 210px;
+#page-nav {
+    width: 200px;
 }
 
 @media screen and (max-width: 767px) {
     #side-nav {
-        min-width: 120px;
+        display: none;
     }
-    #MSearchField {
-        width: 80px;
+
+    #page-nav {
+        display: none;
     }
-/*
+
+    .ui-resizable-e,
+    #page-nav-resize-handle {
+        display: none;
+    }
+
+    #projectname {
+        display: none;
+    }
+
     #doc-content {
         margin-left: 0 !important;
     }
-*/
+}
+
+@media (min-width: 768px) {
+    #side-nav {
+        display: block;
+        width: 200px;
+        min-width: 200px;
+    }
+
+    #page-nav {
+        display: block;
+        width: 200px;
+        min-width: 200px;
+    }
+
+    .ui-resizable-e,
+    #page-nav-resize-handle {
+        display: block;
+    }
+
+    #projectname {
+        display: block;
+    }
 }
 
 #titlearea {
+    display: flex;
+    align-items: center;
     background-color: var(--nav-background-color);
-    padding-bottom: var(--spacing-medium);
+    padding-bottom: 4px;
     border-bottom: 1px solid var(--nav-border-color);
+}
+
+#projectname {
+    font-size: 180%;
+    font-weight: 400;
+    flex: 1;
+    text-align: right;
+    margin-right: var(--spacing-medium);
 }
 
 #projectalign {
     padding: var(--spacing-medium) 0 var(--spacing-medium) 0.15em;
 }
 
-#side-nav #projectname {
+#side-nav {
     font-size: 200%;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 #projectlogo {
+    margin-top: 4px;
     text-align: left;
-    vertical-align: middle;
 }
 
 #projectbrief {
@@ -137,12 +186,16 @@ dl.remark {
 #projectnumber {
     font-size: 90%;
 }
-
+/*
 #nav-sync {
     bottom: 12px;
     top: auto !important;
 }
-
+*/
+/* main menu */
+.sm-dox a, .sm-dox a:active, .sm-dox a:focus, .sm-dox a:hover {
+    font-size: 18px;
+}
 
 /* navigation buttons .......................................*/
 

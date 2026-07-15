@@ -1,6 +1,6 @@
 #=============================================================================
-# _Spexygen_ - Traceable Specifications Based on doxygen
-# Copyright (C) 2025 Quantum Leaps, LLC <www.state-machine.com>
+# _Spexygen_ - Traceable Specifications Based on Doxygen
+# Copyright (C) 2024-2026 Quantum Leaps, LLC <www.state-machine.com>
 #
 # SPDX-License-Identifier: MIT
 #
@@ -26,12 +26,12 @@
 # <info@state-machine.com>
 #=============================================================================
 
-# Doxyfile 1.16.1
+# Doxyfile 1.17.0
 
 #---------------------------------------------------------------------------
 # Project related configuration options
 #---------------------------------------------------------------------------
-# Spexygen: Commands
+# Spexygen commands
 #---------------------------------------------------------------------------
 ALIASES += \
 "uid{2}=<hr>@addindex \1^^@subsection \1 \1^^<span style=\"font-style:italic;font-size:larger;\">\2</span>^^" \
@@ -66,21 +66,16 @@ ALIASES += \
 "clearpage=@latexonly \clearpage @endlatexonly"
 
 #---------------------------------------------------------------------------
-# Configuration options related to XML
-#---------------------------------------------------------------------------
-#LAYOUT_FILE           = $(SPEXYGEN)/SpexyLayout.xml
-
-#---------------------------------------------------------------------------
 # Configuration options related to the HTML output
 #---------------------------------------------------------------------------
 # Spexygen: spexygen style
 #---------------------------------------------------------------------------
 HTML_EXTRA_STYLESHEET  = $(SPEXYGEN)/spexy.css
 HTML_EXTRA_FILES       = $(SPEXYGEN)/image-preview.js
-DISABLE_INDEX          = YES
+DISABLE_INDEX          = NO
 GENERATE_TREEVIEW      = YES
 PAGE_OUTLINE_PANEL     = YES
-FULL_SIDEBAR           = YES
+FULL_SIDEBAR           = NO
 
 #---------------------------------------------------------------------------
 # Spexygen: customized HTML header/footer
@@ -97,3 +92,8 @@ HTML_FOOTER            = $(SPEXYGEN)/spexy-footer.html
 #---------------------------------------------------------------------------
 LATEX_HEADER           = $(SPEXYGEN)/spexy-header.tex
 LATEX_FOOTER           = $(SPEXYGEN)/spexy-footer.tex
+
+#---------------------------------------------------------------------------
+# Configuration options related to the XML output
+#---------------------------------------------------------------------------
+#LAYOUT_FILE           = $(SPEXYGEN)/SpexyLayout.xml
