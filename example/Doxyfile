@@ -1,4 +1,4 @@
-# Doxyfile 1.14.0
+# Doxyfile 1.18.0
 
 @INCLUDE = $(SPEXYGEN)/Spexyfile
 
@@ -13,7 +13,7 @@ PROJECT_LOGO           = $(SPEXYGEN)/doc/img/logo_spexygen.webp
 PROJECT_ICON           =
 
 FULL_PATH_NAMES        = NO
-EXTENSION_MAPPING      =
+EXTENSION_MAPPING      = lnt=C++
 TYPEDEF_HIDES_STRUCT   = YES
 #---------------------------------------------------------------------------
 # Build related configuration options
@@ -58,15 +58,25 @@ WARN_LOGFILE           =
 # listed *after* the referenced code (e.g., header.h).
 #---------------------------------------------------------------------------
 INPUT = \
-    main.dox \
-    ../doc/help.dox
+    main.dox
 
 @INCLUDE = spex/Spexyinc
 
+INPUT += \
+    ../doc/help.dox
+
 INPUT_ENCODING         = UTF-8
 INPUT_FILE_ENCODING    =
+
+#---------------------------------------------------------------------------
+# Project related configuration options
+#---------------------------------------------------------------------------
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+
 ENABLED_SECTIONS       =
-OPTIMIZE_OUTPUT_FOR_C  = YES
+
+OPTIMIZE_OUTPUT_FOR_C  = NO
 FILE_PATTERNS          = *.dox \
                          *.c \
                          *.h
@@ -84,6 +94,7 @@ IMAGE_PATH             = $(SPEXYGEN)/doc/img
 # Configuration options related to source browsing
 #---------------------------------------------------------------------------
 SOURCE_BROWSER         = YES
+SHOW_FILES             = YES
 INLINE_SOURCES         = NO
 STRIP_CODE_COMMENTS    = NO
 REFERENCED_BY_RELATION = NO
@@ -92,6 +103,7 @@ REFERENCES_LINK_SOURCE = YES
 SOURCE_TOOLTIPS        = YES
 USE_HTAGS              = NO
 VERBATIM_HEADERS       = YES
+SHOW_USED_FILES        = NO
 CLANG_ASSISTED_PARSING = NO
 CLANG_ADD_INC_PATHS    = YES
 CLANG_OPTIONS          =
@@ -112,7 +124,7 @@ HTML_FOOTER            = $(SPEXYGEN)/spexy-footer.html
 HTML_STYLESHEET        =
 #Spexygen HTML_EXTRA_STYLESHEET  =
 #Spexygen HTML_EXTRA_FILES       =
-HTML_COLORSTYLE        = AUTO_LIGHT
+HTML_COLORSTYLE        = TOGGLE
 HTML_COLORSTYLE_HUE    = 220
 HTML_COLORSTYLE_SAT    = 100
 HTML_COLORSTYLE_GAMMA  = 80
@@ -146,13 +158,15 @@ QHP_SECT_FILTER_ATTRS  =
 QHG_LOCATION           =
 GENERATE_ECLIPSEHELP   = NO
 ECLIPSE_DOC_ID         = com.state-machine.qp
+#---------------------------------------------------------------------------
 #Spexyfile: DISABLE_INDEX          = NO
 #Spexyfile: GENERATE_TREEVIEW      = YES
 #Spexyfile: PAGE_OUTLINE_PANEL     = YES
 #Spexyfile: FULL_SIDEBAR           = NO
+#---------------------------------------------------------------------------
 ENUM_VALUES_PER_LINE   = 4
 SHOW_ENUM_VALUES       = NO
-TREEVIEW_WIDTH         = 335
+TREEVIEW_WIDTH         = 200
 EXT_LINKS_IN_WINDOW    = NO
 OBFUSCATE_EMAILS       = NO
 HTML_FORMULA_FORMAT    = png
@@ -171,27 +185,6 @@ SEARCHENGINE_URL       =
 SEARCHDATA_FILE        = searchdata.xml
 EXTERNAL_SEARCH_ID     = Spexygen
 EXTRA_SEARCH_MAPPINGS  =
-#---------------------------------------------------------------------------
-# Configuration options related to the LaTeX output
-#---------------------------------------------------------------------------
-GENERATE_LATEX         = NO
-LATEX_OUTPUT           = latex
-LATEX_CMD_NAME         = latex
-MAKEINDEX_CMD_NAME     = makeindex
-LATEX_MAKEINDEX_CMD    = makeindex
-COMPACT_LATEX          = NO
-PAPER_TYPE             = letter
-EXTRA_PACKAGES         =
-LATEX_HEADER           = $(SPEXYGEN)/spexy-header.tex
-LATEX_FOOTER           = $(SPEXYGEN)/spexy-footer.tex
-LATEX_EXTRA_STYLESHEET =
-LATEX_EXTRA_FILES      =
-PDF_HYPERLINKS         = YES
-USE_PDFLATEX           = YES
-LATEX_BATCHMODE        = NO
-LATEX_HIDE_INDICES     = NO
-LATEX_BIB_STYLE        = plainnat
-LATEX_EMOJI_DIRECTORY  =
 #---------------------------------------------------------------------------
 # Configuration options related to the preprocessor
 #---------------------------------------------------------------------------

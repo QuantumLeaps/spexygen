@@ -1,9 +1,8 @@
 /*!
 @ifnot IN_SPEXYGEN
-@mainpage
-@section exa About the Example
+@mainpage Spexygen Example
 @else
-@page exa Example
+@page exa Spexygen Example
 @endif
 
 @ifnot LATEX
@@ -11,13 +10,15 @@
 <div style="clear:both"></div>
 @endif
 
-@section about About this Example
+@section exa_about About this Example
 Simple example for Doxygen.
 
 @verbatim
 +---example/     <-- this example
-|   |   main.dox <-- example description
+|   |   code.dox <-- example documentation separated from the code
+|   |   main.dox <-- example main page or main section
 |   |   srs.dox  <-- example Software Requirements Specification
+|   |   make.bat <-- batch script to build the documentation
 |   |
 |   +---inc
 |   |       header.h <-- example header file
@@ -26,25 +27,29 @@ Simple example for Doxygen.
 |   |       source.c <-- example source file
 |   |
 |   \---test
-|           test1.c  <-- example test file
-|           test2.c  <-- example test file
+|           test1.c  <-- example test file (free function)
+|           test2.c  <-- example test file (class Foo)
 @endverbatim
 
+@note
+This example illustrates the way Doxygen allows you to separate the documentation from the source code. Specifically, the sample code provides only minimal documentation. The actual documentation is external (in the file code.dox). Such an approach is advantageous for safety-related code, where changes to the code base are prohibitively expensive, which would otherwise hinder improving the documentation independently.
+
+@remark
+Additionally, the example code and documentation illustrate how to implement __classes in C__ and how to document such classes with Doxygen.
+
 @section exa_gen Spexygen-Generated Documentation
+Spexygen logo:
 
 @image html  logo_spexygen.webp
 @image latex logo_spexygen.png width=2in
-@caption{image caption}
+@caption{Image caption.}
 
 The following sections contain the _Spexygen_-generated documentation of this example:
-- @subpage srs
+- @ref srs
 - @ref header.h
 - @ref source.c
 - @ref test1.c
 - @ref test2.c
-
-@note
-Please note the generated _forward-traceability_ and the _backward-traceability_ links (augmented with the brief descriptions) in the "work artifacts" and "code artifacts". Also, try clicking on the provided traceability links as well as _searching_ the UIDs in the Doxygen "search" box.
 
 @ifnot LATEX
 <p></p>

@@ -47,7 +47,7 @@ class Spexygen:
     '''
 
     # public class constants
-    VERSION = 250
+    VERSION = 300
 
     UID_DOC  = 1
     UID_CODE = 2
@@ -132,7 +132,7 @@ class Spexygen:
                     "line", self._lnum, ":", i)
             return
 
-        k = line.find('}', j + 1)
+        k = line.rfind('}', j + 1)
         if k < 0:
             print("Error: missing '}' in UID definition",
                     "line", self._lnum, ":", i)
@@ -416,7 +416,7 @@ class Spexygen:
         print(f"Spexygen: traceable technical documentation system "\
             f"{self.VERSION//100}.{(self.VERSION//10) % 10}."\
             f"{self.VERSION % 10}")
-        print("Copyright (c) 2005-2024 Quantum Leaps, www.state-machine.com\n")
+        print("Copyright (c) 2005-2026 Quantum Leaps, www.state-machine.com\n")
 
         # defaults
         sfname = 'spex.json'

@@ -1,3 +1,5 @@
+/* Customization of the standard CSS for doxygen 1.18.0*/
+
 html {
     /* default spacings. Most components reference these values
     * for spacing, to provide uniform spacing on the page.
@@ -91,6 +93,28 @@ dl.remark {
     background: var(--todo-color-bg);
     border-left: 8px solid var(--todo-color-hl);
     color: var(--todo-color-text);
+}
+
+/* work item styling (@uid / @enduid) .......................
+ * Work items are rendered with the same memitem/memproto/memdoc
+ * structure Doxygen itself uses for documenting code elements (a
+ * function, macro, etc.): a title bar (memproto, showing the UID)
+ * directly connected to a body panel (memdoc, the brief + backward/
+ * forward traceability + references) -- all already styled by the
+ * base theme, so this reuses that box wholesale instead of hand-
+ * rolling a new one. The @subsection heading above it is left as
+ * plain, undisturbed Doxygen output so its anchor/TOC/search-index
+ * behavior is unaffected; the memproto bar repeating the UID right
+ * below it mirrors how Doxygen documents a real function/macro too
+ * (heading, then a proto box repeating the name).
+ * Only .uid-brief below is custom -- everything else is Doxygen's
+ * own memitem/memproto/memdoc/memname styling.
+ */
+.uid-brief {
+    display: block;
+    font-style: italic;
+    font-size: larger;
+    margin-bottom: 6px;
 }
 
 /* full side nav ............................................*/
@@ -338,12 +362,6 @@ dl.item p {
     overflow: auto;
 }
 
-.img {
-    padding-left: 20px;
-    white-space: nowrap;
-    color: #00A;
-}
-
 img.inline {
   display: block;
   margin: auto;
@@ -369,3 +387,22 @@ video {
   display:none;
   color:#fff;
 }
+
+/* Spexygen badges -------------------------------------------------- */
+img.badge {
+  display: inline;
+  height: 32px;
+  width: auto;
+  vertical-align: sub;
+  margin: 0 2px;
+}
+
+/* Spexygen glyphs -------------------------------------------------- */
+.glyph {
+    padding-left: 20px;
+    white-space: nowrap;
+    color: var(--memdecl-template-color);
+}
+
+
+

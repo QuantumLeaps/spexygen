@@ -26,15 +26,14 @@
 - traceable specifications of other kind (e.g., @ref srs)
 
 @ifnot LATEX
+<p></p>
 <a href="https://youtu.be/5naC_z-76Aw?si=IsXXh3Zs59CXAeNv" target="_blank" title="Spexygen video">
 <img src="spexygen-video.jpg">
 </a>
 @else
 @image latex spexygen-video.jpg width=5in
-@webref{https://youtu.be/5naC_z-76Aw?si=IsXXh3Zs59CXAeNv, Spexygen video}
 @endif
-@caption{watch @webref{https://youtu.be/5naC_z-76Aw?si=IsXXh3Zs59CXAeNv, Spexygen video on YouTube}}
-<br>
+@caption{Watch <a href="https://youtu.be/5naC_z-76Aw?si=IsXXh3Zs59CXAeNv">Spexygen video on YouTube</a>}
 
 @note
 By extending Doxygen with a uniform __traceability management__ not just for source code, but also for all other specifications, _Spexygen_ supports regulatory compliance with functional safety standards such as IEC 61508, IEC 62304, ISO 26262 and others.
@@ -54,7 +53,7 @@ The main objectives and features of _Spexygen_ are:
 @section tr Traceability
 __Traceability__ is the cornerstone of any formal documentation system, especially those intended for managing __functional safety__. It enables product teams to associate every work artifact (e.g., a specific requirement) with all the related project artifacts (e.g., design, code, or tests), both backward and forward. Traceability enables everyone to see how every work artifact relates to the requirement &mdash; and vice versa &mdash; at any point during development. This ability fosters team collaboration and enables early detection of possible production risks.
 
-@section fsm-qp_tr-uid Unique Identifiers (UIDs)
+@subsection fsm-qp_tr-uid Unique Identifiers (UIDs)
 Traceability is enabled by the consistent use of __Unique Identifiers (UIDs)__, which are short text labels associated with _all_ work artifacts, such as requirements, architecture elements, design elements, source code elements, coding standard deviations, tests, functional safety documents, etc.
 
 @note
@@ -67,7 +66,8 @@ The UIDs for source code must follow the @webref{https://doxygen.nl, Doxygen} st
 The most important feature of UIDs is their __uniqueness__ within the whole system under consideration. To avoid name conflicts, it is advantageous to establish general rules for constructing the UIDs. Throughout _Spexygen_ documentation, the UIDs have the hierarchical structure consisting of fields separated by underscores and/or dashes:
 
 @verbatim
- +------------------ [1] Work artifact type (e.g., 'SRS' for Software Requirement Specification)
+ +------------------ [1] Work artifact type (e.g., 'SRS' for Software
+ |                       Requirement Specification)
  |   +-------------- [2] Component unique identifier (e.g, 'QP' for @QPX Framework)
  |   |   +---------- [3] Work artifact ID (abbreviation or number)
  |   |   |  +------- [4] Work artifact number
@@ -83,12 +83,11 @@ The various fields in the UID are as follows:
 @subsection fsm-qp_tr-uid_type UID Type
 `[1]` the UID starts with a fields corresponding to the _type_ of the work artifact. Here are the suggested artifact type names:
   + <b>DOC</b>  Document
-  + <b>SRS</b>  Software Requirement Specification
-  + <b>SSR</b>  Software Safety Requirement
-  + <b>SAS</b>  Software Architecture Specification
-  + <b>SDS</b>  Software Design Specification
+  + <b>REQ</b>  Software Requirement Specification
+  + <b>SREQ</b> Software Safety Requirement
+  + <b>ARCH</b> Software Architecture Specification
+  + <b>DES</b>  Software Design Specification
   + <b>FSM</b>  Functional Safety Management artifact
-  + <b>SHR</b>  Software Hazard and Risk artifact
   + <b>DVR</b>  Deviation Record (e.g. coding standard violation)
   + <b>DVP</b>  Deviation Permit (e.g. coding standard violation)
   + <b>TUN</b>  Test (unit)
@@ -115,7 +114,9 @@ Alternatively, UIDs of __code__ elements follow the rules established by Doxygen
      |          |
 [namespace]_[element]
 @endverbatim
-Examples: @tr{Foo_ctor()}, @tr{TUN_PRJ_Foo_ctor_01}
+Examples:
+- @tr{Foo_ctor()}
+- @tr{TUN_PRJ_Foo_ctor_01}
 
 @subsection tr-bw Backward Traceability
 Backward traceability begins at a specific work artifact and links it to the original artifact. For example, architecture element can be linked with an upstream requirement, or code artifact with the upstream design. Backward traceability gives visibility into why specific artifacts were created and how different pieces of a system fit together. Tracing in this way also allows testers to find gaps or missing work artifacts.
@@ -127,9 +128,9 @@ As illustrated in the diagram below, __backward traceability is provided explici
 
 @image html  spx_tr.svg width=1500px
 @image latex spx_tr.eps
-@caption{Schematic View of Backward Traceability in the _Spexygen_ documentation}
+@caption{Schematic View of Backward Traceability in the Spexygen documentation.}
 
-@note
+@n@note
 The _Spexygen_ documentation traceability system includes the __source code__. This is achieved by placing special backward traceability links, such as `@tr{SRS_PRJ_Foo_03}` or `@tr{free_fun()}`, inside the _Spexygen_ documentation for the source code.
 
 
@@ -164,14 +165,13 @@ The whole system of traceability offered in _Spexygen_ is __extensible__ and can
 _Spexygen_ can be viewed as a pre-processor for @webref{https://Doxygen.nl,Doxygen} with the workflow similar to that of Doxygen. The diagram below shows the documentation generation steps, the
 relation between _Spexygen_ and Doxygen, and the flow of information between them. The numbered sections following the diagram explain the labeled elements:
 
-<br>
 @image html  spx_flow.svg width=1500px
 @image latex spx_flow.eps
 @caption{Spexygen information flow.}
 
-`[1]` Developers prepare documents (e.g., `srs.dox`) according to the conventions established by Doxygen. The individual "work artifacts" are created with a set of @ref spx_use-doc-uid "custom commands" provided by _Spexygen_ (file `Spexyfile`). For example, command \c \@uid{} starts a definition of a new "work artifact" such as a requirement.
+`[1]` Developers prepare documents (e.g., `srs.dox`) according to the conventions established by Doxygen. The individual "work artifacts" are created with a set of @ref spx_use-doc-uid "custom commands" provided by _Spexygen_ (file `Spexyfile`). For example, command \c \@uid{} starts a definition of a new work artifact such as a requirement.
 
-`[2]` Developers also apply the special @ref spx_use-doc-code "custom commands" provided by _Spexygen_ to annotate the source code (e.g., `header.h`). For example, command \c \@code_uid{} starts a definition of a new "code artifact".
+`[2]` Developers also apply the special @ref spx_use-doc-code "custom commands" provided by _Spexygen_ to annotate the source code (e.g., `header.h`). For example, command \c \@code_uid{} starts a definition of a new code artifact.
 
 `[3]` Developers prepare a _Spexygen_ configuration file (e.g., `spex.json` in the diagram), which describes the documents to be traced and generated by _Spexygen_.
 
@@ -206,7 +206,6 @@ The _Spexygen_ workflow is illustrated in the provided @ref exa "example".
 */
 //############################################################################
 /*! @page doc Preparing Spexygen Documentation
-
 @ifnot LATEX
 @nav{work,gen}
 <div style="clear:both"></div>
@@ -219,19 +218,28 @@ As described in the @ref spx_work "<em>spexygen</em> workflow", _Spexygen_ works
 @section spx_use-doc-uid Defining Work Artifacts
 __Work artifacts__ (e.g., requirements) are defined by means of the following _Spexygen_ custom commands:
 <table>
-<tr><th class = "middle">Command <th>Purpose
-<tr><td><b>\@uid{uid,brief}</b> <td>starts the definition of a "work artifact"<br> parameter: <b>uid</b>  -- the @ref tr-uid "UID" of the "work artifact"<br> parameter: <b>brief</b> -- brief description of the "work artifact"
-<tr><td><b>\@uid_litem{title}</b> <td>adds new line - item in the "work artifact" definition<br>parameter: <b>title</b> -- Title of the line item(e.g., Details)
-<tr><td><b>\@uid_bw_trace{brief}</b> <td>adds the backward trace section in in the "work artifact" definition<br>parameter: <b>brief</b> -- request _Spexygen_ to add the brief item description
-<tr><td><b>\@uid_bw_trace</b> <td>adds the backward trace section in in the "work artifact" definition<br> overloaded version without requesting the brief description
-<tr><td><b>\@uid_fw_trace{levels}</b> <td>adds the forward trace section in in the "work artifact" definition<br> this is a request to _Spexygen_ to __generate__ the recursive @ref tr-fw "forward traceability" for the "work artifact" <br>optional parameter: <b>levels</b> truncates the displayed recursion levels
-<tr><td><b>\@enduid</b> <td>ends the definition "work artifact" <br> must be placed at the end of "work artifact" definition
-<tr><td><b>\@tr{uid}</b> <td>references the given UID<br> parameter: <b>uid</b>  -- the @ref tr-uid "UID" of the "work artifact"
+<tr><th>Command <th>Purpose
+<tr><td><b>\@uid{uid,brief}</b> <td>starts the definition of a work artifact<br>
+parameter: <b>uid</b> &mdash; the @ref tr-uid "UID" of the work artifact<br>
+parameter: <b>brief</b> &mdash; brief description of the work artifact
+<tr><td><b>\@uid_litem{title}</b> <td>adds new line - item in the work artifact definition<br>
+parameter: <b>title</b> &mdash; Title of the line item(e.g., Details)
+<tr><td><b>\@uid_bw_trace{brief}</b> <td>adds the backward trace section in in the work artifact definition<br>
+parameter: <b>brief</b> &mdash; request _Spexygen_ to add the brief item description
+<tr><td><b>\@uid_bw_trace</b> <td>adds the backward trace section in in the work artifact definition<br>
+overloaded version without requesting the brief description
+<tr><td><b>\@uid_fw_trace{levels}</b> <td>adds the forward trace section in in the work artifact definition<br>
+this is a request to _Spexygen_ to __generate__ the recursive @ref tr-fw "forward traceability" for the work artifact<br>
+optional parameter: <b>levels</b> truncates the displayed recursion levels
+<tr><td><b>\@enduid</b> <td>ends the definition work artifact <br>
+must be placed at the end of work artifact definition
+<tr><td><b>\@tr{uid}</b> <td>references the given UID<br>
+parameter: <b>uid</b> &mdash; the @ref tr-uid "UID" of the work artifact
 </table>
 @remark
 The _Spexygen_ custom commands are defined as `ALIAS=...` in `Spexyfile`.
 
-The following snippet illustrates how a "work artifact" (a requirement) has been documented for _Spexygen_ (see also file srs.dox):
+The following snippet illustrates how a work artifact (a requirement) has been documented for _Spexygen_ (see also file srs.dox):
 @verbatim
 [1] @section srs_req Requirements
     ...
@@ -246,26 +254,26 @@ The following snippet illustrates how a "work artifact" (a requirement) has been
 
 `[1]` _Spexygen_ "work artifacts" must be defined in the scope of a Doxygen <b>\@section</b>.
 
-`[2]` each "work artifact" is defined with the _Spexygen_ command <b>\@uid{}</b>, which takes two arguments:
+`[2]` each work artifact is defined with the _Spexygen_ command <b>\@uid{}</b>, which takes two arguments:
   1. the UID associated with the artifact (e.g., `SRS_PRJ_Foo_03`)
   2. the brief description of the artifact (e.g., `My project class Foo shall provide a verify operation.`)
 @attention
-The whole <b>\@uid{}</b> command must be defined in a single line of text and the brief description must not contain commas `,`
+@badge{safety} The whole <b>\@uid{}</b> command must be defined in a single line of text and the brief description must not contain commas `,`
 
 <p></p>
-`[3]` the "work artifact" definition can contain "line items", such as "Description" coded by means of the <b>\@uid_litem{Description}</b> _Spexygen_ command. A "work artifact" can have multiple line items defined with the <b>\@uid_litem{}</b> _Spexygen_ command.
+`[3]` the work artifact definition can contain "line items", such as "Description" coded by means of the <b>\@uid_litem{Description}</b> _Spexygen_ command. A work artifact can have multiple line items defined with the <b>\@uid_litem{}</b> _Spexygen_ command.
 
-`[4]` the "work artifact" can specify @ref tr-bw "backward traceability" by means of the <b>\@uid_bw_trace</b> _Spexygen_ command. If this command provides argument `{brief}`, _Spexygen_ will generate the brief description for each of the provided traceability links (see the next step `[5]`)
+`[4]` the work artifact can specify @ref tr-bw "backward traceability" by means of the <b>\@uid_bw_trace</b> _Spexygen_ command. If this command provides argument `{brief}`, _Spexygen_ will generate the brief description for each of the provided traceability links (see the next step `[5]`)
 
 `[5]` the traceability links to the upstream artifacts must be provided explicitly by means of the <b>\@tr{uid}</b> _Spexygen_ command. The command establishes traceability to the @ref tr-uid "UID" provided in the argument (e.g., `SRS_PRJ_Foo_00`)
 
-`[6]` the "work artifact" can specify forward traceability by means of the <b>\@uid_fw_trace</b> _Spexygen_ command
+`[6]` the work artifact can specify forward traceability by means of the <b>\@uid_fw_trace</b> _Spexygen_ command
 @note
 The <b>\@uid_fw_trace</b> _Spexygen_ command is just a __placeholder__ for _Spexygen_ to generate the forward traceability links at this place. The optional parameter truncates the number of recursion levels to the specified value.
 
 `[7]` The artifact definition must end with the _Spexygen_ <b>\@enduid</b> command
 
-The following screen shot shows how the "work artifact" defined in the code snipped above is rendered in HTML:
+The following screen shot shows how the work artifact defined in the code snipped above is rendered in HTML:
 
 @image html  spx-uid.jpg
 @image latex spx-uid.jpg width=5.5in
@@ -274,19 +282,19 @@ The following screen shot shows how the "work artifact" defined in the code snip
 @section spx_use-doc-code Defining Code Artifacts
 __Code artifacts__ (e.g., functions, macros, classes) are naturally handled by Doxygen and the _Spexygen_ system must comply with the exiting Doxygen conventions. The "code artifacts" are defined by means of the following _Spexygen_ custom commands:
 <table>
-<tr><th class = "middle">Command <th>Purpose
-<tr><td><b>\@code_uid{uid,brief }</b> <td>starts the definition of a "code artifact"<br> parameter: <b>uid</b>  --the @ref tr-uid "UID" of the "code artifact"<br> parameter: <b>brief</b> -- brief description of the "code artifact"
-<tr><td><b>\@code_litem{item }</b> <td>adds new line-item in the "code artifact" definition<br>parameter: <b>title</b> --Title of the line item(e.g., Details)
-<tr><td><b>\@code_bw_trace{brief}</b> <td>adds the backward trace section in in the "code artifact" definition<br>parameter: <b>brief</b> -- request _Spexygen_ to add the brief item description
-<tr><td><b>\@code_bw_trace</b> <td>adds the backward trace section in in the "code artifact" definition<br> overloaded version without requesting the brief description
-<tr><td><b>\@code_fw_trace{levels}</b>  <td>adds the forward trace section in in the "code artifact" definition<br> this is a request to _Spexygen_ to __generate__ the recursive @ref tr-fw "forward traceability" for the "code artifact"<br>optional parameter: <b>levels</b> truncates the displayed recursion levels
-<tr><td><b>\@endcode_uid</b> <td>ends the definition "code artifact" <br> must be placed at the end of "code artifact" definition
-<tr><td><b>\@tr{uid}</b> <td>references the given UID<br> parameter: <b>uid</b> -- the @ref tr-uid "UID" of the "code artifact"
+<tr><th>Command <th>Purpose
+<tr><td><b>\@code_uid{uid,brief}</b> <td>starts the definition of a code artifact<br> parameter: <b>uid</b> &mdash; the @ref tr-uid "UID" of the code artifact<br> parameter: <b>brief</b> &mdash; brief description of the code artifact
+<tr><td><b>\@code_litem{item}</b> <td>adds new line-item in the code artifact definition<br>parameter: <b>title</b> &mdash; Title of the line item(e.g., Details)
+<tr><td><b>\@code_bw_trace{brief}</b> <td>adds the backward trace section in in the code artifact definition<br>parameter: <b>brief</b> &mdash; request _Spexygen_ to add the brief item description
+<tr><td><b>\@code_bw_trace</b> <td>adds the backward trace section in in the code artifact definition<br> overloaded version without requesting the brief description
+<tr><td><b>\@code_fw_trace{levels}</b>  <td>adds the forward trace section in in the code artifact definition<br> this is a request to _Spexygen_ to __generate__ the recursive @ref tr-fw "forward traceability" for the code artifact<br>optional parameter: <b>levels</b> truncates the displayed recursion levels
+<tr><td><b>\@endcode_uid</b> <td>ends the definition code artifact <br> must be placed at the end of code artifact definition
+<tr><td><b>\@tr{uid}</b> <td>references the given UID<br> parameter: <b>uid</b> &mdash; the @ref tr-uid "UID" of the code artifact
 </table>
 @remark
 The _Spexygen_ custom commands are defined as `ALIAS=...` in `Spexyfile`.
 
-The following snippet illustrates how a "code artifact" (function `free_fun()`) has been documented (see also file header.h):
+The following snippet illustrates how a code artifact (function `free_fun()`) has been documented (see also file header.h):
 @verbatim
     /*!
 [1] @code_uid{Foo_verify_(), Operation verify_() of class Foo brief description}
@@ -303,34 +311,33 @@ The following snippet illustrates how a "code artifact" (function `free_fun()`) 
 [7] bool Foo_verify_(Foo const* const me);
 @endverbatim
 
-`[1]` each "code artifact" is defined with the _Spexygen_ command <b>\@code_uid{}</b>, which takes two arguments :
+`[1]` each code artifact is defined with the _Spexygen_ command <b>\@code_uid{}</b>, which takes two arguments :
 1. the UID associated with the artifact(e.g., `Foo_verify_()`)
 2. the brief description of the artifact(e.g., `Operation verify_() of class Foo brief description`)
 @attention
-The whole <b>\@code_uid{}</b> command must be defined in a single line of text and the brief description must not contain commas `,`
+@badge{safety} The whole <b>\@code_uid{}</b> command must be defined in a single line of text and the brief description must not contain commas `,`
 
 <p></p>
-`[2]` the "code artifact" definition can contain "line items", such as "Details" coded by means of the <b>\@code_litem{Details}</b> _Spexygen_ command. A "code artifact" can have multiple items defined with the <b>\@code_litem{...}</b> _Spexygen_ command.
+`[2]` the code artifact definition can contain "line items", such as "Details" coded by means of the <b>\@code_litem{Details}</b> _Spexygen_ command. A code artifact can have multiple items defined with the <b>\@code_litem{...}</b> _Spexygen_ command.
 
-`[3]` the "code artifact" can specify @ref tr-bw "backward traceability" by means of the <b>\@uid_bw_trace</b> _Spexygen_ command. If this command provides argument `{brief}`, _Spexygen_ will generate the brief description for each of the provided traceability links(see the next step `[4]`)
+`[3]` the code artifact can specify @ref tr-bw "backward traceability" by means of the <b>\@uid_bw_trace</b> _Spexygen_ command. If this command provides argument `{brief}`, _Spexygen_ will generate the brief description for each of the provided traceability links(see the next step `[4]`)
 
 `[4]` the traceability links to the upstream artifacts must be provided explicitly by means of the <b>\@tr{uid}</b> _Spexygen_ command. The command establishes traceability to the @ref tr-uid "UID" provided in the argument(e.g., `SRS_PRJ_Foo_03`)
 
-`[5]` the "code artifact" can specify forward traceability by means of the <b>\@code_fw_trace</b> _Spexygen_ command
+`[5]` the code artifact can specify forward traceability by means of the <b>\@code_fw_trace</b> _Spexygen_ command
 @note
 The <b>\@code_fw_trace</b> _Spexygen_ command is just a __placeholder__ for _Spexygen_ to generate the forward traceability links at this place. The optional parameter truncates the number of recursion levels to the specified value.
 
-`[6]` The "code artifact" definition must end with the _Spexygen_ <b>\@endcode_uid</b> command
+`[6]` The code artifact definition must end with the _Spexygen_ <b>\@endcode_uid</b> command
 
-`[7]` Finally, the "code artifact" needs to be declared, so that Doxygen can analyze the syntax of the specific programming language.
+`[7]` Finally, the code artifact needs to be declared, so that Doxygen can analyze the syntax of the specific programming language.
 
 
-The following screen shot shows how the "code artifact" defined in the code snipped above is rendered in HTML :
+The following screen shot shows how the code artifact defined in the code snipped above is rendered in HTML :
 
 @image html  spx-code.jpg
 @image latex spx-code.jpg width=5.5in
 @caption{ Examples of "code artifacts" (function) }
-
 
 @ifnot LATEX
 <div style="clear:both"></div>
@@ -353,23 +360,23 @@ Similar to Doxygen, _Spexygen_ is configured by an external configuration file w
 @verbatim
     {
 [1] "trace": [
-        "../example/exa.dox",
         "../example/srs.dox",
         "../example/dev.dox",
         "../example/inc",
         "../example/src",
-        "../example/test"
+        "../example/test",
+        "../example/code.dox"
     ]
 
 [2] "gen-dir": "spex",
 [3] "gen-inc": "Spexyinc",
 [4] "gen": [
-        "../example/exa.dox",
         "../example/srs.dox",
         "../example/dev.dox",
         "../example/inc",
         "../example/src",
         "../example/test"
+        "../example/code.dox"
     ],
     }
 @endverbatim
@@ -391,6 +398,8 @@ The "gen-inc":` JSON string is optional and if not provided, _Spexygen_ will NOT
 <p></p>
 `[4]` The `"gen":` JSON array contains a list of the files that _Spexygen_ will generate by replacing the special forward traceability commands (<b>\@ui_fw_trace</b> and <b>\@code_fw_trace</b>) with the actual traceability links collected during the "trace" pass.
 
+@attention
+The **order** of the files in the `"gen":` array is important. In particular, any external documenation (separated from the code) must be listed **after** the elements that it documents.
 
 @section gen_run Running Spexygen
 The `spexygen.py` Python script can be executed from a command prompt. Typically, you run the script in the directory, where you have your `spex.json` script.Here is an example run:

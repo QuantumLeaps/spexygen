@@ -34,7 +34,7 @@
 # Spexygen commands
 #---------------------------------------------------------------------------
 ALIASES = \
-"uid{2}=<hr>@addindex \1^^@subsection \1 \1^^<i>\2</i>^^" \ 
+"uid{2}=@addindex \1^^@subsection \1 \1^^<i>\2</i>^^" \ 
 "uid_litem{1}=^^<b>\1</b>^^" \
 "uid_bw_trace=^^<b>Backward Traceability</b>" \
 "uid_bw_trace{1}=^^<b>Backward Traceability</b>" \
@@ -42,7 +42,7 @@ ALIASES = \
 "uid_fw_trace{1}=^^<b>Forward Traceability (truncated to \1 level(s))</b>" \
 "uid_ref=^^<b>References</b>" \
 "uid_ref{1}=^^<b>References</b>" \
-"enduid=<br>^^" \
+"enduid=" \
 "code_uid{2}=@brief \2" \
 "code_alias{2}=@anchor \1^^@brief <b>\1</b> : \2" \
 "code_litem{1}=^^<b>\1</b>^^" \
@@ -52,37 +52,22 @@ ALIASES = \
 "code_fw_trace{1}=^^<b>Forward Traceability (truncated to \1 level(s))</b>" \
 "code_ref=^^<b>References</b>" \
 "code_ref{1}=^^<b>References</b>" \
-"endcode_uid=@latexonly \clearpage @endlatexonly" \
+"endcode_uid=" \
 "tr{1}=@ref \1 \"\1\"" \
 "precondition{2}=^^@par Precondition `\1:\2`^^" \
 "postcondition{2}=^^@par Postcondition `\1:\2`^^" \
 "invariant{2}=^^@par Invariant `\1:\2`^^" \
-"caption{1}=<center><i>\1</i></center>^^" \
+"caption{1}=@latexonly\DoxyCaption{@endlatexonly\1@latexonly}@endlatexonly^^" \
 "webref{2}=<a target=\"_blank\" rel=\"noopener\" href=\"\1\">\2&uarr;</a>" \
 "newpage=@latexonly \clearpage @endlatexonly" \
-"badge{1}=<img class=\"badge\" src=\"\1.webp\">" \
-"nav{2}=<span class=\"prev_button\">@ref \1</span><span class=\"next_button\">@ref \2</span>" \
-"nav_prev{1}=<span class=\"prev_button\">@ref \1</span><span class=\"next_button\"></span>" \
-"nav_next{1}=<span class=\"prev_button\"></span><span class=\"next_button\">@ref \1</span>"
-
-SORT_MEMBER_DOCS       = NO
+"badge{1}=@image{inline} latex \1.png width=0.25in"
 
 #---------------------------------------------------------------------------
-# Configuration options related to the HTML output
+# Configuration options related to the LaTeX output
 #---------------------------------------------------------------------------
-# Spexygen: spexy style
-#---------------------------------------------------------------------------
-HTML_EXTRA_STYLESHEET  = $(SPEXYGEN)/spexy.css
-HTML_EXTRA_FILES       = $(SPEXYGEN)/image-preview.js
-DISABLE_INDEX          = NO
-GENERATE_TREEVIEW      = YES
-PAGE_OUTLINE_PANEL     = YES
-FULL_SIDEBAR           = NO
-
-#---------------------------------------------------------------------------
-# Spexygen: customized HTML header/footer
+# Spexygen: customized LaTeX header/footer
 # (can be overridden by the including Doxyfile)
 #---------------------------------------------------------------------------
-TREEVIEW_WIDTH         = 200
-HTML_HEADER            = $(SPEXYGEN)/spexy-header.html
-HTML_FOOTER            = $(SPEXYGEN)/spexy-footer.html
+LATEX_HEADER           = $(SPEXYGEN)/spexy-header.tex
+LATEX_FOOTER           = $(SPEXYGEN)/spexy-footer.tex
+LATEX_EXTRA_STYLESHEET = $(SPEXYGEN)/spexy-style.sty

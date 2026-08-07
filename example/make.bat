@@ -1,6 +1,6 @@
 @echo off
 :: ===========================================================================
-:: Product: batch script for generating Spexygen documentation
+:: batch script for generating Spexygen documentation
 ::
 ::                   Q u a n t u m  L e a P s
 ::                   ------------------------
@@ -32,9 +32,13 @@
 :: ===========================================================================
 @setlocal
 
+@cls
 @echo usage:
 @echo make
 @echo make -PDF
+
+@echo.
+@echo param is %1
 
 :: tools (adjust to your system)----------------------------------------------
 :: Doxygen/Spexygen tools
@@ -42,10 +46,11 @@
 @set SPEXYGEN=..
 
 @echo Generate Spexygen tracing ----------------------------------------------
-rmdir /S /Q  .\spex
-python %SPEXYGEN%/spexygen.py spex.json
+@set SPEX_OUT=.\spex
+rmdir /S /Q  %SPEX_OUT%
+call python %SPEXYGEN%/spexygen.py spex.json
 
-::============================================================================
+:: ===========================================================================
 @if "%1"=="-PDF" goto PDF
 
 @echo.
@@ -58,13 +63,11 @@ rmdir /S /Q %HTML_OUT%
 @echo generating HTML...
 call %DOXYGEN% Doxyfile
 
-@echo Adding custom files...
-
 ::qclean %HTML_OUT%
 goto END
 
 :PDF
-@echo Generate PDF Documentation --------------------------------------------
+@echo Generate PDF Documentation ---------------------------------------------
 @set LATEX_OUT=latex
 
 @echo.
@@ -84,6 +87,7 @@ rmdir /S /Q  %LATEX_OUT%
 
 :END
 @echo Final cleanup ----------------------------------------------------------
-rmdir /S /Q  .\spex
+rmdir /S /Q  %SPEX_OUT%
 
+@echo Done
 @endlocal

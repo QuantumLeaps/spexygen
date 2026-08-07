@@ -5,7 +5,8 @@
         "./srs.dox",
         "./inc",
         "./src",
-        "./test"
+        "./test",
+        "./code.dox"
     ],
     "note1":  "no separate 'trace' section, meaning that 'gen' section will be used for tracing"
 }

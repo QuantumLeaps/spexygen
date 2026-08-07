@@ -1,0 +1,535 @@
+% =============================================================================
+% Quantum Leaps custom LaTeX stylesheet for Doxygen/Spexygen PDF output
+%
+% Wired in via Doxyfile:
+%   LATEX_EXTRA_STYLESHEET = $(SPEXYGEN)/spexy-style.sty
+%
+% Loaded from spexy-header.tex immediately after \usepackage{doxygen} (via the
+% $extralatexstylesheet substitution), i.e. BEFORE fontenc, hyperref, and the
+% title page -- but AFTER the brand colors (frontbg/frontfg/accent/emph) are
+% already \definecolor'd. Section-heading color and hyperlink color are set
+% directly in spexy-header.tex itself (not here), since that file already
+% calls \doxyallsectionsfont/\hypersetup on its own later in the preamble --
+% duplicating those overrides here would just get silently clobbered by that
+% later call.
+% =============================================================================
+
+% -----------------------------------------------------------------------------
+% Fonts, trial 3: Libertinus, one coherent family covering all three roles --
+% replacing the earlier Source Sans/Code Pro attempt (which kept hitting
+% mirror/install problems) and the original TeX Gyre trio (kept commented
+% out below for easy A/B rollback).
+% Per the libertinus package docs, a bare \usepackage{libertinus} (no
+% options) activates all three at once:
+%   Libertinus Serif = body text   (\rmdefault)
+%   Libertinus Sans  = headings    (\sfdefault; picked up by \sffamily in
+%                                   spexy-header.tex's \doxyallsectionsfont)
+%   Libertinus Mono  = code/mono   (\ttdefault)
+% Already confirmed installed on your machine (the earlier tlmgr install
+% succeeded for libertinus, even though sourcesanspro failed) -- no further
+% package install should be needed.
+% -----------------------------------------------------------------------------
+\usepackage{libertinus}
+
+% ---- previous trial (TeX Gyre) -- kept for quick A/B rollback ----
+%\usepackage{tgpagella}
+%\usepackage{tgheros}
+%\usepackage{tgcursor}
+
+% -----------------------------------------------------------------------------
+% Monospace override: revert Libertinus Mono (just set above) back to
+% Computer Modern Typewriter (cmtt) -- plain LaTeX's built-in default
+% \ttfamily, the same font stock/unmodified doxygen LaTeX output uses (its
+% doxygen.sty never loads a font package or touches \ttdefault). cmtt ships
+% with the LaTeX kernel itself, so this needs no package at all -- simply
+% force \ttdefault back to it here, overriding whatever libertinus set.
+% Only \rmdefault/\sfdefault (body/headings) stay on Libertinus.
+% -----------------------------------------------------------------------------
+\renewcommand{\ttdefault}{cmtt}
+
+% spexy-header.tex's $latexfont substitution (a Doxyfile-driven block,
+% generated *after* this file loads) may reload its own font packages and
+% force \familydefault back to sans -- which would silently undo whichever
+% font family we just picked here, no matter which one it is. Capture what
+% we actually set, then re-assert it at \begin{document}, guaranteed to run
+% after the rest of the preamble (including $latexfont) has finished, so
+% our choice always wins regardless of what runs in between.
+\edef\SpexyRmDefault{\rmdefault}
+\edef\SpexySfDefault{\sfdefault}
+\edef\SpexyTtDefault{\ttdefault}
+\AtBeginDocument{%
+  \renewcommand{\rmdefault}{\SpexyRmDefault}%
+  \renewcommand{\sfdefault}{\SpexySfDefault}%
+  \renewcommand{\ttdefault}{\SpexyTtDefault}%
+  \renewcommand{\familydefault}{\SpexyRmDefault}%
+  \normalfont
+}
+
+% -----------------------------------------------------------------------------
+% Heading color: a darker shade of the brand accent, used for chapter/section
+% titles only (links and the table-header tint keep using the brighter
+% \accent color elsewhere, unaffected by this).
+% -----------------------------------------------------------------------------
+\colorlet{sectioncolor}{accent!70!black}
+
+% -----------------------------------------------------------------------------
+% Section headings: doxygen's LaTeX generator emits \doxysection /
+% \doxysubsection / \doxysubsubsection directly (not \section/\subsection),
+% so \doxyallsectionsfont (set in spexy-header.tex) never reaches them -- it
+% only reaches \chapter/\part via doxygen.sty's older sectsty-style shim.
+% Redefine the actual commands doxygen emits.
+% -----------------------------------------------------------------------------
+\renewcommand\doxysection{\@startsection{section}{1}{\z@}%
+  {-3.5ex \@plus -1ex \@minus .2ex}%
+  {1.0ex \@plus .1ex}%
+  {\raggedright\sffamily\bfseries\Large\color{sectioncolor}}}
+\renewcommand\doxysubsection{\@startsection{subsection}{2}{\z@}%
+  {-3.25ex\@plus -1ex \@minus .2ex}%
+  {0.6ex \@plus .1ex}%
+  {\raggedright\sffamily\bfseries\large\color{sectioncolor}}}
+\renewcommand\doxysubsubsection{\@startsection{subsubsection}{3}{\z@}%
+  {-3.25ex\@plus -1ex \@minus .2ex}%
+  {0.6ex \@plus .1ex}%
+  {\raggedright\sffamily\bfseries\normalsize\color{sectioncolor}}}
+\renewcommand\doxysubsubsubsection{\@startsection{subsubsubsection}{4}{\z@}%
+  {-3.25ex\@plus -1ex \@minus .2ex}%
+  {0.6ex \@plus .1ex}%
+  {\raggedright\sffamily\bfseries\normalsize\color{sectioncolor}}}
+
+% -----------------------------------------------------------------------------
+% Chapter headings (book class, used when !COMPACT_LATEX): as with
+% \doxysection above, \doxyallsectionsfont's \SS@chaptitlefont/\SS@chapnumfont
+% hooks are legacy and no longer wired into book.cls's actual chapter-heading
+% routine in current doxygen.sty, so the chapter title stays plain black
+% unless \@makechapterhead/\@makeschapterhead themselves are redefined.
+% This is book.cls's stock definition with \raggedright (already applied by
+% doxygen.sty) plus \sffamily\color{sectioncolor} added to match section
+% headings.
+% -----------------------------------------------------------------------------
+\makeatletter
+\def\@makechapterhead#1{%
+  \vspace*{50\p@}%
+  {\parindent\z@\raggedright\sffamily\bfseries\color{sectioncolor}%
+    \ifnum\c@secnumdepth>\m@ne
+      \if@mainmatter
+        \huge\bfseries\@chapapp\space\thechapter
+        \par\nobreak
+        \vskip20\p@
+      \fi
+    \fi
+    \interlinepenalty\@M
+    \Huge\bfseries#1\par\nobreak
+    \vskip40\p@
+  }}
+\def\@makeschapterhead#1{%
+  \vspace*{50\p@}%
+  {\parindent\z@\raggedright\sffamily\bfseries\color{sectioncolor}%
+    \interlinepenalty\@M
+    \Huge\bfseries#1\par\nobreak
+    \vskip40\p@
+  }}
+\makeatother
+
+% -----------------------------------------------------------------------------
+% Code listings & verbatim blocks: give \DoxyCode (used by @code and, via
+% DoxyCodeInclude, by @example/@include/@includelineno/@dontinclude) and
+% \DoxyVerb (used by @verbatim, via DoxyVerbInclude by @verbinclude, and by
+% @code blocks Doxygen couldn't parse -- see note below) a visible
+% light-gray background box instead of bare monospace text sitting directly
+% on the page. DoxyCodeInclude/DoxyVerbInclude call \DoxyCode/\DoxyVerb
+% directly rather than \begin{...}, so wrapping just these two base
+% environments covers all of the above automatically.
+% -----------------------------------------------------------------------------
+\usepackage{mdframed}
+
+% The document sets a large \parskip (via \doxynormalparskip in
+% spexy-header.tex, ~3ex plus/minus). That \parskip is still in effect at
+% the moment each of these framed environments opens, and mdframed's frame
+% starts drawing its background only from the first real paragraph onward --
+% the leading \parskip-worth of glue before that paragraph still occupies
+% space inside the frame but is left uncolored, showing up as a gap between
+% the background's top edge and the first visible line (most noticeable on
+% multi-paragraph content like numbered source listings, where every
+% \DoxyCodeLine is its own paragraph). Fix: zero \parskip for the duration
+% of the frame, restoring it afterward via \begingroup/\endgroup.
+\let\DoxyCodeOrig\DoxyCode
+\let\endDoxyCodeOrig\endDoxyCode
+\renewenvironment{DoxyCode}[1]{%
+  \begingroup
+  \parskip=0pt\relax
+  \begin{mdframed}[%
+    backgroundcolor=gray!15,%
+    hidealllines=true,%
+    innertopmargin=6pt,%
+    innerbottommargin=6pt,%
+    innerleftmargin=8pt,%
+    innerrightmargin=8pt,%
+    skipabove=8pt,%
+    skipbelow=8pt%
+  ]%
+  \DoxyCodeOrig{#1}%
+}{%
+  \endDoxyCodeOrig
+  \end{mdframed}%
+  \endgroup
+}
+
+% \DoxyVerb (used by @verbatim, and via DoxyVerbInclude by @verbinclude --
+% also what @code/@endcode falls back to whenever Doxygen can't parse the
+% block's contents as a real language, per Doxygen's own docs: "If the
+% contents of the code block are in a language that Doxygen cannot parse,
+% Doxygen will just show the output as-is") is built on the plain
+% `verbatim` package's raw \verbatim/\endverbatim, which switches to a
+% special catcode mode and scans character-by-character for its own closing
+% tag. A manual wrap -- \renewenvironment{DoxyVerb}{\begin{mdframed}[...]
+% \DoxyVerbOrig}{...} -- broke on real content (a multi-line ASCII-art UID
+% diagram): "Runaway argument? File ended while scanning use of \next",
+% reproduced in isolation. The fix is mdframed's own \surroundwithmdframed
+% helper instead of manual \renewenvironment: it wraps the environment at a
+% point before catcodes change, avoiding the expansion-order clash the
+% manual version hit. Confirmed working on the same real ASCII-art content
+% and in a full-document rebuild, including correct top-edge alignment (no
+% \parskip-gap fix needed here, unlike \DoxyCode above).
+\surroundwithmdframed[%
+  backgroundcolor=gray!15,%
+  hidealllines=true,%
+  innertopmargin=6pt,%
+  innerbottommargin=6pt,%
+  innerleftmargin=8pt,%
+  innerrightmargin=8pt,%
+  skipabove=8pt,%
+  skipbelow=8pt%
+]{DoxyVerb}
+
+% -----------------------------------------------------------------------------
+% Special paragraphs (Note, Warning, Attention, Remark, Author, Since, See
+% Also, Version, Return, Precondition, Postcondition, Invariant, Copyright,
+% Paragraph, Important, Date): all of these route through doxygen.sty's
+% DoxyDesc environment, with the "Note"/"Warning"/etc. label itself drawn by
+% \entrylabel via \DoxyLabelFont (set in spexy-header.tex).
+%
+% DoxyDesc takes a mandatory argument (the label text), so the argument-less
+% \surroundwithmdframed helper (used above for DoxyVerb) doesn't apply here;
+% wrap begin/end directly instead, preserving the argument (same pattern as
+% \DoxyCode above, which needs the same manual wrap for its \parskip fix).
+%
+% DoxyDesc is a plain `list` environment (doxygen.sty), and LaTeX's `list`
+% always resets \rightskip to 0pt as one of its default parameters -- which
+% silently overrides the document-wide \raggedright set once in
+% spexy-header.tex, making Note/Warning/Attention/Remark/etc. text fully
+% justified while everything else is ragged-right. Re-assert \raggedright
+% right after entering the list (i.e. right after \DoxyDescOrig{#1}, which
+% has already done \begin{list}...\item[#1]) to restore it.
+%
+% Colors below are lifted directly from doxygen.css (light-mode :root
+% variables) so the PDF matches the HTML output instead of inventing a new
+% palette -- except where the project's own spexy.css (loaded after
+% doxygen.css in the HTML build) overrides the base doxygen.css rule for a
+% given section, in which case we match spexy.css's override instead, since
+% that's what actually renders in the real HTML output:
+%   --note-color-bg/-hl/-text       #faf3d8 / #f3a600 / #5f4204  (Note only
+%                                                        -- see Remark below)
+%   --warning-color-bg/-hl/-text    #f8d1cc / #b61825 / #75070f  (Warning,
+%                                                       Attention, Important)
+%   --invariant-color-bg/-hl/-text  #d8f1e3 / #44b86f / #265532  (Invariant,
+%                                                    Precondition/\pre,
+%                                                    Postcondition/\post)
+%   --todo-color-bg/-hl/-text       #e4f3ff / #1879c4 / #274a5c  (Remark --
+%                                          spexy.css's "dl.remark" rule
+%                                          reassigns Remark from the base
+%                                          doxygen.css note-blue... er,
+%                                          note-yellow to the todo-blue
+%                                          triple instead of leaving it
+%                                          paired with Note)
+%   --deprecated-color-bg/-hl/-text #ecf0f3 / #5b6269 / #43454a  (Paragraph
+%                                          -- spexy.css's "dl.user" rule,
+%                                          which is what @par/DoxyParagraph
+%                                          renders as in HTML, borrows the
+%                                          deprecated-gray triple)
+% doxygen.css groups Warning/Attention/Important and Invariant/pre/post
+% exactly this way (e.g. "dl.warning, dl.attention, dl.important {
+% background: var(--warning-color-bg); ... }"); Remark and Paragraph/user
+% are then individually reassigned by spexy.css's own "dl.remark"/"dl.user"
+% rules (both confirmed by reading the user-supplied doxygen.css and
+% spexy.css). -hl is used both for the box's left accent bar (mirroring the
+% CSS "border-left: 8px solid") and for the label text (mirroring e.g.
+% "dl.warning dt { color: var(--warning-color-hl) }"); -text tints the body
+% text inside the box the same way the CSS's block-level "color: var(...)"
+% does, with the label overriding back to -hl on top of that, same as the
+% CSS cascade (more specific "dt" selector wins over the inherited block
+% color).
+%
+% Neither doxygen.css nor spexy.css gives Author/Date/Since/SeeAlso/Version/
+% Return/Copyright a colored box (no dl.<type> rule for them -- plain
+% "dl.section", unstyled apart from bold labels). Those stay exactly as
+% before: routed through the generic \DoxyDesc override just below, which
+% keeps the original flat warm box. Say the word if you'd rather those also
+% go fully unboxed/plain to match the HTML pixel-for-pixel.
+% -----------------------------------------------------------------------------
+\definecolor{warmaccent}{rgb}{0.72, 0.35, 0.03}
+\definecolor{warmbg}{rgb}{1.0, 0.98, 0.88}
+
+\definecolor{doxNoteBg}{HTML}{FAF3D8}
+\definecolor{doxNoteHl}{HTML}{F3A600}
+\definecolor{doxNoteText}{HTML}{5F4204}
+
+\definecolor{doxWarnBg}{HTML}{F8D1CC}
+\definecolor{doxWarnHl}{HTML}{B61825}
+\definecolor{doxWarnText}{HTML}{75070F}
+
+\definecolor{doxInvBg}{HTML}{D8F1E3}
+\definecolor{doxInvHl}{HTML}{44B86F}
+\definecolor{doxInvText}{HTML}{265532}
+
+\definecolor{doxTodoBg}{HTML}{E4F3FF}
+\definecolor{doxTodoHl}{HTML}{1879C4}
+\definecolor{doxTodoText}{HTML}{274A5C}
+
+\definecolor{doxDeprBg}{HTML}{ECF0F3}
+\definecolor{doxDeprHl}{HTML}{5B6269}
+\definecolor{doxDeprText}{HTML}{43454A}
+
+\let\DoxyDescOrig\DoxyDesc
+\let\endDoxyDescOrig\endDoxyDesc
+
+% Generic fallback box (unchanged from before): everything that routes
+% through DoxyDesc without a more specific override below keeps this flat
+% warm box -- currently Author, Date, Since, SeeAlso, Version, Return,
+% Copyright, and Paragraph in this document's actual usage.
+\renewenvironment{DoxyDesc}[1]{%
+  \begingroup
+  \parskip=0pt\relax
+  \begin{mdframed}[%
+    backgroundcolor=warmbg,%
+    hidealllines=true,%
+    innertopmargin=6pt,%
+    innerbottommargin=6pt,%
+    innerleftmargin=8pt,%
+    innerrightmargin=8pt,%
+    skipabove=8pt,%
+    skipbelow=8pt%
+  ]%
+  \DoxyDescOrig{#1}%
+  \raggedright
+}{%
+  \endDoxyDescOrig
+  \end{mdframed}%
+  \endgroup
+}
+
+% \SpexyDefColoredDesc{<env name>}{<bg color>}{<accent/label color>}%
+%   {<body text color>}
+% Redefines a DoxyDesc-wrapper environment (DoxyNote, DoxyWarning, etc.) to
+% bypass the generic DoxyDesc box above and use its own HTML-matched colors
+% instead: tinted background, colored left accent bar (mdframed's
+% leftline/linecolor, standing in for the CSS "border-left"), body text
+% tinted with the -text color, and the "Note"/"Warning"/etc. label itself
+% recolored to -hl by locally overriding \DoxyLabelFont (same trick as the
+% single global override this replaces -- \DoxyLabelFont is only consulted
+% at \item[#1] time inside \DoxyDescOrig, so a \renewcommand local to this
+% group takes effect for exactly this one box and nothing else).
+\newcommand{\SpexyDefColoredDesc}[4]{%
+  \renewenvironment{#1}[1]{%
+    \begingroup
+    \parskip=0pt\relax
+    \renewcommand{\DoxyLabelFont}{\normalfont\bfseries\color{#3}}%
+    \color{#4}%
+    \begin{mdframed}[%
+      backgroundcolor=#2,%
+      hidealllines=true,%
+      leftline=true,%
+      linecolor=#3,%
+      linewidth=3pt,%
+      innertopmargin=6pt,%
+      innerbottommargin=6pt,%
+      innerleftmargin=10pt,%
+      innerrightmargin=8pt,%
+      skipabove=8pt,%
+      skipbelow=8pt%
+    ]%
+    \DoxyDescOrig{##1}%
+    \raggedright
+  }{%
+    \endDoxyDescOrig
+    \end{mdframed}%
+    \endgroup
+  }%
+}
+
+\SpexyDefColoredDesc{DoxyNote}{doxNoteBg}{doxNoteHl}{doxNoteText}
+\SpexyDefColoredDesc{DoxyRemark}{doxTodoBg}{doxTodoHl}{doxTodoText}
+
+\SpexyDefColoredDesc{DoxyWarning}{doxWarnBg}{doxWarnHl}{doxWarnText}
+\SpexyDefColoredDesc{DoxyAttention}{doxWarnBg}{doxWarnHl}{doxWarnText}
+\SpexyDefColoredDesc{DoxyImportant}{doxWarnBg}{doxWarnHl}{doxWarnText}
+
+\SpexyDefColoredDesc{DoxyInvariant}{doxInvBg}{doxInvHl}{doxInvText}
+\SpexyDefColoredDesc{DoxyPrecond}{doxInvBg}{doxInvHl}{doxInvText}
+\SpexyDefColoredDesc{DoxyPostcond}{doxInvBg}{doxInvHl}{doxInvText}
+
+\SpexyDefColoredDesc{DoxyParagraph}{doxDeprBg}{doxDeprHl}{doxDeprText}
+
+% -----------------------------------------------------------------------------
+% Bullet lists (DoxyItemize, used by @itemize / plain "-"/"*" markdown
+% lists): doxygen.sty builds this as an enumitem list (\newlist{DoxyItemize}
+% {itemize}{12}) but only sets its bullet glyphs, leaving spacing at
+% enumitem's defaults. The document-wide \parskip (~3ex, set via
+% \doxynormalparskip in spexy-header.tex to visually separate no-indent
+% paragraphs) is inserted by TeX as ordinary paragraph glue when the
+% preceding paragraph ends -- on top of the list's own \topsep/\partopsep
+% spacing -- producing a much larger gap between running text and the first
+% bullet than intended.
+%
+% First attempt: give DoxyItemize a \partopsep equal to -\parskip (the fix
+% commonly recommended for this exact interaction) so the paragraph glue
+% cancels out. This worked in an isolated single-list test (~30pt -> ~7pt),
+% but did NOT reproduce reliably in the real document: two lists with
+% byte-for-byte identical \parskip/\topsep/\partopsep/\itemsep (confirmed via
+% \typeout instrumentation) still rendered at very different gaps (~21pt vs
+% ~13pt) depending on what preceded them on the page. Root cause: the \par
+% that ends the preceding paragraph is triggered *inside* \list's own
+% machinery when \begin{DoxyItemize} is processed -- not at the source
+% newline -- so by the time \partopsep is applied, the \parskip-based
+% interparagraph glue has *already* been committed using whatever \parskip
+% was in effect at that point, and \partopsep's fixed cancellation doesn't
+% reliably net to zero against it (page-breaking-dependent glue-setting
+% behavior, confirmed by direct \lastskip/register inspection).
+%
+% Working fix (same pattern already used for DoxyCode/DoxyVerb/DoxyDesc
+% above): wrap the environment so \parskip is capped to a small fixed value
+% *before* calling the original \DoxyItemize, i.e. before \list's internal
+% \par fires -- so that \par's interparagraph glue is computed against that
+% small value instead of the full document \parskip. Give the list a small
+% fixed \topsep on top of that. Originally set \parskip=0pt here (verified
+% against the real document on two lists that previously diverged at ~21pt
+% and ~13pt: both rendered identically at ~7pt) -- tuned up to 6pt since,
+% per visual review of the rebuilt PDF, for a slightly more comfortable
+% (still consistent) gap between running text and the first bullet.
+% -----------------------------------------------------------------------------
+\setlist[DoxyItemize]{topsep=3pt, partopsep=0pt}
+\let\DoxyItemizeOrig\DoxyItemize
+\let\endDoxyItemizeOrig\endDoxyItemize
+\renewenvironment{DoxyItemize}{%
+  \begingroup
+  \parskip=6pt\relax
+  \DoxyItemizeOrig
+}{%
+  \endDoxyItemizeOrig
+  \endgroup
+}
+
+% -----------------------------------------------------------------------------
+% External links: doxygen's LaTeX generator hardcodes external/URL links as
+% \href{url}{\texttt{text}} directly in its C++ output (both auto-detected
+% bare URLs and @a "text" href-style links) -- there's no named macro to
+% redefine the way there was for DoxyCode or the section headings, since the
+% \texttt is emitted literally rather than through an overridable command.
+% Neutralize \texttt locally, only inside \href's own argument, so external
+% links pick up whatever font is already active (matching internal links)
+% without touching \texttt/\ttfamily anywhere else in the document (code
+% listings, inline code, etc. are unaffected).
+%
+% \href itself comes from hyperref, which spexy-header.tex only loads later
+% (in the PDF_HYPERLINKS block) -- well after this file runs. The replacement
+% macro is defined here (normal, single-level parameter rules), and only the
+% final \let-swap onto \href is deferred to \AtBeginDocument, so it executes
+% after the full preamble (hyperref included) has finished loading. The
+% \AtBeginDocument block itself contains no macro parameters, so there is no
+% hash-doubling ambiguity to worry about there.
+% -----------------------------------------------------------------------------
+\newcommand{\DoxyHrefNoTT}[2]{%
+  \begingroup
+  \renewcommand{\texttt}[1]{##1}%
+  \DoxyOrigHref{#1}{#2}%
+  \endgroup
+}
+\AtBeginDocument{%
+  \let\DoxyOrigHref\href
+  \let\href\DoxyHrefNoTT
+}
+
+% -----------------------------------------------------------------------------
+% Table headers: tint with the brand accent color (defined in
+% spexy-header.tex) instead of doxygen.sty's default plain lightgray.
+% -----------------------------------------------------------------------------
+\colorlet{tableheadtint}{accent!12!white}
+\renewcommand{\tableheadbgcolor}{tableheadtint}
+
+% -----------------------------------------------------------------------------
+% Captions (@caption alias -- NOT doxygen's native \DoxyImage/\doxyfigcaption
+% mechanism, which grepping the generated .tex confirms this project never
+% uses): the alias used to expand to a bare "<center><i>\1</i></center>",
+% translated by doxygen's LaTeX generator into a plain
+% \begin{center}{\itshape ...}\end{center} block with no caption machinery
+% of its own -- the *only* use of raw \center anywhere in the document.
+%
+% That caused two problems, both reported directly:
+% 1. The gap between the thing being captioned (image/table/listing) and
+%    the caption text itself was too large -- \center is plain \trivlist,
+%    which inserts its own \topsep+\partopsep-based leading glue on top of
+%    the ambient ~3ex \parskip (same stacking issue as DoxyItemize/DoxyDesc
+%    above), and there was no dedicated environment name to hook a fix onto
+%    since it was bare \center.
+% 2. The gap *after* the caption, before whatever comes next, was also just
+%    the ambient ~3ex \parskip -- too much; working around it with a manual
+%    <br> in the doc comments overshot even further (a full extra blank
+%    line's worth of space on top of that).
+%
+% Fix: rather than keep patching bare \center (which previously required a
+% fragile "did the last thing end with an image" flag -- see git history --
+% to know when to tighten it, and never covered tables/listings at all),
+% change the @caption alias itself (see Spexyfile-tex) to expand to a
+% dedicated \DoxyCaption{...} command instead of raw HTML tags. That gives
+% full control with no guessing: every @caption use, regardless of what
+% precedes it, gets the same tight leading gap (same tuned parskip=0pt/
+% topsep=-10pt/partopsep=0pt values already verified against the real
+% document for the image case) AND the same, new, deliberate trailing gap
+% -- \doxycaptionskip, sized to read like the gap after a heading rather
+% than a full paragraph break. Tune \doxycaptionskip below to taste; no <br>
+% needed in the doc comments any more.
+% -----------------------------------------------------------------------------
+\newcommand{\doxycaptionskip}{1.2ex plus 0.3ex minus 0.2ex}
+
+\newcommand{\DoxyCaption}[1]{%
+  \begingroup
+  \parskip=0pt\relax
+  \topsep=-10pt\relax
+  \partopsep=0pt\relax
+  \begin{center}
+  \normalfont\itshape #1%
+  \end{center}
+  \endgroup
+  \vspace{\doxycaptionskip}%
+}
+
+% -----------------------------------------------------------------------------
+% Inline images (used by @image{inline} ... e.g. the safety.png warning-triangle
+% icon marking safety-critical items directly inside a line of running text):
+% doxygen.sty's \DoxyInlineImage environment is a complete no-op --
+%   \newenvironment{DoxyInlineImage}{}{}
+% -- so the \includegraphics call inside it gets no special treatment at all.
+% A plain \includegraphics box has zero depth, so LaTeX places its bottom
+% edge flush with the surrounding text's baseline -- the same spot a capital
+% letter sits on -- which reads as "floating high" next to lowercase text,
+% especially compared to where a descender (g/y/p) would hang below the
+% baseline.
+%
+% Fix: locally redefine \includegraphics, only for the duration of
+% DoxyInlineImage, to wrap its own output in \raisebox{-\dp\strutbox}{...}.
+% \strutbox is NFSS's standard per-current-font/size "typical descender"
+% reference (updated by \selectfont on every font-size change), so
+% \dp\strutbox gives the actual descent of whatever font is active at each
+% call site -- shifting the image down until its bottom edge sits at the
+% descender line instead of the baseline. Restored to the real
+% \includegraphics at \end{DoxyInlineImage} so this doesn't leak into
+% \DoxyImage/\DoxyImageNoCaption (full-width figures elsewhere) or anything
+% else that happens to call \includegraphics later in the document.
+% -----------------------------------------------------------------------------
+\renewenvironment{DoxyInlineImage}{%
+  \let\DoxyInlineImageOrigIncludegraphics\includegraphics
+  \renewcommand{\includegraphics}[2][]{%
+    \raisebox{-\dp\strutbox}{\DoxyInlineImageOrigIncludegraphics[##1]{##2}}%
+  }%
+}{%
+  \let\includegraphics\DoxyInlineImageOrigIncludegraphics
+}

@@ -6,7 +6,7 @@
 
 This is an example Software Requirements Specification (SRS), illustrating the typical structure and the use of _Spexygen_ commands to define the __traceable__ requirement work artifacts.
 
-@note
+@remark
 Please note the generated _forward-traceability_ and the _backward-traceability_ links (augmented with the brief descriptions) in the "work artifacts" and "code artifacts". Also, try clicking on the provided traceability links as well as _searching_ the UIDs in the Doxygen "search" box.
 
 @section srs-def Concepts &amp; Definitions
@@ -15,19 +15,41 @@ Description of concepts and definitions...
 @section srs_req Requirements
 Definitions of formal requirements specifications with _Spexygen_ commands.
 
-@uid{SRS_EXA_FF_00,My project shall provide a free function foo().}
+@uid{SRS_EXA_FF_00, My project shall provide a free function foo().}
+@uid_litem{Description}
+Longer description of the requirement
+@uid_litem{Regulatory background}
+@badge{fusa} Across functional safety standards, a dedicated, traceable specification of software safety requirements is a central artifact for demonstrating that the software can achieve its claimed integrity levels, as summarized in the following table:
+<table>
+<tr><th>IEC 61508-3:2010 (Functional Safety of E/E/PE Systems)
+<tr><td>
+@ref ref-qp_norm "[IEC 61508]" requires that software safety requirements be explicitly specified, traceable to system-level safety requirements, and assigned appropriate safety integrity levels. The SSRS consolidates these software safety requirements for use in SIL-3 applications. The most relevant clauses are:
+- IEC 61508-1:2010, 7.5  specification of E/E/PE system safety requirements, including allocation to software.
+- IEC 61508-3:2010, 7.2  objectives for the software safety lifecycle and the need for a documented software safety requirements specification.
+- IEC 61508-3:2010, 7.4.27.4.3  specification of software safety requirements and software safety integrity requirements, including assumptions about hardware, operating environment, and external risk-reduction measures.
+<tr><th>IEC 62304:2006 + Amd1:2015 (Medical Device Software)
+<tr><td>
+@ref ref-qp_norm "[IEC 62304]" mandates a documented set of software requirements that reflect the results of risk management and support verification and traceability throughout the lifecycle. The SSRS captures the Class-C-relevant software safety requirements, including risk-control dependencies, safety constraints and assumptions of use. Key clauses are:
+- 4.2  linkage to the risk-management process (ISO 14971) and risk-control measures.
+- 4.3  software safety classification (Class-C) and its impact on the rigor of requirements.
+- 5.2  software requirements analysis, requiring the derivation, documentation, and traceability of software requirements from system requirements and risk controls.
+<tr><th>ISO 26262:2018 (Road Vehicles Functional Safety)
+<tr><td>
+@ref ref-qp_norm "[ISO 26262]" requires a structured hierarchy of safety requirements, from safety goals down to software safety requirements, with clear allocation and traceability. The SSRS provides the software safety requirements necessary to integrate the element into ASIL-D systems and to support the _Safety Manual's_ @ref def-qp-asr "Assumed Safety Requirements (ASRs)". For a software @ref def-qp-seooc "SEooC" such as SafeQP framework, the key clauses are:
+- ISO 26262-3:2018, Clause 7  item-level safety goals and functional safety requirements that ultimately drive software safety requirements.
+- ISO 26262-4:2018, Clause6  technical safety requirements, including those allocated to software.
+- ISO 26262-6:2018, Clause6  specification of software safety requirements, including ASIL assignment, interface assumptions, timing and resource constraints, and required safety mechanisms.
+</table>
+@uid_fw_trace{1}
+@enduid
+
+@uid{SRS_EXA_Foo_00, My project shall provide a class Foo.}
 @uid_litem{Description}
 Longer description of the requirement
 @uid_fw_trace{1}
 @enduid
 
-@uid{SRS_EXA_Foo_00,My project shall provide a class Foo.}
-@uid_litem{Description}
-Longer description of the requirement
-@uid_fw_trace{1}
-@enduid
-
-@uid{SRS_EXA_Foo_01,Class Foo shall provide a public attribute x.}
+@uid{SRS_EXA_Foo_01, Class Foo shall provide a public attribute x.}
 @uid_litem{Description}
 Longer description of the requirement
 @uid_bw_trace{brief}
@@ -35,15 +57,17 @@ Longer description of the requirement
 @uid_fw_trace{2}
 @enduid
 
-@uid{SRS_EXA_Foo_02,Class Foo shall provide a constructor.}
+@uid{SRS_EXA_Foo_02, Class Foo shall provide a constructor.}
 @uid_litem{Description}
-Longer description of the requirement
+Longer description of the requirement.
+@attention
+@badge{safety} This is a attention note. Also shows how to add a "badge".
 @uid_bw_trace{brief}
 - @tr{SRS_EXA_Foo_00}
 @uid_fw_trace{2}
 @enduid
 
-@uid{SRS_EXA_Foo_03,Class Foo shall provide a verify operation.}
+@uid{SRS_EXA_Foo_03, @badge{safety} Class Foo shall provide a verify operation.}
 @uid_litem{Description}
 Longer description of the requirement
 @uid_bw_trace{brief}
@@ -51,7 +75,7 @@ Longer description of the requirement
 @uid_fw_trace
 @enduid
 
-@uid{SRS_EXA_Foo_04,Class Foo shall provide an update operation.}
+@uid{SRS_EXA_Foo_04, Class Foo shall provide an update operation.}
 @uid_litem{Description}
 Longer description of the requirement
 @uid_bw_trace{brief}
@@ -59,7 +83,7 @@ Longer description of the requirement
 @uid_fw_trace
 @enduid
 
-@uid{SRS_EXA_Foo_05,Class Foo shall be a singleton.}
+@uid{SRS_EXA_Foo_05, Class Foo shall be a singleton.}
 @uid_litem{Description}
 Longer description of the requirement
 @uid_bw_trace{brief}

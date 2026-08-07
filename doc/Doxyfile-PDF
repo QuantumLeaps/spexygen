@@ -1,10 +1,13 @@
+# Doxyfile 1.18.0
+
 @INCLUDE = Doxyfile
+@INCLUDE = $(SPEXYGEN)/Spexyfile-tex
 
 #---------------------------------------------------------------------------
 # Configuration options related to the LateX output
 #---------------------------------------------------------------------------
 PROJECT_NAME           = Reference Manual
-PROJECT_BRIEF          = For Spexygen 2.6.0
+PROJECT_BRIEF          = For Spexygen 3.0.0
 PROJECT_NUMBER         = Document: DOC_MAN_SPX
 
 #---------------------------------------------------------------------------
@@ -13,15 +16,36 @@ PROJECT_NUMBER         = Document: DOC_MAN_SPX
 GENERATE_HTML          = NO
 GENERATE_LATEX         = YES
 
+SOURCE_BROWSER         = NO
+INLINE_SOURCES         = NO
+VERBATIM_HEADERS       = NO
+
 ENABLED_SECTIONS      += LATEX
+
+ALIASES               +=
 
 #---------------------------------------------------------------------------
 # Configuration options related to the input files
-#
+#---------------------------------------------------------------------------
 # NOTE:
 # The differet INPUT than in Doxyfile is handled in spex-PDF.json 
 #---------------------------------------------------------------------------
-
-# no source code for this document
-SOURCE_BROWSER         = NO
-VERBATIM_HEADERS       = NO
+# Configuration options related to the LaTeX output
+#---------------------------------------------------------------------------
+LATEX_OUTPUT           = latex
+LATEX_CMD_NAME         = latex
+MAKEINDEX_CMD_NAME     = makeindex
+LATEX_MAKEINDEX_CMD    = makeindex
+COMPACT_LATEX          = NO
+PAPER_TYPE             = letter
+EXTRA_PACKAGES         =
+LATEX_HEADER           = $(SPEXYGEN)/spexy-header.tex
+LATEX_FOOTER           = $(SPEXYGEN)/spexy-footer.tex
+LATEX_EXTRA_STYLESHEET = $(SPEXYGEN)/spexy-style.sty
+LATEX_EXTRA_FILES      =
+PDF_HYPERLINKS         = YES
+USE_PDFLATEX           = YES
+LATEX_BATCHMODE        = NON_STOP
+LATEX_HIDE_INDICES     = NO
+LATEX_BIB_STYLE        = plainnat
+LATEX_EMOJI_DIRECTORY  =

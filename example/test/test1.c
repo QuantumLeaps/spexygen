@@ -12,6 +12,7 @@ void tearDown(void) {
 @code_litem{Details}
 This test checks that zero input to free_fun() produces zero array.
 @code_bw_trace{brief}
+- @tr{SRS_EXA_FF_00}
 - @tr{free_fun()}
 @endcode_uid
 */
@@ -28,6 +29,7 @@ void TUN_PRJ_free_fun_00(void) {
 @code_litem{Details}
 This test checks that non-zero input to free_fun() produces expected array.
 @code_bw_trace
+- @tr{SRS_EXA_FF_00}
 - @tr{free_fun()}
 @endcode_uid
 */

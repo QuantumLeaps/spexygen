@@ -1,5 +1,5 @@
-% Latex header for doxygen 1.11.0
-% modified by Quantum Leaps on 24-05-17
+% Latex header for doxygen 1.17.0
+% modified by Quantum Leaps on 26-08-05
 
   % Handle batch mode
   $latex_batchmode
@@ -20,20 +20,12 @@
 
   % Set document class depending on configuration
 %%BEGIN COMPACT_LATEX
-  \documentclass[twoside]{article}
+  \documentclass[twoside,11pt]{article}
 %%END COMPACT_LATEX
 %%BEGIN !COMPACT_LATEX
-  \documentclass[twoside]{book}
+  \documentclass[twoside,11pt]{book}
 %%END !COMPACT_LATEX
 
-  %% moved from doxygen.sty due to workaround for LaTex 2019 version and unmaintained tabu package
-  \usepackage{ifthen}
-  \ifx\requestedLaTeXdate\undefined
-    \usepackage{array}
-  \else
-    \usepackage{array}[=2016-10-06]
-  \fi
-  %%
   \usepackage{geometry}
   \usepackage[table]{xcolor}
   \usepackage{scrextend}
@@ -51,6 +43,20 @@
 https://www.state-machine.com\\
 info@state-machine.com\\
   }
+  % Customer-specific license line shown at the bottom of the title page.
+  % $CUST_NAME$/$CUST_URL$ are placeholders -- substitute with the actual
+  % customer name/URL per delivered copy.
+  %
+  % The literal "$" and "_" characters in these placeholders are TeX special
+  % characters (math-mode delimiter and subscript, respectively) and must be
+  % escaped in the visible link text (\$...\$, \_) to print literally rather
+  % than tripping into math mode -- confirmed by testing: unescaped, "$CUST_
+  % NAME$" was silently typeset as math with NAME as a subscript of CUST.
+  % The URL argument of \href is parsed specially by url.sty (verbatim-like
+  % catcodes) and must stay unescaped -- adding the same backslash-escapes
+  % there causes a runaway "TeX capacity exceeded" failure, confirmed by
+  % testing.
+  \newcommand{\licenseinfo}{Licensed to \href{$CUST_URL$}{\$CUST\_NAME\$}}
 
   % Packages required by doxygen
   \makeatletter
@@ -100,12 +106,15 @@ info@state-machine.com\\
   $latexfont
 
   \doxyallsectionsfont{%
-    \fontseries{bc}\selectfont%
-    \color{darkgray}%
+    \sffamily\fontseries{bc}\selectfont%
+    \color{accent}%
   }
+  % Label for special paragraphs (Note, Warning, Attention, Remark, etc.):
+  % use the body font (not a condensed sans face) with warm-color emphasis.
+  % warmaccent is defined in spexy-style.sty, loaded earlier in this file.
   \renewcommand{\DoxyLabelFont}{%
-    \fontseries{bc}\selectfont%
-    \color{darkgray}%
+    \normalfont\bfseries%
+    \color{warmaccent}%
   }
 
   % see: https://stackoverflow.com/questions/15230386/howto-disable-hyphenation-for-typewriter-text-in-doxygen
@@ -127,7 +136,8 @@ info@state-machine.com\\
     top=2.5cm,%
     bottom=2.5cm,%
     left=2.5cm,%
-    right=2.5cm%
+    right=2.5cm,%
+    headheight=14pt%
   }
   \usepackage{changepage}
 
@@ -163,19 +173,30 @@ info@state-machine.com\\
   \pagestyle{fancyplain}
   \renewcommand{\footrulewidth}{0.4pt}
 
+  % Footer layout mirrors the header's inner/outer split: $projectnumber
+  % moves to the outer edge (LE/RO), directly below where \thepage sits in
+  % the header above it, and \licenseinfo (defined earlier alongside
+  % \contactdetails/title page) takes over the inner edge (LO/RE) that used
+  % to repeat \thepage -- the page number already appears once, in the
+  % header, so it's not duplicated here. Footer text originally matched the
+  % header's font/size exactly (\bfseries at normal size); dialed back one
+  % step to \small so the footer reads a tad smaller than the header while
+  % still bold. Both header and footer now also pick up \sffamily, matching
+  % the section-title font (\doxysection/etc. in spexy-style.sty use
+  % \sffamily\bfseries) rather than the body's serif face.
   \fancypagestyle{fancyplain}{
     \fancyhf{}
-    \fancyhead[LE, RO]{\bfseries\thepage}
-    \fancyhead[LO]{\bfseries\rightmark}
-    \fancyhead[RE]{\bfseries\leftmark}
-    \fancyfoot[LO, RE]{\bfseries\thepage}
-    \fancyfoot[C]{\bfseries\scriptsize $projectnumber}
+    \fancyhead[LE, RO]{\sffamily\bfseries\thepage}
+    \fancyhead[LO]{\sffamily\bfseries\rightmark}
+    \fancyhead[RE]{\sffamily\bfseries\leftmark}
+    \fancyfoot[LE, RO]{\sffamily\small\bfseries $projectnumber}
+    \fancyfoot[LO, RE]{\sffamily\small\bfseries \licenseinfo}
   }
 
   \fancypagestyle{plain}{
     \fancyhf{}
-    \fancyfoot[LO, RE]{\bfseries\thepage}
-    \fancyfoot[C]{\bfseries\scriptsize $projectnumber}
+    \fancyfoot[LE, RO]{\sffamily\small\bfseries $projectnumber}
+    \fancyfoot[LO, RE]{\sffamily\small\bfseries \licenseinfo}
     \renewcommand{\headrulewidth}{0pt}
   }
 
@@ -227,8 +248,8 @@ info@state-machine.com\\
     \fi
     \hypersetup{%
       colorlinks=true,%
-      linkcolor=blue,%
-      citecolor=blue,%
+      linkcolor=accent,%
+      citecolor=accent,%
       unicode,%
       pdftitle={$projectname},%
       pdfsubject={$projectnumber}%
@@ -285,19 +306,23 @@ info@state-machine.com\\
   \pagecolor{frontbg}
   \color{frontfg}
   \vspace*{5cm}
-  {\fontsize{40}{40} \selectfont $projectname\\}
+  {\sffamily\bfseries\fontsize{40}{40} \selectfont $projectname\\}
   \vspace*{1cm}
-  {\fontsize{30}{30} \selectfont $projectbrief\\}
+  {\sffamily\bfseries\fontsize{30}{30} \selectfont $projectbrief\\}
 
   \line(1,0){800}\\
   \vspace*{0.3cm}
-  {\fontsize{20}{20} \selectfont $projectnumber\\}
+  {\sffamily\bfseries\fontsize{20}{20} \selectfont $projectnumber\\}
 %%BEGIN LATEX_TIMESTAMP
 %%END LATEX_TIMESTAMP
   \vspace*{7cm}
-  \begin{addmargin}[30em]{0em}
+  \begin{addmargin}[25em]{0em}
   \fontsize{12}{14} \selectfont \contactdetails
   \end{addmargin}
+  \vfill
+  \begin{center}
+  \fontsize{12}{14} \selectfont \licenseinfo
+  \end{center}
   \end{titlepage}
 
   \pagecolor{white}
