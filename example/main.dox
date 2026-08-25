@@ -44,7 +44,7 @@ Spexygen logo:
 @image latex logo_spexygen.png width=2in
 @caption{Image caption.}
 
-The following sections contain the _Spexygen_-generated documentation of this example:
+The following sections contain the <i>Spexygen</i>-generated documentation of this example:
 - @ref srs
 - @ref header.h
 - @ref source.c

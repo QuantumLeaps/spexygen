@@ -22,7 +22,7 @@ Free function longer description.
 @param[in]  x   the parameter x
 @retval pointer Pointer to a static array
 @code_bw_trace{brief}
-- @tr{SRS_EXA_FF_00}
+- @tr{SRS_EXA_REQ_01}
 @code_fw_trace
 @endcode_uid
 @newpage
@@ -34,7 +34,7 @@ Free function longer description.
 @code_litem{Details}
 Class Foo longer description.
 @code_bw_trace{brief}
-- @tr{SRS_EXA_Foo_00}
+- @tr{SRS_EXA_REQ_10}
 @code_fw_trace
 @endcode_uid
 @newpage
@@ -45,7 +45,7 @@ Class Foo longer description.
 @code_litem{Details}
 Attribute x of class Foo: longer description.
 @code_bw_trace{brief}
-- @tr{SRS_EXA_Foo_01}
+- @tr{SRS_EXA_REQ_11}
 @endcode_uid
 @newpage
 */
@@ -68,7 +68,7 @@ Constructor of class Foo longer description.
 @param[in]  me - the instance pointer (OOP in C)
 @param[in]  x  - the initial value for me->x
 @code_bw_trace{brief}
-- @tr{SRS_EXA_Foo_02}
+- @tr{SRS_EXA_REQ_12}
 - @tr{Foo}
 @code_fw_trace
 @endcode_uid
@@ -82,7 +82,7 @@ Operation verify_() of class Foo longer description.
 @param[in]  me - the instance pointer (OOP in C)
 @returns 'true' when the Foo instance verification succeeds, 'false' otherwise.
 @code_bw_trace{brief}
-- @tr{SRS_EXA_Foo_03}
+- @tr{SRS_EXA_REQ_13}
 - @tr{Foo}
 @code_fw_trace
 @endcode_uid
@@ -95,7 +95,7 @@ Operation verify_() of class Foo longer description.
 Constructor of class Foo longer description.
 @param[in]  me - the instance pointer (OOP in C)
 @code_bw_trace{brief}
-- @tr{SRS_EXA_Foo_04}
+- @tr{SRS_EXA_REQ_14}
 - @tr{Foo}
 @code_fw_trace
 @endcode_uid
@@ -107,7 +107,7 @@ Constructor of class Foo longer description.
 @code_litem{Details}
 Foo instance longer description.
 @code_bw_trace{brief}
-- @tr{SRS_EXA_Foo_05}
+- @tr{SRS_EXA_REQ_15}
 - @tr{Foo}
 @code_fw_trace
 @endcode_uid
