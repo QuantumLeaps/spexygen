@@ -9,6 +9,8 @@ uint8_t const * free_fun(uint32_t x) {
     return arr;
 }
 
+Foo Foo_inst;
+
 void Foo_ctor(Foo * const me, uint32_t const x) {
     me->x = x;
     Foo_update_(me);
