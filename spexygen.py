@@ -39,7 +39,99 @@ specifications, such as:
 
 import sys
 import os
+import re
 import json
+
+class _CondSections:
+    '''Doxygen conditional sections (@if/@ifnot/@elseif/@else/@endif,
+    also inline, with label expressions using !, &&, ||, parentheses),
+    evaluated for the given set of enabled section labels.
+    '''
+    _RE = re.compile(r'[@\\](ifnot|if|elseif|else|endif)\b[ \t]*'
+                     r'(\([^\n]*?\)(?=\s|$)|[A-Za-z_][A-Za-z0-9_]*)?')
+
+    def __init__(self, enabled):
+        self._en = set(enabled)
+        self._stack = [] # entries: [active, taken]
+
+    def _eval(self, expr):
+        toks = re.findall(r'\(|\)|&&|\|\||!|[A-Za-z_][A-Za-z0-9_]*', expr)
+        pos = [0]
+        def peek():
+            return toks[pos[0]] if pos[0] < len(toks) else None
+        def take():
+            pos[0] += 1
+            return toks[pos[0] - 1]
+        def prim():
+            t = take()
+            if t == '!':
+                return not prim()
+            if t == '(':
+                v = orx()
+                take()
+                return v
+            return t in self._en
+        def andx():
+            v = prim()
+            while peek() == '&&':
+                take()
+                v = prim() and v
+            return v
+        def orx():
+            v = andx()
+            while peek() == '||':
+                take()
+                v = andx() or v
+            return v
+        return orx()
+
+    def active(self):
+        return all(e[0] for e in self._stack)
+
+    def feed(self, line):
+        '''process one line; return the list of (start, end, active)
+        segments of the line
+        '''
+        segs = []
+        p = 0
+        for m in self._RE.finditer(line):
+            cmd, lab = m.group(1), m.group(2)
+            if cmd in ('if', 'ifnot', 'elseif') and not lab:
+                continue
+            segs.append((p, m.start(), self.active()))
+            if cmd in ('if', 'ifnot'):
+                v = self._eval(lab)
+                if cmd == 'ifnot':
+                    v = not v
+                self._stack.append([v, v])
+                p = m.end()
+            elif cmd == 'elseif':
+                if self._stack:
+                    e = self._stack[-1]
+                    v = (not e[1]) and self._eval(lab)
+                    e[0] = v
+                    e[1] = e[1] or v
+                p = m.end()
+            elif cmd == 'else':
+                if self._stack:
+                    e = self._stack[-1]
+                    e[0] = not e[1]
+                    e[1] = True
+                p = m.start() + 5
+            else: # endif
+                if self._stack:
+                    self._stack.pop()
+                p = m.start() + 6
+        segs.append((p, len(line), self.active()))
+        return segs
+
+    @staticmethod
+    def active_at(segs, idx):
+        for s, e, a in segs:
+            if s <= idx < e:
+                return a
+        return segs[-1][2]
+
 
 class Spexygen:
     '''
@@ -47,7 +139,7 @@ class Spexygen:
     '''
 
     # public class constants
-    VERSION = 301
+    VERSION = 400
 
     UID_DOC  = 1
     UID_CODE = 2
@@ -67,7 +159,11 @@ class Spexygen:
         self._uid_trace_dict = {}  # UID dictionary collected during tracing
         self._uid_brief_dict = {}  # UID-brief dictionary collected during tracing
         self._uid_traced_list = [] # UID list built during generation
-        self._fw_tr_levels = len(Spexygen.LEVELS) - 2 # no. of levels to generate
+        self._fw_tr_levels = 0     # no. of levels to generate (0: 1 level)
+        self._sections = None      # enabled Doxygen sections (None: ignore)
+        self._cond = None          # conditional-section state of the file
+        self._segs = None          # active segments of the current line
+        self._uid_active = True    # is the current UID in an active section?
 
     @staticmethod
     def debug(*args, **kwargs):
@@ -99,9 +195,8 @@ class Spexygen:
                 if level < self._fw_tr_levels:
                     if uid in self._uid_trace_dict:
                         self.on_gen_fw_trace(uid, level+1) # recursive!
-                elif level >= len(Spexygen.LEVELS) - 2:
-                    #self._file.write("%s%s- ...\n"
-                    #    %(self._prefix, Spexygen.LEVELS[level+1]))
+                elif uid in self._uid_trace_dict \
+                    and level >= len(Spexygen.LEVELS) - 2:
                     self._file.write(
                         f"{self._prefix}{Spexygen.LEVELS[level+1]}- ...\n")
                     print(f"  {self._fname}:{self._lnum} too many"\
@@ -142,9 +237,26 @@ class Spexygen:
         self._uid = line[i + l:j].strip()
         brief = line[j + 1:k].strip()
         self._bw_trace = ''
+        self._uid_active = self.is_active(i)
+        if not self._uid_active:
+            Spexygen.debug("  uid (inactive section):", self._uid)
+            return
         if self._uid not in self._uid_brief_dict:
             self._uid_brief_dict[self._uid] = brief.replace('\\,', ',')
         Spexygen.debug("  uid:", self._uid, brief)
+
+    def feed_line(self, line):
+        '''update the conditional-section state with the given "line"
+        '''
+        if self._cond is not None:
+            self._segs = self._cond.feed(line)
+
+    def is_active(self, idx):
+        '''is position "idx" of the current line in an active section?
+        '''
+        if self._cond is None:
+            return True
+        return _CondSections.active_at(self._segs, idx)
 
     def uid_end(self, line):
         '''return True if UID-end was found in the "line"
@@ -244,7 +356,8 @@ class Spexygen:
             j = line.find('}', i + 4)
             if j >= 0:
                 tr = line[i + 4:j]
-                tr_list.append(tr)
+                if self._uid_active and self.is_active(i):
+                    tr_list.append(tr)
                 i = j
             else:
                 print("Error: missing '}' for '@tr{' in line",
@@ -267,8 +380,11 @@ class Spexygen:
         print("Tracing:", fname)
         self._uid = ''
         self._lnum = 0
+        self._cond = None if self._sections is None \
+                     else _CondSections(self._sections)
         for line in lines:
             self._lnum += 1
+            self.feed_line(line)
             if self._uid == '':
                 self.uid_begin(line)
             else:
@@ -307,6 +423,8 @@ class Spexygen:
             if tr in self._uid_brief_dict:
                 if annotate_brief:
                     out.append(f" <i>{self._uid_brief_dict[tr]}</i>")
+            elif not (self._uid_active and self.is_active(i)):
+                pass # inactive section: not processed by Doxygen
             else:
                 print(f'  {self._fname}:{self._lnum} '\
                       f'[{tr}] undefined in backward trace'\
@@ -349,16 +467,14 @@ class Spexygen:
             return False # placeholder not found
 
         # parse the optional number of levels parameter
-        levels = len(Spexygen.LEVELS) - 2
+        # (default: 1 level, i.e., only the direct forward traces)
+        levels = 0
         if line.find('{', i+l) == i+l: # parameter present?
             j = line.find('}', i+l+1)
             if j >= 0:
                 try:
                     levels = int(line[i+l+1:j])
-                    if levels >= 1:
-                        levels -= 1
-                    elif levels > len(Spexygen.LEVELS) - 2:
-                        levels = len(Spexygen.LEVELS) - 2
+                    levels = max(1, min(levels, len(Spexygen.LEVELS) - 1)) - 1
                 except ValueError:
                     print("Error: non-numeric parameter in '@uid_fw_trace{}'")
                     return False
@@ -370,7 +486,9 @@ class Spexygen:
 
         self._prefix = line[:i]
         self._file.write(line)
-        if self._uid in self._uid_trace_dict:
+        if not (self._uid_active and self.is_active(i)):
+            pass # inactive section: not processed by Doxygen
+        elif self._uid in self._uid_trace_dict:
             self._uid_traced_list = []
             self.on_gen_fw_trace(self._uid, 0)
         else:
@@ -404,8 +522,11 @@ class Spexygen:
             self._lnum = 0
             self._uid = ''
             self._bw_trace = ''
+            self._cond = None if self._sections is None \
+                         else _CondSections(self._sections)
             for line in lines:
                 self._lnum += 1
+                self.feed_line(line)
                 if self._uid == '': # no current item
                     self._file.write(line)
                     self.uid_begin(line)
@@ -466,6 +587,12 @@ class Spexygen:
                 print("Error in spexyfile:", sfname)
                 print(e)
                 sys.exit(-1)
+
+        # optional Doxygen ENABLED_SECTIONS (conditional sections)
+        key = 'enabled-sections'
+        if key in spex:
+            self._sections = spex[key]
+            print("Enabled sections:", ' '.join(self._sections))
 
         # perform tracing
         key = 'trace'
