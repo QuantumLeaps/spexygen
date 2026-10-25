@@ -139,7 +139,7 @@ class Spexygen:
     '''
 
     # public class constants
-    VERSION = 400
+    VERSION = 401
 
     UID_DOC  = 1
     UID_CODE = 2
@@ -270,12 +270,14 @@ class Spexygen:
                 Spexygen.debug("  end:", self._uid)
                 self._uid = ''
                 self._bw_trace = ''
+                self._ref = ''
                 return True
         elif self._kind == Spexygen.UID_CODE:
             if line.find('@endcode_uid') >= 0:
                 Spexygen.debug("  end:", self._uid)
                 self._uid = ''
                 self._bw_trace = ''
+                self._ref = ''
                 return True
         else:
             print(f"Unknown current UID kind={self._kind}")
@@ -379,6 +381,8 @@ class Spexygen:
 
         print("Tracing:", fname)
         self._uid = ''
+        self._bw_trace = ''
+        self._ref = ''
         self._lnum = 0
         self._cond = None if self._sections is None \
                      else _CondSections(self._sections)
@@ -522,6 +526,7 @@ class Spexygen:
             self._lnum = 0
             self._uid = ''
             self._bw_trace = ''
+            self._ref = ''
             self._cond = None if self._sections is None \
                          else _CondSections(self._sections)
             for line in lines:
