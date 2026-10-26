@@ -1,0 +1,177 @@
+/*! @page t Test of the 'require-fw' rules (Spexygen 4.1.0)
+
+Rule 1: code UID ending in ')' -> needs a child TST_* or NOTEST_*
+(directly, or through a code child ending in ')' that meets rule 1,
+default depth 2). Rule 2: any UID REQ_* -> needs a code child ending
+in ')' (depth 1).
+
+@uid{REQ_01, Requirement implemented by op_a()}
+@uid_fw_trace
+- [@tr{op_a()}] <i>Op with a direct test: OK</i>
+@enduid
+
+@uid{REQ_02, Requirement implemented by no code (rule 2 reports it)}
+@uid_fw_trace
+@enduid
+
+@uid{REQ_03, Requirement implemented by Foo only (not an operation: reported)}
+@uid_fw_trace
+- [@tr{Foo}] <i>Class (no ')'): rule 1 does not apply</i>
+@enduid
+
+@uid{DOC_01, Doc UID ending in ')' (kind doc: rule 1 does not apply) ()}
+@uid_fw_trace
+@enduid
+
+@code_uid{op_a(), Op with a direct test: OK}
+@code_bw_trace
+- [@tr{REQ_01}]
+@code_fw_trace
+- [@tr{TST_01}] <i>Test of op_a()</i>
+- [@tr{TST_04}] <i>Test with a trace in an inactive section</i>
+- [@tr{TST_05}] <i>Test that only references op_k() (reference list: no trace)</i>
+@endcode_uid
+
+@code_uid{op_b(), Op with no forward trace: empty + reported}
+@code_fw_trace
+@endcode_uid
+
+@code_uid{op_c(), Op traced only by a doc UID: reported}
+@code_fw_trace
+- [@tr{DOC_02}] <i>Document item tracing op_c()</i>
+@endcode_uid
+
+@code_uid{op_d(), Op with a NOTEST disposition: OK}
+@code_fw_trace
+- [@tr{NOTEST_01}] <i>op_d() verified by other means</i>
+@endcode_uid
+
+@code_uid{Foo, Class (no ')'): rule 1 does not apply}
+@code_bw_trace
+- [@tr{REQ_03}]
+@code_fw_trace
+@endcode_uid
+
+@code_uid{Foo()_x, Ends not in ')' (full match): rule 1 does not apply}
+@code_fw_trace
+@endcode_uid
+
+@code_uid{Base::m(), Base op tested through an override: OK (level 2)}
+@code_fw_trace
+- [@tr{Derived::m()}] <i>Override of Base::m() with a test: OK</i>
+@endcode_uid
+
+@code_uid{Derived::m(), Override of Base::m() with a test: OK}
+@code_bw_trace
+- [@tr{Base::m()}]
+@code_fw_trace
+- [@tr{TST_02}] <i>Test of Derived::m()</i>
+@endcode_uid
+
+@code_uid{Base::n(), Base op whose override has no test: reported}
+@code_fw_trace
+- [@tr{Derived::n()}] <i>Override of Base::n() without a test: reported</i>
+@endcode_uid
+
+@code_uid{Derived::n(), Override of Base::n() without a test: reported}
+@code_bw_trace
+- [@tr{Base::n()}]
+@code_fw_trace
+@endcode_uid
+
+@code_uid{Top::p(), Test 3 levels down: beyond default depth 2: reported}
+@code_fw_trace
+- [@tr{Mid::p()}] <i>Test 2 levels down: OK</i>
+@endcode_uid
+
+@code_uid{Mid::p(), Test 2 levels down: OK}
+@code_bw_trace
+- [@tr{Top::p()}]
+@code_fw_trace
+- [@tr{Leaf::p()}] <i>Direct test: OK</i>
+@endcode_uid
+
+@code_uid{Leaf::p(), Direct test: OK}
+@code_bw_trace
+- [@tr{Mid::p()}]
+@code_fw_trace
+- [@tr{TST_03}] <i>Test of Leaf::p()</i>
+@endcode_uid
+
+@code_uid{cyc_a(), Cycle with cyc_b(), no test: reported (terminates)}
+@code_bw_trace
+- [@tr{cyc_b()}]
+@code_fw_trace
+- [@tr{cyc_b()}] <i>Cycle with cyc_a(), no test: reported (terminates)</i>
+@endcode_uid
+
+@code_uid{cyc_b(), Cycle with cyc_a(), no test: reported (terminates)}
+@code_bw_trace
+- [@tr{cyc_a()}]
+@code_fw_trace
+- [@tr{cyc_a()}] <i>Cycle with cyc_b(), no test: reported (terminates)</i>
+@endcode_uid
+
+@code_uid{op_e(), Op tested only in an inactive section: empty + reported}
+@code_fw_trace
+@endcode_uid
+
+@if OFF
+@code_uid{op_f(), Op in an inactive section: not checked}
+@code_fw_trace
+@endcode_uid
+@endif
+
+@code_uid{op_g(), Op without a forward-trace placeholder: not checked}
+@endcode_uid
+
+@code_uid{op_h(), Op with an inactive forward-trace placeholder: not checked}
+@if OFF
+@code_fw_trace
+@endif
+@endcode_uid
+
+@code_uid{op_k(), Op with a test listed only in a reference list: reported}
+@code_fw_trace
+@endcode_uid
+
+@uid{TST_01, Test of op_a()}
+@uid_bw_trace
+- [@tr{op_a()}]
+@enduid
+
+@uid{TST_02, Test of Derived::m()}
+@uid_bw_trace
+- [@tr{Derived::m()}]
+@enduid
+
+@uid{TST_03, Test of Leaf::p()}
+@uid_bw_trace
+- [@tr{Leaf::p()}]
+@enduid
+
+@uid{TST_04, Test with a trace in an inactive section}
+@uid_bw_trace
+@if OFF
+- [@tr{op_e()}]
+@endif
+- [@tr{op_a()}]
+@enduid
+
+@uid{TST_05, Test that only references op_k() (reference list: no trace)}
+@uid_ref
+- [@tr{op_k()}]
+@uid_bw_trace
+- [@tr{op_a()}]
+@enduid
+
+@uid{NOTEST_01, op_d() verified by other means}
+@uid_bw_trace
+- [@tr{op_d()}]
+@enduid
+
+@uid{DOC_02, Document item tracing op_c()}
+@uid_bw_trace
+- [@tr{op_c()}]
+@enduid
+*/

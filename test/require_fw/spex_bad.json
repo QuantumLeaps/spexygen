@@ -1,0 +1,7 @@
+{
+"gen-dir": "spex",
+"gen": ["t.dox"],
+"require-fw": [
+  {"kind": "code", "uid": ".*\\)", "child": "TST_.*", "levels": 2}
+]
+}

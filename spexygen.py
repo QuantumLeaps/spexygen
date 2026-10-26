@@ -42,104 +42,13 @@ import os
 import re
 import json
 
-class _CondSections:
-    '''Doxygen conditional sections (@if/@ifnot/@elseif/@else/@endif,
-    also inline, with label expressions using !, &&, ||, parentheses),
-    evaluated for the given set of enabled section labels.
-    '''
-    _RE = re.compile(r'[@\\](ifnot|if|elseif|else|endif)\b[ \t]*'
-                     r'(\([^\n]*?\)(?=\s|$)|[A-Za-z_][A-Za-z0-9_]*)?')
-
-    def __init__(self, enabled):
-        self._en = set(enabled)
-        self._stack = [] # entries: [active, taken]
-
-    def _eval(self, expr):
-        toks = re.findall(r'\(|\)|&&|\|\||!|[A-Za-z_][A-Za-z0-9_]*', expr)
-        pos = [0]
-        def peek():
-            return toks[pos[0]] if pos[0] < len(toks) else None
-        def take():
-            pos[0] += 1
-            return toks[pos[0] - 1]
-        def prim():
-            t = take()
-            if t == '!':
-                return not prim()
-            if t == '(':
-                v = orx()
-                take()
-                return v
-            return t in self._en
-        def andx():
-            v = prim()
-            while peek() == '&&':
-                take()
-                v = prim() and v
-            return v
-        def orx():
-            v = andx()
-            while peek() == '||':
-                take()
-                v = andx() or v
-            return v
-        return orx()
-
-    def active(self):
-        return all(e[0] for e in self._stack)
-
-    def feed(self, line):
-        '''process one line; return the list of (start, end, active)
-        segments of the line
-        '''
-        segs = []
-        p = 0
-        for m in self._RE.finditer(line):
-            cmd, lab = m.group(1), m.group(2)
-            if cmd in ('if', 'ifnot', 'elseif') and not lab:
-                continue
-            segs.append((p, m.start(), self.active()))
-            if cmd in ('if', 'ifnot'):
-                v = self._eval(lab)
-                if cmd == 'ifnot':
-                    v = not v
-                self._stack.append([v, v])
-                p = m.end()
-            elif cmd == 'elseif':
-                if self._stack:
-                    e = self._stack[-1]
-                    v = (not e[1]) and self._eval(lab)
-                    e[0] = v
-                    e[1] = e[1] or v
-                p = m.end()
-            elif cmd == 'else':
-                if self._stack:
-                    e = self._stack[-1]
-                    e[0] = not e[1]
-                    e[1] = True
-                p = m.start() + 5
-            else: # endif
-                if self._stack:
-                    self._stack.pop()
-                p = m.start() + 6
-        segs.append((p, len(line), self.active()))
-        return segs
-
-    @staticmethod
-    def active_at(segs, idx):
-        for s, e, a in segs:
-            if s <= idx < e:
-                return a
-        return segs[-1][2]
-
-
 class Spexygen:
     '''
     Spexygen class that encapsulates tracing and code generation
     '''
 
     # public class constants
-    VERSION = 401
+    VERSION = 410
 
     UID_DOC  = 1
     UID_CODE = 2
@@ -164,6 +73,8 @@ class Spexygen:
         self._cond = None          # conditional-section state of the file
         self._segs = None          # active segments of the current line
         self._uid_active = True    # is the current UID in an active section?
+        self._uid_kind_dict = {}   # UID-kind dictionary collected during tracing
+        self._rules = []           # 'require-fw' rules from the spexyfile
 
     @staticmethod
     def debug(*args, **kwargs):
@@ -243,6 +154,8 @@ class Spexygen:
             return
         if self._uid not in self._uid_brief_dict:
             self._uid_brief_dict[self._uid] = brief.replace('\\,', ',')
+        if self._uid not in self._uid_kind_dict:
+            self._uid_kind_dict[self._uid] = kind
         Spexygen.debug("  uid:", self._uid, brief)
 
     def feed_line(self, line):
@@ -495,11 +408,93 @@ class Spexygen:
         elif self._uid in self._uid_trace_dict:
             self._uid_traced_list = []
             self.on_gen_fw_trace(self._uid, 0)
+            self.check_rules()
         else:
             print(f'  {self._fname}:{self._lnum} empty forward trace'\
                   f' for UID: [{self._uid}]')
+            self.check_rules()
 
         return True
+
+    def load_rules(self, rules):
+        '''load and check the 'require-fw' rules from the spexyfile;
+        return False if the rules are malformed
+        '''
+        if not isinstance(rules, list):
+            print("Error: 'require-fw' must be a list of rules")
+            return False
+        keys = ('kind', 'uid', 'child', 'depth', 'message')
+        for n, r in enumerate(rules, 1):
+            if not isinstance(r, dict) or 'uid' not in r or 'child' not in r:
+                print(f"Error: 'require-fw' rule {n}: 'uid' and 'child'"\
+                      " are required")
+                return False
+            bad = [k for k in r if k not in keys]
+            if bad:
+                print(f"Error: 'require-fw' rule {n}: unknown key(s):",
+                      ' '.join(bad))
+                return False
+            kind = {'code': Spexygen.UID_CODE, 'doc': Spexygen.UID_DOC,
+                    'any': None}.get(r.get('kind', 'any'), 0)
+            if kind == 0:
+                print(f"Error: 'require-fw' rule {n}: 'kind' must be"\
+                      " 'code', 'doc' or 'any'")
+                return False
+            depth = r.get('depth', 2)
+            if not isinstance(depth, int) or isinstance(depth, bool) \
+               or not 1 <= depth <= 9:
+                print(f"Error: 'require-fw' rule {n}: 'depth' must be"\
+                      " an integer 1..9")
+                return False
+            try:
+                uid_re = re.compile(r['uid'])
+                child_re = re.compile(r['child'])
+            except (re.error, TypeError) as e:
+                print(f"Error: 'require-fw' rule {n}: bad regex:", e)
+                return False
+            self._rules.append(dict(kind=kind, uid=uid_re, child=child_re,
+                depth=depth,
+                message=r.get('message', 'missing required forward trace'),
+                checked=0, reported=0))
+        return True
+
+    def rule_applies(self, rule, uid):
+        '''does the 'require-fw' "rule" apply to the "uid"?
+        '''
+        return (rule['kind'] is None
+                or self._uid_kind_dict.get(uid) == rule['kind']) \
+               and rule['uid'].fullmatch(uid) is not None
+
+    def rule_met(self, rule, uid, depth, seen):
+        '''is the 'require-fw' "rule" met by the forward trace of "uid"?
+        A child meets the rule if it matches the rule's 'child' pattern,
+        or (up to "depth" levels) if the rule applies to the child itself
+        and the child meets the rule (recursively).
+        '''
+        children = self._uid_trace_dict.get(uid, [])
+        for c in children:
+            if rule['child'].fullmatch(c) is not None:
+                return True
+        if depth > 1:
+            for c in children:
+                if c not in seen and self.rule_applies(rule, c):
+                    seen.add(c)
+                    if self.rule_met(rule, c, depth - 1, seen):
+                        return True
+        return False
+
+    def check_rules(self):
+        '''check the 'require-fw' rules for the current UID
+        (called at its active forward-trace placeholder)
+        '''
+        for rule in self._rules:
+            if self.rule_applies(rule, self._uid):
+                rule['checked'] += 1
+                if not self.rule_met(rule, self._uid, rule['depth'],
+                                     {self._uid}):
+                    rule['reported'] += 1
+                    print(f"  {self._fname}:{self._lnum} {rule['message']}"\
+                          f" for UID: [{self._uid}]")
 
     def gen(self, gendir, fname):
         '''generate a given file, replacing the detected placeholdrs
@@ -599,6 +594,12 @@ class Spexygen:
             self._sections = spex[key]
             print("Enabled sections:", ' '.join(self._sections))
 
+        # optional 'require-fw' rules (required forward traces)
+        key = 'require-fw'
+        if key in spex:
+            if not self.load_rules(spex[key]):
+                sys.exit(-1)
+
         # perform tracing
         key = 'trace'
         if key not in spex:
@@ -624,6 +625,8 @@ class Spexygen:
             gendir = spex[key]
         if gendir == '':
             print("No code generation (empty gen directory)")
+            if self._rules:
+                print("require-fw: rules NOT checked (no generation)")
             return
 
         key = 'gen-inc'
@@ -634,6 +637,8 @@ class Spexygen:
         geninc = None
         if key not in spex:
             print("Spexygen: nothing to generate")
+            if self._rules:
+                print("require-fw: rules NOT checked (no generation)")
             return
 
         if not os.path.exists(gendir):
@@ -668,6 +673,102 @@ class Spexygen:
 
         if geninc:
             geninc.close()
+
+        # summary of the 'require-fw' rules
+        for n, rule in enumerate(self._rules, 1):
+            print(f"require-fw rule {n} '{rule['message']}':"\
+                  f" {rule['checked']} UIDs checked,"\
+                  f" {rule['reported']} reported")
+
+class _CondSections:
+    '''Doxygen conditional sections (@if/@ifnot/@elseif/@else/@endif,
+    also inline, with label expressions using !, &&, ||, parentheses),
+    evaluated for the given set of enabled section labels.
+    '''
+    _RE = re.compile(r'[@\\](ifnot|if|elseif|else|endif)\b[ \t]*'
+                     r'(\([^\n]*?\)(?=\s|$)|[A-Za-z_][A-Za-z0-9_]*)?')
+
+    def __init__(self, enabled):
+        self._en = set(enabled)
+        self._stack = [] # entries: [active, taken]
+
+    def _eval(self, expr):
+        toks = re.findall(r'\(|\)|&&|\|\||!|[A-Za-z_][A-Za-z0-9_]*', expr)
+        pos = [0]
+        def peek():
+            return toks[pos[0]] if pos[0] < len(toks) else None
+        def take():
+            pos[0] += 1
+            return toks[pos[0] - 1]
+        def prim():
+            t = take()
+            if t == '!':
+                return not prim()
+            if t == '(':
+                v = orx()
+                take()
+                return v
+            return t in self._en
+        def andx():
+            v = prim()
+            while peek() == '&&':
+                take()
+                v = prim() and v
+            return v
+        def orx():
+            v = andx()
+            while peek() == '||':
+                take()
+                v = andx() or v
+            return v
+        return orx()
+
+    def active(self):
+        return all(e[0] for e in self._stack)
+
+    def feed(self, line):
+        '''process one line; return the list of (start, end, active)
+        segments of the line
+        '''
+        segs = []
+        p = 0
+        for m in self._RE.finditer(line):
+            cmd, lab = m.group(1), m.group(2)
+            if cmd in ('if', 'ifnot', 'elseif') and not lab:
+                continue
+            segs.append((p, m.start(), self.active()))
+            if cmd in ('if', 'ifnot'):
+                v = self._eval(lab)
+                if cmd == 'ifnot':
+                    v = not v
+                self._stack.append([v, v])
+                p = m.end()
+            elif cmd == 'elseif':
+                if self._stack:
+                    e = self._stack[-1]
+                    v = (not e[1]) and self._eval(lab)
+                    e[0] = v
+                    e[1] = e[1] or v
+                p = m.end()
+            elif cmd == 'else':
+                if self._stack:
+                    e = self._stack[-1]
+                    e[0] = not e[1]
+                    e[1] = True
+                p = m.start() + 5
+            else: # endif
+                if self._stack:
+                    self._stack.pop()
+                p = m.start() + 6
+        segs.append((p, len(line), self.active()))
+        return segs
+
+    @staticmethod
+    def active_at(segs, idx):
+        for s, e, a in segs:
+            if s <= idx < e:
+                return a
+        return segs[-1][2]
 
 #=============================================================================
 if __name__ == "__main__":

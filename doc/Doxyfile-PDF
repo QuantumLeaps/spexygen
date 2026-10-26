@@ -7,7 +7,7 @@
 # Configuration options related to the LateX output
 #---------------------------------------------------------------------------
 PROJECT_NAME           = Reference Manual
-PROJECT_BRIEF          = For Spexygen 3.0.0
+PROJECT_BRIEF          = For Spexygen 4.1.0
 PROJECT_NUMBER         = Document: DOC_MAN_SPX
 
 #---------------------------------------------------------------------------

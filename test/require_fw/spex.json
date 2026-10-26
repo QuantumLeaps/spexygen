@@ -1,0 +1,12 @@
+{
+"enabled-sections": ["ON"],
+"gen-dir": "spex",
+"gen-inc": "",
+"gen": ["t.dox"],
+"require-fw": [
+  {"kind": "code", "uid": ".*\\)", "child": "TST_.*|NOTEST_.*",
+   "message": "operation without a test"},
+  {"uid": "REQ_.*", "child": ".*\\)", "depth": 1,
+   "message": "requirement without code"}
+]
+}

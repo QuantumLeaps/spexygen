@@ -85,7 +85,7 @@ The whole system of traceability offered in <i>Spexygen</i> is __extensible__ an
 
 
 
-@section tr-uid Unique Identifiers (UIDs)
+@subsection tr-uid Unique Identifiers (UIDs)
 Traceability is enabled by the consistent use of __Unique Identifiers (UIDs)__, which are short text labels associated with _all_ work artifacts, such as requirements, architecture elements, design elements, source code elements, coding standard deviations, tests, functional safety documents, etc.
 
 @note
@@ -95,7 +95,6 @@ The structure of UIDs is __flexible__ to accommodate various existing naming con
 The UIDs for source code must follow the @webref{https://doxygen.nl, Doxygen} standard for referencing code elements, such as classes, functions, macros, namespaces, types, etc. This enables extending the bi-directional traceability to code. Additionally, such UIDs become __searchable__ with the Doxygen built-in search (the "Search Box").
 
 
-@subsection tr-uid_work Work Artifact UIDs
 The most important feature of UIDs is their __uniqueness__ within the whole system under consideration. To avoid name conflicts, it is advantageous to establish general rules for constructing the UIDs. Throughout <i>Spexygen</i> documentation, the UIDs have the hierarchical structure consisting of fields separated by underscores and/or dashes:
 
 @verbatim
@@ -115,6 +114,7 @@ Examples:
 
 The various fields in the UID are as follows:
 
+@subsection tr-uid_type UID Type
 `[1]` the UID starts with a field corresponding to the <i>document type</i>. This helps to immediately identify the document where the UID is defined. Here are some suggestions for the document types:
   - <b>CTR</b>   Concepts, Terminology, &amp; References
   - <b>FSM</b>   Functional Safety Management Plan
@@ -160,8 +160,6 @@ The <b>kind</b>  field of the UID should be carefully chosen to allow filtering 
 
 `[6]` optionally, the UID might contain a variant letter ('A', 'B', 'C',...)
 
-
-@subsection tr-uid_code Code Artifact UIDs
 Alternatively, UIDs of __code__ elements follow the rules established by Doxygen, with the following general form:
 @verbatim
      +-------------- [1] Namespace (e.g., class or module)
@@ -425,6 +423,33 @@ The "gen-inc":` JSON string is optional and if not provided, <i>Spexygen</i> wil
 
 @attention
 The **order** of the files in the `"gen":` array is important. In particular, any external documenation (separated from the code) must be listed **after** the elements that it documents.
+
+@subsection gen_spex_req Required Forward Traces
+The optional `"require-fw":` JSON array specifies rules for forward traces that must exist (e.g., every operation in the code must be verified by a test). Example:
+
+@verbatim
+"require-fw": [
+  {"kind": "code", "uid": ".*\\)",
+   "child": "TUN_.*|TIN_.*|NOTEST_.*",
+   "message": "operation without a test"}
+]
+@endverbatim
+
+Each rule is a JSON object with the following keys:
+- `"uid":` (required) regular expression; the rule applies to the UIDs that match it as a whole;
+- `"child":` (required) regular expression; the forward trace of the UID must contain a UID that matches it as a whole;
+- `"kind":` (optional) `"code"` (code UIDs only), `"doc"` (document UIDs only), or `"any"` (default);
+- `"depth":` (optional, 1..9, default 2) the number of forward-trace levels searched. A child to which the rule applies itself (e.g., an overriding operation, which traces to the base-class operation) meets the rule if it meets the rule itself, up to this depth. With `"depth": 1`, only the direct forward trace counts.
+- `"message":` (optional) the text of the report (default: "missing required forward trace").
+
+A rule is checked for each UID it applies to at the UID's forward-trace placeholder (<b>\@uid_fw_trace</b> or <b>\@code_fw_trace</b>) in the "gen" pass, so UIDs without that placeholder, and UIDs or placeholders in inactive conditional sections, are not checked. Only traces count; reference lists (<b>\@uid_ref</b>, <b>\@code_ref</b>) do not. A UID that does not meet a rule is reported like an empty forward trace, with the file name and line number. At the end, <i>Spexygen</i> prints for each rule the number of UIDs checked and reported, for example:
+
+@verbatim
+  code.dox:1932 operation without a test for UID: [QP::QHsm::isIn()]
+require-fw rule 1 'operation without a test': 251 UIDs checked, 1 reported
+@endverbatim
+
+The number of UIDs checked shows that a rule actually applies to the intended UIDs (a mistyped `"uid":` pattern checks 0 UIDs). A malformed rule stops <i>Spexygen</i> with an error before tracing.
 
 @section gen_run Running Spexygen
 The `spexygen.py` Python script can be executed from a command prompt. Typically, you run the script in the directory, where you have your `spex.json` script.Here is an example run:

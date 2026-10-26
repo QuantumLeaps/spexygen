@@ -1,0 +1,27 @@
+Spexygen: traceable technical documentation system 4.1.0
+Copyright (c) 2005-2026 Quantum Leaps, www.state-machine.com
+
+Enabled sections: ON
+Tracing: t.dox
+Generating: spex/t.dox
+  t.dox:13 empty forward trace for UID: [REQ_02]
+  t.dox:13 requirement without code for UID: [REQ_02]
+  t.dox:17 requirement without code for UID: [REQ_03]
+  t.dox:21 empty forward trace for UID: [DOC_01]
+  t.dox:31 empty forward trace for UID: [op_b()]
+  t.dox:31 operation without a test for UID: [op_b()]
+  t.dox:35 operation without a test for UID: [op_c()]
+  t.dox:45 empty forward trace for UID: [Foo]
+  t.dox:49 empty forward trace for UID: [Foo()_x]
+  t.dox:63 operation without a test for UID: [Base::n()]
+  t.dox:69 empty forward trace for UID: [Derived::n()]
+  t.dox:69 operation without a test for UID: [Derived::n()]
+  t.dox:73 operation without a test for UID: [Top::p()]
+  t.dox:91 operation without a test for UID: [cyc_a()]
+  t.dox:97 operation without a test for UID: [cyc_b()]
+  t.dox:101 empty forward trace for UID: [op_e()]
+  t.dox:101 operation without a test for UID: [op_e()]
+  t.dox:120 empty forward trace for UID: [op_k()]
+  t.dox:120 operation without a test for UID: [op_k()]
+require-fw rule 1 'operation without a test': 15 UIDs checked, 9 reported
+require-fw rule 2 'requirement without code': 3 UIDs checked, 2 reported
