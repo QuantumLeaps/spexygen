@@ -55,7 +55,7 @@ The main objectives and features of <i>Spexygen</i> are:
 
 The diagram below illustrates the kinds of traceability and the relationships between them. The downstream work artifacts establish backward-traceability to the related upstream artifact by means of the explicitly provided @ref tr-uid "Unique Identifiers (UIDs)".
 
-@image html  spx_tr.svg width=1500px
+@image html  spx_tr.png width=1500px
 @image latex spx_tr.eps
 @caption{Schematic View of Backward Traceability in the Spexygen documentation.}
 
